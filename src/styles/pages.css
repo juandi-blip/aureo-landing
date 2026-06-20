@@ -235,3 +235,37 @@ body.nav-open { overflow: hidden; }
 @media (max-width: 640px) {
   .scisim-controls { grid-template-columns: 1fr; }
 }
+
+/* ── Service cards glassmorphism (Wave 1 redesign) ── */
+.module.glass {
+  position: relative;
+  border-radius: var(--r-xl);
+  overflow: hidden;
+}
+
+.svc-card__canvas {
+  position: absolute;
+  inset: 0;
+  width: 100% !important;
+  height: 100% !important;
+  opacity: 0.35;
+  pointer-events: none;
+  z-index: 0;
+  /* reset the top-right positioning from sections.css */
+  right: unset;
+  top: unset;
+  transform: none !important;
+}
+
+.module:hover .svc-card__canvas {
+  opacity: 0.55;
+  transform: none !important;
+}
+
+.svc-card__content {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}

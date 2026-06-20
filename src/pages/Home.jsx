@@ -160,12 +160,14 @@ export default function Home() {
               { id: 'M-05 · modelado científico', h: 'Resolvemos lo que otros <span class="res">no pueden.</span>', p: 'Modelos físico-matemáticos y simulación numérica: EDOs/EDPs, optimización y ML científico. Conocimiento real, no buzzwords.', chips: ['EDOs/EDPs', 'optimización', 'simuladores'], mini: 'sci' },
               { id: 'M-06 · sprint de descubrimiento', h: 'Claridad técnica <span class="res">antes de comprometerte.</span>', p: 'Una semana de análisis: arquitectura candidata, riesgos identificados y plan de fases accionable. Sin proyecto previo requerido.', chips: ['análisis', 'arquitectura', 'plan'], mini: 'arch' },
             ].map(({ id, h, p, chips, mini }) => (
-              <motion.article key={id} className="module" variants={fadeUp}>
-                <canvas className="mini-node" data-mini={mini} aria-hidden="true"></canvas>
-                <span className="mod-id">{id}</span>
-                <h3 dangerouslySetInnerHTML={{ __html: h }} />
-                <p>{p}</p>
-                <div className="mod-foot">{chips.map((c) => <span key={c} className="chip">{c}</span>)}</div>
+              <motion.article key={id} className="module glass border-glow hover-lift" variants={fadeUp}>
+                <canvas className="mini-node svc-card__canvas" data-mini={mini} aria-hidden="true" />
+                <div className="svc-card__content">
+                  <span className="mod-id">{id}</span>
+                  <h3 dangerouslySetInnerHTML={{ __html: h }} />
+                  <p>{p}</p>
+                  <div className="mod-foot">{chips.map((c) => <span key={c} className="chip">{c}</span>)}</div>
+                </div>
               </motion.article>
             ))}
           </motion.div>
