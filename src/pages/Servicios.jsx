@@ -22,8 +22,8 @@ export default function Servicios() {
           </motion.span>
 
           <motion.h1 initial="hidden" whileInView="visible" viewport={vp}>
-            {chars('Vendemos, desarrollamos y construimos software que ', charVPage, 0)}
-            <em>{chars('posees.', charVPage, 50)}</em>
+            <span className="hero-title-line">Construimos</span>
+            <span className="hero-ghost-line">el software del futuro.</span>
           </motion.h1>
 
           <motion.p className="ph-sub" variants={fadeUp} initial="hidden" whileInView="visible" viewport={vp}>

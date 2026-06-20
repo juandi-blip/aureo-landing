@@ -21,8 +21,8 @@ export default function Contacto() {
           </motion.span>
 
           <motion.h1 initial="hidden" whileInView="visible" viewport={vp}>
-            {chars('Una llamada, una conversación de ingeniería, ', charVPage, 0)}
-            <em>{chars('un plan.', charVPage, 45)}</em>
+            <span className="hero-title-line">Hablemos</span>
+            <span className="hero-ghost-line">de tu próximo producto.</span>
           </motion.h1>
 
           <motion.p className="ph-sub" variants={fadeUp} initial="hidden" whileInView="visible" viewport={vp}>

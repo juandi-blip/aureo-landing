@@ -94,8 +94,8 @@ export default function Casos() {
           </motion.span>
 
           <motion.h1 initial="hidden" whileInView="visible" viewport={vp}>
-            {chars('Resultados, ', charVPage, 0)}
-            <em>{chars('no captions.', charVPage, 12)}</em>
+            <span className="hero-title-line">Resultados</span>
+            <span className="hero-ghost-line">que hablan solos.</span>
           </motion.h1>
 
           <motion.p className="ph-sub" variants={fadeUp} initial="hidden" whileInView="visible" viewport={vp}>

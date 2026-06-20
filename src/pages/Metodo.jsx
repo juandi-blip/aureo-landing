@@ -20,9 +20,8 @@ export default function Metodo() {
           </motion.span>
 
           <motion.h1 initial="hidden" whileInView="visible" viewport={vp}>
-            {chars('Así pensamos ', charVPage, 0)}
-            <em>{chars('antes', charVPage, 13)}</em>
-            {chars(' de escribir una línea.', charVPage, 18)}
+            <span className="hero-title-line">Método sin</span>
+            <span className="hero-ghost-line">fricción.</span>
           </motion.h1>
 
           <motion.p className="ph-sub" variants={fadeUp} initial="hidden" whileInView="visible" viewport={vp}>
@@ -205,7 +204,7 @@ export default function Metodo() {
           </motion.p>
           <motion.div className="acts" variants={stagger(0.1, 0.15)} initial="hidden" whileInView="visible" viewport={vp}>
             <motion.div variants={fadeUp}><Link to="/contacto" className="btn btn-primary">Agenda una llamada <span className="arrow">→</span></Link></motion.div>
-            <motion.div variants={fadeUp}><Link to="/servicios" className="btn btn-ghost">Ver servicios</Link></motion.div>
+            <motion.div variants={fadeUp}><Link to="/servicios" className="btn btn-ghost">Ver cómo trabajamos</Link></motion.div>
           </motion.div>
         </div>
       </section>
