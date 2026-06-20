@@ -245,21 +245,15 @@ body.nav-open { overflow: hidden; }
 
 .svc-card__canvas {
   position: absolute;
-  inset: 0;
-  width: 100% !important;
-  height: 100% !important;
+  top: 0;
+  right: 0;
   opacity: 0.35;
   pointer-events: none;
   z-index: 0;
-  /* reset the top-right positioning from sections.css */
-  right: unset;
-  top: unset;
-  transform: none !important;
 }
 
 .module:hover .svc-card__canvas {
   opacity: 0.55;
-  transform: none !important;
 }
 
 .svc-card__content {
