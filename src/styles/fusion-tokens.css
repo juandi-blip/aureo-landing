@@ -36,7 +36,7 @@
 
   /* Hover lift */
   --lift-distance: -4px;
-  --lift-shadow: 0 12px 40px -8px color-mix(in oklch, #000 40%, transparent);
+  --lift-shadow: 0 12px 40px -8px color-mix(in oklch, var(--ink-900) 40%, transparent);
 
   /* Float badge */
   --float-duration: 4s;
