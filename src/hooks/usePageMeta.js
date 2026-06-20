@@ -1,4 +1,5 @@
 import { useEffect } from 'react'
+import { useLocation } from 'react-router-dom'
 
 // Actualiza <title> y metadatos por ruta (SPA no recarga el head).
 // Mantiene en sync description, og:* y twitter:* para que cada ruta
@@ -14,6 +15,8 @@ function setMeta(selector, attr, value, content) {
 }
 
 export function usePageMeta(title, description) {
+  const { pathname } = useLocation()
+
   useEffect(() => {
     if (title) {
       document.title = title
@@ -25,5 +28,8 @@ export function usePageMeta(title, description) {
       setMeta('meta[property="og:description"]', 'property', 'og:description', description)
       setMeta('meta[name="twitter:description"]', 'name', 'twitter:description', description)
     }
-  }, [title, description])
+    // Actualizar og:url dinámicamente según ruta actual
+    const currentUrl = `https://kaivexai.com${pathname}`
+    setMeta('meta[property="og:url"]', 'property', 'og:url', currentUrl)
+  }, [title, description, pathname])
 }
