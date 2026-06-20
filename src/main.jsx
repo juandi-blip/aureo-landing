@@ -7,6 +7,7 @@ import './styles/base.css'
 import './styles/sections.css'
 import './styles/extras.css'
 import './styles/pages.css'
+import './styles/fusion-tokens.css'
 
 import App from './App.jsx'
 import Home from './pages/Home.jsx'

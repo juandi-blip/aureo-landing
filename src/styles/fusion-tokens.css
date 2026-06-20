@@ -1,0 +1,43 @@
+/* src/styles/fusion-tokens.css */
+/* Contrato de diseño — Wave 1 produce, Wave 2 consume */
+
+:root {
+  /* Glassmorphism */
+  --glass-bg: color-mix(in oklch, var(--ink-820) 60%, transparent);
+  --glass-blur: blur(12px) saturate(1.5);
+  --glass-border: 1px solid var(--line);
+
+  /* Border glow */
+  --border-glow-color: var(--signal);
+  --border-glow-color-soft: var(--signal-soft);
+
+  /* Scanlines */
+  --scanline-opacity: 0.015;
+  --scanline-size: 6px;
+
+  /* Cursor glow */
+  --cursor-glow-size: 420px;
+  --cursor-glow-color: color-mix(in oklch, var(--signal) 15%, transparent);
+
+  /* Hero layout */
+  --hero-cols: 1fr 1fr;
+  --hero-gap: 4rem;
+
+  /* Stats strip */
+  --stats-gap: 3rem;
+  --stats-divider: var(--line);
+
+  /* Editorial steps */
+  --step-divider-color: var(--line-strong);
+  --step-number-color: var(--bone-faint);
+
+  /* Ghost typography */
+  --ghost-text-color: color-mix(in oklch, var(--bone) 35%, transparent);
+
+  /* Hover lift */
+  --lift-distance: -4px;
+  --lift-shadow: 0 12px 40px -8px color-mix(in oklch, #000 40%, transparent);
+
+  /* Float badge */
+  --float-duration: 4s;
+}
