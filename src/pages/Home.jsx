@@ -21,22 +21,52 @@ export default function Home() {
 
   return (
     <>
-      {/* 1 · HERO Woven */}
-      <WovenHero />
+      {/* Hero fusionado 2 columnas */}
+      <section className="hero-fusion">
+        {/* Columna izquierda — texto */}
+        <div className="hero-fusion__left">
+          <p className="hero-eyebrow animate-fade-up stagger-1">
+            Estudio de desarrollo de software con IA
+          </p>
 
-      {/* 1b · motor IA */}
-      <section className="section hero-engine-section">
-        <div className="wrap">
-          <motion.div
-            className="hero-engine"
-            variants={fadeUp}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, margin: '-60px' }}
-          >
-            <p className="hero-engine-label mono">o mira al estudio pensar en tiempo real — escribe una idea ↓</p>
-            <AiStrip />
-          </motion.div>
+          <div className="animate-fade-up stagger-2">
+            <h1 className="hero-title-line">Software que</h1>
+            <span className="hero-ghost-line">piensa solo.</span>
+          </div>
+
+          <p className="animate-fade-up stagger-3" style={{ color: 'var(--bone-dim)', maxWidth: '42ch', lineHeight: '1.7' }}>
+            Construimos productos digitales con agentes de IA — desde el prototipo hasta producción.
+            Rápido, preciso, sin fricción.
+          </p>
+
+          <div className="animate-fade-up stagger-4" style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap' }}>
+            <a href="#estimador" className="btn btn-primary">Estimar mi proyecto</a>
+            <a href="/casos" className="btn btn-ghost">Ver casos reales</a>
+          </div>
+
+          {/* Stats strip */}
+          <div className="hero-fusion__stats animate-fade-up stagger-5">
+            <div>
+              <div className="hero-stat__value">3×</div>
+              <div className="hero-stat__label">más rápido con IA</div>
+            </div>
+            <div>
+              <div className="hero-stat__value">+40</div>
+              <div className="hero-stat__label">proyectos entregados</div>
+            </div>
+            <div>
+              <div className="hero-stat__value">100%</div>
+              <div className="hero-stat__label">en producción</div>
+            </div>
+          </div>
+        </div>
+
+        {/* Columna derecha — canvas + terminal */}
+        <div className="hero-fusion__right animate-fade-up stagger-2">
+          <div className="hero-fusion__canvas-wrap">
+            <WovenHero />
+          </div>
+          <AiStrip />
         </div>
       </section>
 
