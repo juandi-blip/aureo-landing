@@ -3,8 +3,8 @@ import { Link } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import { usePageMeta } from '../hooks/usePageMeta.js'
 import { initMiniNodes } from '../lib/miniNodes.js'
+import { initWoven } from '../lib/woven.js'
 import { fadeUp, fadeIn, scaleIn, stagger } from '../lib/motion.jsx'
-import WovenHero from '../components/WovenHero.jsx'
 import AiStrip from '../components/AiStrip.jsx'
 import Diagram from '../components/Diagram.jsx'
 import Estimator from '../components/Estimator.jsx'
@@ -18,6 +18,7 @@ export default function Home() {
     'Kaivex AI es un estudio de desarrollo de software con IA. Validamos rápido con demos y construimos a medida arquitectura robusta que escala.'
   )
   useEffect(() => initMiniNodes(), [])
+  useEffect(() => initWoven(), [])
 
   return (
     <>
@@ -41,7 +42,7 @@ export default function Home() {
 
           <div className="animate-fade-up stagger-4" style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap' }}>
             <a href="#estimador" className="btn btn-primary">Estimar mi proyecto</a>
-            <a href="/casos" className="btn btn-ghost">Ver casos reales</a>
+            <Link to="/casos" className="btn btn-ghost">Ver casos reales</Link>
           </div>
 
           {/* Stats strip */}
@@ -64,7 +65,12 @@ export default function Home() {
         {/* Columna derecha — canvas + terminal */}
         <div className="hero-fusion__right animate-fade-up stagger-2">
           <div className="hero-fusion__canvas-wrap">
-            <WovenHero />
+            <canvas
+              className="hero-woven-canvas"
+              id="woven-canvas"
+              aria-hidden="true"
+              style={{ width: '100%', height: '100%', display: 'block' }}
+            />
           </div>
           <AiStrip />
         </div>
