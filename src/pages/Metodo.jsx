@@ -132,27 +132,31 @@ export default function Metodo() {
           <motion.div className="services-head" style={{ maxWidth: '34ch' }} variants={fadeUp} initial="hidden" whileInView="visible" viewport={vp}>
             <h2>Sin sorpresas. Sabes qué pasa cada semana.</h2>
           </motion.div>
-          <motion.div
-            className="process-grid"
-            variants={stagger(0.12)}
-            initial="hidden"
-            whileInView="visible"
-            viewport={vp}
-          >
+          <div className="editorial-steps">
             {[
-              { wk: 'Semana 1', h: 'Descubrimiento', p: 'Entendemos la operación y los riesgos reales antes de prometer nada.', items: ['mapa de sistemas', 'decisiones de arquitectura', 'plan por fases'] },
-              { wk: 'Semana 2–4', h: 'Cimientos', p: 'Arquitectura, entornos y el primer corte funcional en producción.', items: ['esquema de datos', 'CI/CD + observabilidad', 'checkpoint semanal'] },
-              { wk: 'Semana 4–N', h: 'Construcción', p: 'Iteración en producción con demos vivas, no slides.', items: ['releases continuos', 'métricas a la vista', 'IA donde compone'] },
-              { wk: 'Continuo', h: 'Operación', p: 'El sistema es tuyo; te acompañamos a escalarlo o lo entregamos llave en mano.', items: ['handoff documentado', 'SLA opcional', 'roadmap evolutivo'] },
-            ].map(({ wk, h, p, items }) => (
-              <motion.div key={wk} className="phase" variants={fadeUp}>
-                <div className="ph-wk">{wk}</div>
-                <h4>{h}</h4>
-                <p>{p}</p>
-                <ul>{items.map((t) => <li key={t}>{t}</li>)}</ul>
-              </motion.div>
+              { no: '01', wk: 'Semana 1', h: 'Descubrimiento', p: 'Entendemos la operación y los riesgos reales antes de prometer nada.', items: ['mapa de sistemas', 'decisiones de arquitectura', 'plan por fases'] },
+              { no: '02', wk: 'Semana 2–4', h: 'Cimientos', p: 'Arquitectura, entornos y el primer corte funcional en producción.', items: ['esquema de datos', 'CI/CD + observabilidad', 'checkpoint semanal'] },
+              { no: '03', wk: 'Semana 4–N', h: 'Construcción', p: 'Iteración en producción con demos vivas, no slides.', items: ['releases continuos', 'métricas a la vista', 'IA donde compone'] },
+              { no: '04', wk: 'Continuo', h: 'Operación', p: 'El sistema es tuyo; te acompañamos a escalarlo o lo entregamos llave en mano.', items: ['handoff documentado', 'SLA opcional', 'roadmap evolutivo'] },
+            ].map(({ no, wk, h, p, items }) => (
+              <div key={no} className="editorial-step reveal">
+                <div className="editorial-step__header">
+                  <span className="editorial-step__num">{no}</span>
+                  <div className="editorial-step__line" />
+                </div>
+                <h3 className="editorial-step__title">
+                  {h}
+                  <span className="editorial-step__sub"> · {wk}</span>
+                </h3>
+                <div className="editorial-step__body">
+                  <p>{p}</p>
+                  <ul className="tick-list" style={{ marginTop: 'var(--s-4)' }}>
+                    {items.map((t) => <li key={t}>{t}</li>)}
+                  </ul>
+                </div>
+              </div>
             ))}
-          </motion.div>
+          </div>
         </div>
       </section>
 

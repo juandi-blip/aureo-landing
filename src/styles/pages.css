@@ -263,3 +263,60 @@ body.nav-open { overflow: hidden; }
   flex-direction: column;
   flex: 1;
 }
+
+/* ── Editorial steps layout (Wave 1 redesign) ── */
+.editorial-steps {
+  display: flex;
+  flex-direction: column;
+}
+
+.editorial-step {
+  padding: 2.5rem 0;
+  border-bottom: 1px solid var(--line);
+}
+.editorial-step:first-child {
+  border-top: 1px solid var(--line);
+}
+
+.editorial-step__header {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  margin-bottom: 1.25rem;
+}
+
+.editorial-step__num {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--step-number-color);
+  letter-spacing: 0.1em;
+  min-width: 2rem;
+  flex-shrink: 0;
+}
+
+.editorial-step__line {
+  flex: 1;
+  height: 1px;
+  background: var(--step-divider-color);
+}
+
+.editorial-step__title {
+  font-family: var(--font-display);
+  font-size: clamp(1.5rem, 3vw, 2.25rem);
+  font-weight: 700;
+  color: var(--bone);
+  line-height: 1.2;
+  margin: 0 0 0.5rem;
+}
+
+.editorial-step__sub {
+  color: var(--ghost-text-color);
+  font-size: 0.9em;
+}
+
+.editorial-step__body {
+  color: var(--bone-dim);
+  max-width: 60ch;
+  line-height: 1.7;
+  padding-left: calc(2rem + 1.5rem);
+}
