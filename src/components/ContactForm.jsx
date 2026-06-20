@@ -11,9 +11,29 @@ const TONE = {
   info: 'var(--bone-faint)',
 }
 
+const LIMITS = { name: 100, email: 254, message: 2000 }
+
+function sanitize(str) {
+  return str.replace(/[<>"'&]/g, c => ({
+    '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#x27;', '&': '&amp;'
+  }[c]))
+}
+
+function validate({ name, email, message }) {
+  const errors = {}
+  if (!name.trim() || name.length > LIMITS.name)
+    errors.name = 'Nombre requerido (máx. 100 caracteres)'
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) || email.length > LIMITS.email)
+    errors.email = 'Email inválido'
+  if (!message.trim() || message.length < 10 || message.length > LIMITS.message)
+    errors.message = `Mensaje requerido (10–${LIMITS.message} caracteres)`
+  return errors
+}
+
 export default function ContactForm() {
   const [status, setStatus] = useState({ msg: 'Respondemos en < 24h hábiles.', kind: 'info' })
   const [sending, setSending] = useState(false)
+  const [errors, setErrors] = useState({})
 
   async function onSubmit(e) {
     e.preventDefault()
@@ -24,6 +44,25 @@ export default function ContactForm() {
     }
 
     const data = new FormData(e.currentTarget)
+
+    // Validación de los campos requeridos antes de enviar.
+    const formData = {
+      name: (data.get('nombre') || '').toString(),
+      email: (data.get('email') || '').toString(),
+      message: (data.get('mensaje') || '').toString(),
+    }
+    const errs = validate(formData)
+    if (Object.keys(errs).length) {
+      setErrors(errs)
+      setStatus({ msg: Object.values(errs)[0], kind: 'err' })
+      return
+    }
+    setErrors({})
+
+    // Sanitización antes del envío (email se valida por regex, no se sanitiza).
+    data.set('nombre', sanitize(formData.name))
+    data.set('mensaje', sanitize(formData.message))
+
     setStatus({ msg: 'Enviando…', kind: 'info' })
     setSending(true)
     try {
@@ -46,11 +85,13 @@ export default function ContactForm() {
       <div className="field-row">
         <div className="field">
           <label htmlFor="nombre">Nombre <span className="req">*</span></label>
-          <input id="nombre" name="nombre" type="text" required autoComplete="name" placeholder="Tu nombre" />
+          <input id="nombre" name="nombre" type="text" required maxLength={LIMITS.name} autoComplete="name" placeholder="Tu nombre" aria-invalid={!!errors.name} />
+          {errors.name && <span className="field-error" style={{ color: 'var(--warn)' }}>{errors.name}</span>}
         </div>
         <div className="field">
           <label htmlFor="email">Email <span className="req">*</span></label>
-          <input id="email" name="email" type="email" required autoComplete="email" placeholder="tu@empresa.com" />
+          <input id="email" name="email" type="email" required maxLength={LIMITS.email} autoComplete="email" placeholder="tu@empresa.com" aria-invalid={!!errors.email} />
+          {errors.email && <span className="field-error" style={{ color: 'var(--warn)' }}>{errors.email}</span>}
         </div>
       </div>
       <div className="field-row">
@@ -72,7 +113,8 @@ export default function ContactForm() {
       </div>
       <div className="field">
         <label htmlFor="mensaje">Tu proyecto <span className="req">*</span></label>
-        <textarea id="mensaje" name="mensaje" required placeholder="Cuéntanos qué quieres construir, en qué etapa estás y qué problema resuelve."></textarea>
+        <textarea id="mensaje" name="mensaje" required maxLength={LIMITS.message} placeholder="Cuéntanos qué quieres construir, en qué etapa estás y qué problema resuelve." aria-invalid={!!errors.message}></textarea>
+        {errors.message && <span className="field-error" style={{ color: 'var(--warn)' }}>{errors.message}</span>}
       </div>
       {/* honeypot anti-spam (oculto) */}
       <input type="text" name="_gotcha" tabIndex={-1} autoComplete="off" aria-hidden="true" style={{ position: 'absolute', left: '-9999px' }} />
