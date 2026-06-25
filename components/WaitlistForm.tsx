@@ -7,7 +7,6 @@ type State = "idle" | "loading" | "success" | "error";
 
 export function WaitlistForm({ origen }: { origen: string }) {
   const [email, setEmail] = useState("");
-  const [negocio, setNegocio] = useState("");
   const [state, setState] = useState<State>("idle");
   const [msg, setMsg] = useState("");
 
@@ -19,7 +18,7 @@ export function WaitlistForm({ origen }: { origen: string }) {
       const res = await fetch("/api/waitlist", {
         method: "POST",
         headers: { "content-type": "application/json" },
-        body: JSON.stringify({ email, negocio, origen }),
+        body: JSON.stringify({ email, origen }),
       });
       const json = await res.json();
       if (res.ok && json.ok) {
@@ -46,6 +45,8 @@ export function WaitlistForm({ origen }: { origen: string }) {
         required
         placeholder="Tu correo"
         aria-label="Correo electrónico"
+        autoComplete="email"
+        inputMode="email"
         value={email}
         onChange={(e) => setEmail(e.target.value)}
         className="flex-1"

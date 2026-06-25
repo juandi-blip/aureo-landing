@@ -13,7 +13,7 @@ export function PricingTable() {
             <PricingCard key={p.nombre} plan={p} />
           ))}
         </div>
-        <p className="mt-6 text-center text-sm text-[var(--text-muted)]">{site.preciosNota}</p>
+        <p className="mt-6 text-center text-sm text-[var(--text-secondary)]">{site.preciosNota}</p>
       </div>
     </section>
   );

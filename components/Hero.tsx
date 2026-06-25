@@ -12,7 +12,7 @@ export function Hero() {
           <p className="mt-6 text-lg text-[var(--text-secondary)]">{site.hero.subtitulo}</p>
           <div className="mt-8">
             <WaitlistForm origen="hero" />
-            <p className="mt-3 text-sm text-[var(--text-muted)]">{site.hero.nota}</p>
+            <p className="mt-3 text-sm text-[var(--text-secondary)]">{site.hero.nota}</p>
           </div>
         </div>
         <div className="rounded-[var(--radius-lg)] border border-[var(--border-subtle)] bg-[var(--bg-surface)] p-3 shadow-sm">

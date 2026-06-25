@@ -10,7 +10,7 @@ export function PricingCard({ plan }: { plan: Plan }) {
       <p className="mt-1 text-sm text-[var(--text-secondary)]">{plan.resumen}</p>
       <p className="mt-4">
         <span className="font-display text-3xl font-extrabold text-[var(--primary)]">{plan.precio}</span>
-        <span className="text-[var(--text-muted)]">{plan.periodo}</span>
+        <span className="text-[var(--text-secondary)]">{plan.periodo}</span>
       </p>
       <ul className="mt-6 space-y-2 text-sm text-[var(--text-secondary)]">
         {plan.features.map((f) => (
