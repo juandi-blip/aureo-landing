@@ -10,7 +10,7 @@ export function FAQ() {
           {site.faq.map((item, i) => (
             <AccordionItem key={i} value={`item-${i}`}>
               <AccordionTrigger className="text-left text-[var(--text-primary)]">{item.pregunta}</AccordionTrigger>
-              <AccordionContent className="text-[var(--text-secondary)]">{item.respuesta}</AccordionContent>
+              <AccordionContent className="text-[var(--text-primary)]">{item.respuesta}</AccordionContent>
             </AccordionItem>
           ))}
         </Accordion>

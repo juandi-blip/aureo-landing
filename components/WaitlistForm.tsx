@@ -39,7 +39,7 @@ export function WaitlistForm({ origen }: { origen: string }) {
   }
 
   return (
-    <form onSubmit={onSubmit} className="flex w-full max-w-md flex-col gap-3 sm:flex-row" noValidate>
+    <form onSubmit={onSubmit} className="relative flex w-full max-w-md flex-col gap-3 sm:flex-row" noValidate>
       <Input
         type="email"
         required
@@ -49,13 +49,13 @@ export function WaitlistForm({ origen }: { origen: string }) {
         inputMode="email"
         value={email}
         onChange={(e) => setEmail(e.target.value)}
-        className="flex-1"
+        className="flex-1 min-h-11"
       />
-      <Button type="submit" disabled={state === "loading"} aria-busy={state === "loading"}>
+      <Button type="submit" disabled={state === "loading"} aria-busy={state === "loading"} className="min-h-11">
         {state === "loading" ? "Enviando…" : "Unirme"}
       </Button>
       {state === "error" && (
-        <p role="alert" className="text-[var(--terracotta)] text-sm sm:absolute sm:mt-12">{msg}</p>
+        <p role="alert" className="text-[var(--terracotta)] text-sm sm:absolute sm:top-full sm:mt-1">{msg}</p>
       )}
     </form>
   );

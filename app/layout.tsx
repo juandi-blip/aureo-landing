@@ -1,10 +1,8 @@
 import type { Metadata } from "next";
-import { Inter, Syne, Geist } from "next/font/google";
+import { Inter, Syne } from "next/font/google";
 import "./globals.css";
 import { cn } from "@/lib/utils";
 import { Analytics } from "@vercel/analytics/next";
-
-const geist = Geist({subsets:['latin'],variable:'--font-sans'});
 
 const inter = Inter({
   subsets: ["latin"],
@@ -32,7 +30,7 @@ export default function RootLayout({
   return (
     <html
       lang="es"
-      className={cn("h-full", "antialiased", inter.variable, syne.variable, "font-sans", geist.variable)}
+      className={cn("h-full", "antialiased", inter.variable, syne.variable, "font-sans")}
     >
       <body className="font-sans min-h-full flex flex-col">{children}<Analytics /></body>
     </html>

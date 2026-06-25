@@ -19,7 +19,7 @@ export function PricingCard({ plan }: { plan: Plan }) {
           </li>
         ))}
       </ul>
-      <a href="#waitlist" className="mt-8 block rounded-[var(--radius-md)] bg-[var(--primary)] py-3 text-center font-semibold text-white hover:bg-[var(--primary-strong)]">
+      <a href="#waitlist" className="mt-8 block rounded-[var(--radius-md)] bg-[var(--primary)] py-3 text-center font-semibold text-white hover:bg-[var(--primary-strong)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--primary)] focus-visible:ring-offset-2">
         {plan.cta}
       </a>
     </div>
