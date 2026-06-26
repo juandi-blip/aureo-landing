@@ -1,6 +1,6 @@
 "use client";
 import { useEffect, useState } from "react";
-import { motion } from "motion/react";
+import { motion, useReducedMotion } from "motion/react";
 
 type Particle = {
   id: number;
@@ -18,6 +18,7 @@ export function FloatingParticles({
   count?: number;
   className?: string;
 }) {
+  const reduce = useReducedMotion();
   const [particles, setParticles] = useState<Particle[]>([]);
 
   useEffect(() => {
@@ -32,6 +33,8 @@ export function FloatingParticles({
       }))
     );
   }, [count]);
+
+  if (reduce) return null;
 
   return (
     <div

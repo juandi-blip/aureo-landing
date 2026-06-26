@@ -37,14 +37,14 @@ export function ModuleCard({ module }: { module: Module }) {
       onMouseLeave={onMouseLeave}
       style={{ rotateX: rX, rotateY: rY, transformPerspective: 800 }}
       whileHover={{ boxShadow: "0 20px 40px rgba(168,116,43,0.15)" }}
-      className="group cursor-default rounded-[var(--radius-lg)] border border-[var(--border-subtle)] bg-[var(--bg-surface)] p-6 transition-shadow"
+      className="group cursor-default rounded-[var(--radius-lg)] border border-[var(--border-subtle)] bg-[var(--bg-surface)] p-6"
     >
       <motion.div
         className="mb-4 flex h-11 w-11 items-center justify-center rounded-[var(--radius-md)] bg-[var(--primary)]/10"
         whileHover={{ scale: 1.2, backgroundColor: "rgba(168,116,43,0.15)" }}
         transition={{ type: "spring", stiffness: 300 }}
       >
-        <Icon className="h-5 w-5 text-[var(--primary)] transition-colors group-hover:text-[var(--bronze)]" />
+        <Icon aria-hidden className="h-5 w-5 text-[var(--primary)] transition-colors group-hover:text-[var(--bronze)]" />
       </motion.div>
       <h3 className="text-lg font-semibold text-[var(--text-primary)]">
         {module.titulo}

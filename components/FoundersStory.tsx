@@ -1,6 +1,6 @@
 // components/FoundersStory.tsx
 "use client";
-import { motion } from "motion/react";
+import { motion, useReducedMotion } from "motion/react";
 import { site } from "@/content/site";
 import { fadeUp, staggerContainer, VIEWPORT } from "@/lib/motion";
 import { SectionHeading } from "@/components/ui/SectionHeading";
@@ -8,6 +8,7 @@ import { SectionHeading } from "@/components/ui/SectionHeading";
 const NAME_CHARS = Array.from("Juan & Leif");
 
 export function FoundersStory() {
+  const reduce = useReducedMotion();
   return (
     <section className="grain-texture relative overflow-hidden bg-[var(--bg-base)] py-24">
       <div className="relative z-10 mx-auto max-w-3xl px-5 text-center">
@@ -17,8 +18,8 @@ export function FoundersStory() {
             <div key={initial} className="relative h-16 w-16">
               <motion.div
                 className="absolute inset-0 rounded-full border-2 border-[var(--bronze)]"
-                animate={{ rotate: 360 }}
-                transition={{ duration: 8, repeat: Infinity, ease: "linear" }}
+                animate={reduce ? undefined : { rotate: 360 }}
+                transition={reduce ? undefined : { duration: 8, repeat: Infinity, ease: "linear" }}
               />
               <div className="absolute inset-1 flex items-center justify-center rounded-full bg-[var(--bg-subtle)]">
                 <span className="font-display text-xl font-bold text-[var(--primary)]">

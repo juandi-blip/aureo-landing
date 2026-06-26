@@ -8,7 +8,7 @@ import { SectionHeading } from "@/components/ui/SectionHeading";
 
 export function HowItWorks() {
   const lineRef = useRef<HTMLDivElement>(null);
-  const lineVisible = useInView(lineRef, { once: true, margin: "-100px" });
+  const lineVisible = useInView(lineRef, VIEWPORT);
 
   return (
     <section id="como" className="py-24">

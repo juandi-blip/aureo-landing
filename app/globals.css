@@ -134,6 +134,10 @@ body {
   40%, 100% { transform: translateX(150%); }
 }
 
+@keyframes shimmer-text-move {
+  to { background-position: -200% center; }
+}
+
 @keyframes glow-pulse {
   0%, 100% { box-shadow: 0 0 0 0 var(--bronze-glow); }
   50% { box-shadow: 0 0 30px 10px var(--bronze-glow); }
@@ -172,7 +176,7 @@ body {
   background-clip: text;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-  animation: shimmer-sweep 3s linear infinite;
+  animation: shimmer-text-move 3s linear infinite;
 }
 
 /* Grain texture overlay */
@@ -258,5 +262,13 @@ body {
   }
   html {
     @apply font-sans;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
   }
 }
