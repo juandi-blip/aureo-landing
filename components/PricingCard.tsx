@@ -1,15 +1,31 @@
 // components/PricingCard.tsx
 "use client";
-import { motion } from "motion/react";
+import { useRef } from "react";
+import { motion, useMotionValue, useSpring } from "motion/react";
 import type { Plan } from "@/content/site";
 import { VIEWPORT } from "@/lib/motion";
 
 export function PricingCard({ plan, index = 0 }: { plan: Plan; index?: number }) {
   const hl = plan.destacado;
+  const ref = useRef<HTMLDivElement>(null);
+  const rX = useSpring(useMotionValue(0), { stiffness: 180, damping: 28 });
+  const rY = useSpring(useMotionValue(0), { stiffness: 180, damping: 28 });
+
+  function onMouseMove(e: React.MouseEvent<HTMLDivElement>) {
+    const rect = ref.current?.getBoundingClientRect();
+    if (!rect) return;
+    rX.set(-((e.clientY - rect.top) / rect.height - 0.5) * 6);
+    rY.set(((e.clientX - rect.left) / rect.width - 0.5) * 6);
+  }
+  function onMouseLeave() { rX.set(0); rY.set(0); }
 
   return (
     <motion.div
-      className={`rounded-[var(--radius-lg)] border p-8 ${
+      ref={ref}
+      onMouseMove={onMouseMove}
+      onMouseLeave={onMouseLeave}
+      style={{ rotateX: rX, rotateY: rY, transformPerspective: 900 }}
+      className={`relative overflow-hidden rounded-[var(--radius-lg)] border p-8 ${
         hl
           ? "border-[var(--bronze)]/40 bg-[var(--bg-navy)] shadow-xl"
           : "border-[var(--border-subtle)] bg-[var(--bg-surface)]"
@@ -21,11 +37,20 @@ export function PricingCard({ plan, index = 0 }: { plan: Plan; index?: number })
       }}
       whileInView={{ opacity: 1, x: 0, y: 0 }}
       viewport={VIEWPORT}
-      transition={{
-        type: "spring",
-        damping: 25,
-        stiffness: 100,
-        delay: hl ? 0.15 : 0,
+      animate={hl ? {
+        boxShadow: [
+          "0 0 18px rgba(168,116,43,0.12), 0 20px 40px rgba(0,0,0,0.25)",
+          "0 0 38px rgba(168,116,43,0.28), 0 20px 40px rgba(0,0,0,0.25)",
+          "0 0 18px rgba(168,116,43,0.12), 0 20px 40px rgba(0,0,0,0.25)",
+        ],
+      } : {}}
+      transition={hl ? {
+        boxShadow: { duration: 2.8, repeat: Infinity, ease: "easeInOut" },
+        opacity: { type: "spring", damping: 25, stiffness: 100, delay: 0.15 },
+        x: { type: "spring", damping: 25, stiffness: 100, delay: 0.15 },
+        y: { type: "spring", damping: 25, stiffness: 100, delay: 0.15 },
+      } : {
+        type: "spring", damping: 25, stiffness: 100,
       }}
     >
       {hl && (
@@ -105,16 +130,29 @@ export function PricingCard({ plan, index = 0 }: { plan: Plan; index?: number })
         ))}
       </ul>
 
-      <a
+      <motion.a
         href="#waitlist"
-        className={`mt-8 block rounded-[var(--radius-md)] py-3 text-center font-semibold transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 ${
+        className={`relative mt-8 block overflow-hidden rounded-[var(--radius-md)] py-3 text-center font-semibold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 ${
           hl
             ? "glow-btn bg-[var(--bronze)] text-white hover:bg-[var(--bronze)]/90 focus-visible:ring-[var(--bronze)]"
             : "bg-[var(--primary)] text-white hover:bg-[var(--primary-strong)] focus-visible:ring-[var(--primary)]"
         }`}
+        whileHover={{ scale: 1.02 }}
+        whileTap={{ scale: 0.98 }}
+        transition={{ type: "spring", stiffness: 350, damping: 20 }}
       >
+        {hl && (
+          <motion.span
+            className="pointer-events-none absolute inset-0"
+            initial={{ x: "-100%" }}
+            whileHover={{ x: "200%" }}
+            transition={{ duration: 0.5, ease: "easeInOut" }}
+            style={{ background: "linear-gradient(105deg, transparent 35%, rgba(255,255,255,0.2) 50%, transparent 65%)" }}
+            aria-hidden
+          />
+        )}
         {plan.cta}
-      </a>
+      </motion.a>
     </motion.div>
   );
 }
