@@ -1,8 +1,45 @@
 import { NextResponse } from "next/server";
+import { checkBotId } from "botid/server";
 import { parseWaitlistPayload } from "@/lib/validation";
 import { getSupabaseAdmin } from "@/lib/supabase";
+import { checkRateLimit, getClientIp } from "@/lib/ratelimit";
+
+// Reject cross-site requests. Same-origin form posts send an Origin matching
+// the host; tools that omit Origin fall through to the rate limiter instead.
+function isAllowedOrigin(request: Request): boolean {
+  const origin = request.headers.get("origin");
+  if (!origin) return true;
+  try {
+    return new URL(origin).host === request.headers.get("host");
+  } catch {
+    return false;
+  }
+}
 
 export async function POST(request: Request) {
+  if (!isAllowedOrigin(request)) {
+    return NextResponse.json({ ok: false, error: "Origen no permitido." }, { status: 403 });
+  }
+
+  // BotID: active on Vercel. Locally it throws (no OIDC token), so fail open —
+  // a BotID outage must not block real users; the other guards still apply.
+  try {
+    const bot = await checkBotId();
+    if (bot.isBot) {
+      return NextResponse.json({ ok: false, error: "Acceso denegado." }, { status: 403 });
+    }
+  } catch (e) {
+    console.error("botid check skipped:", e);
+  }
+
+  const allowed = await checkRateLimit(getClientIp(request));
+  if (!allowed) {
+    return NextResponse.json(
+      { ok: false, error: "Demasiados intentos. Espera un momento." },
+      { status: 429 }
+    );
+  }
+
   let body: unknown;
   try {
     body = await request.json();
@@ -12,6 +49,10 @@ export async function POST(request: Request) {
 
   const parsed = parseWaitlistPayload(body);
   if (!parsed.ok) {
+    // Honeypot tripped: pretend success so bots don't learn they were caught.
+    if ("bot" in parsed) {
+      return NextResponse.json({ ok: true }, { status: 200 });
+    }
     return NextResponse.json({ ok: false, error: parsed.error }, { status: 400 });
   }
 

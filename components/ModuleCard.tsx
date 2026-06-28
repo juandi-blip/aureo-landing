@@ -2,7 +2,7 @@
 "use client";
 import { useRef } from "react";
 import { motion, useMotionValue, useSpring } from "motion/react";
-import { ShoppingCart, Boxes, Map, BarChart2, Route } from "lucide-react";
+import { ShoppingCart, Boxes, Map, BarChart2, Route, ArrowRightLeft } from "lucide-react";
 import type { Module } from "@/content/site";
 
 const ICON_MAP: Record<string, React.ComponentType<{ className?: string }>> = {
@@ -11,6 +11,7 @@ const ICON_MAP: Record<string, React.ComponentType<{ className?: string }>> = {
   map: Map,
   "bar-chart": BarChart2,
   route: Route,
+  "arrow-right-left": ArrowRightLeft,
 };
 
 export function ModuleCard({ module }: { module: Module }) {
@@ -37,7 +38,7 @@ export function ModuleCard({ module }: { module: Module }) {
       onMouseLeave={onMouseLeave}
       style={{ rotateX: rX, rotateY: rY, transformPerspective: 800 }}
       whileHover={{ boxShadow: "0 20px 40px rgba(168,116,43,0.15)" }}
-      className="group cursor-default rounded-[var(--radius-lg)] border border-[var(--border-subtle)] bg-[var(--bg-surface)] p-6"
+      className="group flex h-full cursor-default flex-col rounded-[var(--radius-lg)] border border-[var(--border-subtle)] bg-[var(--bg-surface)] p-6"
     >
       <motion.div
         className="mb-4 flex h-11 w-11 items-center justify-center rounded-[var(--radius-md)] bg-[var(--primary)]/10"
@@ -49,7 +50,7 @@ export function ModuleCard({ module }: { module: Module }) {
       <h3 className="text-lg font-semibold text-[var(--text-primary)]">
         {module.titulo}
       </h3>
-      <p className="mt-2 text-sm text-[var(--text-secondary)]">
+      <p className="mt-2 flex-1 text-sm leading-relaxed text-[var(--text-secondary)]">
         {module.beneficio}
       </p>
     </motion.div>

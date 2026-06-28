@@ -22,7 +22,7 @@ export function ModulesGrid() {
           viewport={VIEWPORT}
         >
           {site.modulos.map((m) => (
-            <motion.div key={m.id} variants={fadeUp}>
+            <motion.div key={m.id} variants={fadeUp} className="h-full">
               <ModuleCard module={m} />
             </motion.div>
           ))}

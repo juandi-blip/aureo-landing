@@ -1,8 +1,8 @@
 "use client";
 import { useEffect, useState } from "react";
-import { motion } from "motion/react";
+import { motion, useReducedMotion } from "motion/react";
 import { site } from "@/content/site";
-import { staggerContainer, fadeUp } from "@/lib/motion";
+import { HERO_TIMING, reducedTransition, staggerContainer, fadeUp } from "@/lib/motion";
 
 const LINKS = [
   { href: "#producto", label: "Producto" },
@@ -13,6 +13,7 @@ const LINKS = [
 
 export function Nav() {
   const [scrolled, setScrolled] = useState(false);
+  const reduce = useReducedMotion();
 
   useEffect(() => {
     const handler = () => setScrolled(window.scrollY > 50);
@@ -21,19 +22,26 @@ export function Nav() {
   }, []);
 
   return (
-    <header
+    <motion.header
       className={`sticky top-0 z-50 backdrop-blur-md transition-all duration-300 ${
         scrolled
           ? "border-b border-[var(--border-subtle)] bg-[var(--bg-base)]/90 shadow-sm"
           : "bg-[var(--bg-base)]/85"
       }`}
+      initial={{ y: reduce ? 0 : -24, opacity: reduce ? 1 : 0 }}
+      animate={{ y: 0, opacity: 1 }}
+      transition={
+        reduce
+          ? { duration: 0 }
+          : { type: "spring", damping: 26, stiffness: 140, delay: HERO_TIMING.nav }
+      }
     >
-      <nav className="mx-auto flex max-w-6xl items-center justify-between px-5 py-4">
+      <nav className="mx-auto flex max-w-7xl items-center justify-between px-5 py-4">
         <motion.span
           className="font-display text-2xl font-extrabold text-[var(--primary)]"
-          initial={{ opacity: 0, x: -20 }}
+          initial={{ opacity: 0, x: reduce ? 0 : -16 }}
           animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.4 }}
+          transition={reducedTransition(reduce, 0.1, 0.45)}
         >
           {site.marca}
         </motion.span>
@@ -59,13 +67,17 @@ export function Nav() {
         <motion.a
           href="#waitlist"
           className="shimmer-btn relative overflow-hidden rounded-[var(--radius-md)] bg-[var(--primary)] px-4 py-2 text-sm font-semibold text-white transition-colors hover:bg-[var(--primary-strong)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--primary)] focus-visible:ring-offset-2"
-          initial={{ opacity: 0, x: 20 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.4, delay: 0.3 }}
+          initial={{ opacity: 0, x: reduce ? 0 : 16, scale: reduce ? 1 : 0.92 }}
+          animate={{ opacity: 1, x: 0, scale: 1 }}
+          transition={
+            reduce
+              ? { duration: 0 }
+              : { type: "spring", damping: 18, stiffness: 200, delay: 0.35 }
+          }
         >
           Unirme
         </motion.a>
       </nav>
-    </header>
+    </motion.header>
   );
 }
