@@ -1,7 +1,7 @@
 // components/ui/SectionHeading.tsx
 "use client";
 import { motion } from "motion/react";
-import { clipReveal, VIEWPORT } from "@/lib/motion";
+import { clipReveal } from "@/lib/motion";
 
 export function SectionHeading({
   children,
@@ -20,7 +20,7 @@ export function SectionHeading({
       variants={clipReveal}
       initial="hidden"
       whileInView="visible"
-      viewport={VIEWPORT}
+      viewport={{ once: true, margin: "120px" }}
     >
       {children}
     </motion.h2>

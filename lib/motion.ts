@@ -34,10 +34,11 @@ export const staggerContainer = {
 };
 
 export const clipReveal = {
-  hidden: { clipPath: "inset(100% 0 0 0)" },
+  hidden: { opacity: 0, y: 28 },
   visible: {
-    clipPath: "inset(0% 0 0% 0)",
-    transition: { duration: 0.7, ease: [0.22, 1, 0.36, 1] as const },
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.65, ease: [0.22, 1, 0.36, 1] as const },
   },
 };
 
