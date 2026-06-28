@@ -4,6 +4,8 @@ import { motion } from "motion/react";
 import { site } from "@/content/site";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { fadeUp, VIEWPORT } from "@/lib/motion";
+import { GrainOverlay } from "@/components/ui/GrainOverlay";
+import { SpotlightGlow, useSpotlight } from "@/components/ui/Spotlight";
 
 const VIDEO_SRC =
   process.env.NEXT_PUBLIC_DEMO_VIDEO_URL || "/aureo-video.mp4";
@@ -11,6 +13,7 @@ const VIDEO_SRC =
 export function DemoSection() {
   const videoRef = useRef<HTMLVideoElement>(null);
   const [muted, setMuted] = useState(true);
+  const spotlight = useSpotlight();
 
   useEffect(() => {
     const video = videoRef.current;
@@ -47,8 +50,14 @@ export function DemoSection() {
   }
 
   return (
-    <section className="bg-[var(--bg-navy)] py-24">
-      <div className="mx-auto max-w-6xl px-5 text-center">
+    <section
+      className="relative overflow-hidden bg-[var(--bg-navy)] py-24"
+      onMouseMove={spotlight.onMouseMove}
+      onMouseLeave={spotlight.onMouseLeave}
+    >
+      <GrainOverlay />
+      <SpotlightGlow mouseX={spotlight.mouseX} mouseY={spotlight.mouseY} />
+      <div className="relative z-10 mx-auto max-w-6xl px-5 text-center">
         <SectionHeading light>{site.demo.titulo}</SectionHeading>
 
         <motion.p

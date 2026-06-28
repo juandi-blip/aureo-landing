@@ -1,6 +1,6 @@
 "use client";
 import { useEffect, useState } from "react";
-import { motion, useReducedMotion } from "motion/react";
+import { useReducedMotion } from "motion/react";
 
 type Particle = {
   id: number;
@@ -12,7 +12,7 @@ type Particle = {
 };
 
 export function FloatingParticles({
-  count = 20,
+  count = 14,
   className = "",
 }: {
   count?: number;
@@ -27,9 +27,9 @@ export function FloatingParticles({
         id: i,
         x: Math.random() * 100,
         y: Math.random() * 100,
-        size: Math.random() * 4 + 2,
-        duration: Math.random() * 4 + 3,
-        delay: Math.random() * 2,
+        size: Math.random() * 3 + 2,
+        duration: Math.random() * 4 + 4,
+        delay: Math.random() * 3,
       }))
     );
   }, [count]);
@@ -42,22 +42,16 @@ export function FloatingParticles({
       aria-hidden
     >
       {particles.map((p) => (
-        <motion.div
+        <div
           key={p.id}
-          className="absolute rounded-full bg-[var(--bronze)]"
+          className="particle absolute rounded-full bg-[var(--bronze)]"
           style={{
             left: `${p.x}%`,
             top: `${p.y}%`,
             width: p.size,
             height: p.size,
-            opacity: 0.35,
-          }}
-          animate={{ y: [0, -24, 0], opacity: [0.35, 0.65, 0.35] }}
-          transition={{
-            duration: p.duration,
-            delay: p.delay,
-            repeat: Infinity,
-            ease: "easeInOut",
+            animationDuration: `${p.duration}s`,
+            animationDelay: `${p.delay}s`,
           }}
         />
       ))}

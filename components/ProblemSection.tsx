@@ -5,13 +5,25 @@ import { site } from "@/content/site";
 import { AlertTriangle, Search, Clock, Database } from "lucide-react";
 import { fadeUp, staggerContainer, clipReveal, VIEWPORT } from "@/lib/motion";
 import { SectionHeading } from "@/components/ui/SectionHeading";
+import { GrainOverlay } from "@/components/ui/GrainOverlay";
+import { SpotlightGlow, useSpotlight } from "@/components/ui/Spotlight";
 
 const ICONS = [Search, AlertTriangle, Clock, Database];
 
 export function ProblemSection() {
+  const spotlight = useSpotlight();
+
   return (
-    <section className="bg-[var(--bg-navy)] py-24">
-      <div className="mx-auto max-w-6xl px-5">
+    <section
+      className="relative overflow-hidden bg-[var(--bg-navy)] py-24"
+      onMouseMove={spotlight.onMouseMove}
+      onMouseLeave={spotlight.onMouseLeave}
+    >
+      <GrainOverlay />
+      <SpotlightGlow mouseX={spotlight.mouseX} mouseY={spotlight.mouseY} />
+      <div className="pointer-events-none absolute inset-0 z-0" aria-hidden style={{ background: "radial-gradient(ellipse 80% 60% at 50% 100%, rgba(168,116,43,0.06) 0%, transparent 70%)" }} />
+
+      <div className="relative z-10 mx-auto max-w-6xl px-5">
         <motion.span
           className="mb-3 inline-block text-sm font-semibold uppercase tracking-widest text-[var(--bronze)]"
           variants={clipReveal}

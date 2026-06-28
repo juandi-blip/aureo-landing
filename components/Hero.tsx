@@ -9,6 +9,7 @@ import {
   HERO_TIMING,
   reducedTransition,
 } from "@/lib/motion";
+import { ParallaxLayer } from "@/components/ui/ParallaxLayer";
 
 export function Hero() {
   const reduce = useReducedMotion();
@@ -25,7 +26,9 @@ export function Hero() {
         animate={{ opacity: 1 }}
         transition={reducedTransition(reduce, HERO_TIMING.particles, 1.2)}
       >
-        <FloatingParticles count={22} className="z-0" />
+        <ParallaxLayer speed={0.2} className="absolute inset-0">
+          <FloatingParticles count={14} className="z-0" />
+        </ParallaxLayer>
       </motion.div>
 
       <div className="relative z-10 grid items-center gap-10 lg:grid-cols-[minmax(0,0.92fr)_minmax(0,1.08fr)] lg:gap-8 xl:gap-10">
@@ -41,16 +44,14 @@ export function Hero() {
                 transition={{ delay: 1.4, duration: 1.6, ease: "easeOut" }}
                 aria-hidden
               >
-                <motion.svg
+                <svg
                   viewBox="0 0 340 110"
-                  className="absolute -left-6 w-[105%] text-[var(--bronze)]"
-                  animate={{ rotate: 360 }}
-                  transition={{ duration: 90, repeat: Infinity, ease: "linear" }}
+                  className="animate-spin-slow absolute -left-6 w-[105%] text-[var(--bronze)]"
                   style={{ opacity: 0.13 }}
                 >
                   <ellipse cx="170" cy="55" rx="164" ry="46" fill="none" stroke="currentColor" strokeWidth="1.5" />
                   <ellipse cx="170" cy="55" rx="120" ry="32" fill="none" stroke="currentColor" strokeWidth="0.7" />
-                </motion.svg>
+                </svg>
               </motion.div>
             )}
 
@@ -104,31 +105,7 @@ export function Hero() {
             animate={{ opacity: 1, y: 0 }}
             transition={reducedTransition(reduce, HERO_TIMING.form)}
           >
-            <div className="group relative w-full max-w-md">
-              {/* Anillo orbital en hover/focus */}
-              {!reduce && (
-                <motion.svg
-                  viewBox="0 0 420 80"
-                  className="pointer-events-none absolute -inset-x-4 -inset-y-4 h-[calc(100%+2rem)] w-[calc(100%+2rem)] text-[var(--bronze)]"
-                  aria-hidden
-                  initial={{ opacity: 0 }}
-                  whileHover={{ opacity: 1 }}
-                  transition={{ duration: 0.4 }}
-                >
-                  <motion.ellipse
-                    cx="210" cy="40" rx="200" ry="34"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="1"
-                    strokeOpacity="0.35"
-                    animate={{ rotate: 360 }}
-                    transition={{ duration: 8, repeat: Infinity, ease: "linear" }}
-                    style={{ transformOrigin: "210px 40px" }}
-                  />
-                </motion.svg>
-              )}
-              <WaitlistForm origen="hero" />
-            </div>
+            <WaitlistForm origen="hero" />
             <p className="mt-3 text-sm text-[var(--text-secondary)]">
               {site.hero.nota}
             </p>
