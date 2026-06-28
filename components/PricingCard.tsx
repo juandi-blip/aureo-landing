@@ -2,28 +2,20 @@
 "use client";
 import { motion } from "motion/react";
 import type { Plan } from "@/content/site";
-import { VIEWPORT } from "@/lib/motion";
 
-export function PricingCard({ plan, index = 0 }: { plan: Plan; index?: number }) {
+export function PricingCard({ plan }: { plan: Plan }) {
   const hl = plan.destacado;
 
   return (
     <div className="group relative">
       {/* Saturn ring orbit border — separate div so overflow-hidden on card doesn't clip it */}
-      <div className={`saturn-border pointer-events-none absolute inset-0 rounded-[var(--radius-lg)]${hl ? " saturn-border-always" : ""}`} aria-hidden />
+      <div className={`saturn-border saturn-border-always pointer-events-none absolute inset-0 rounded-[var(--radius-lg)]${hl ? "" : " saturn-border-dim"}`} aria-hidden />
       <motion.div
         className={`relative z-[1] overflow-hidden rounded-[var(--radius-lg)] p-8 transition-shadow duration-300 ${
           hl
             ? "bg-[var(--bg-navy)] shadow-xl"
             : "bg-[var(--bg-surface)]"
         }`}
-        initial={{
-          opacity: 0,
-          x: hl ? 0 : index === 0 ? -60 : 60,
-          y: hl ? -40 : 0,
-        }}
-        whileInView={{ opacity: 1, x: 0, y: 0 }}
-        viewport={VIEWPORT}
         animate={hl ? {
           boxShadow: [
             "0 0 18px rgba(168,116,43,0.12), 0 20px 40px rgba(0,0,0,0.25)",
@@ -33,23 +25,12 @@ export function PricingCard({ plan, index = 0 }: { plan: Plan; index?: number })
         } : {}}
         transition={hl ? {
           boxShadow: { duration: 2.8, repeat: Infinity, ease: "easeInOut" },
-          opacity: { duration: 0.7, ease: "easeOut", delay: 0.1 },
-          x: { duration: 0.9, ease: [0.22, 1, 0.36, 1], delay: 0.1 },
-          y: { duration: 0.9, ease: [0.22, 1, 0.36, 1], delay: 0.1 },
-        } : {
-          duration: 0.9, ease: [0.22, 1, 0.36, 1],
-        }}
+        } : {}}
       >
         {hl && (
-          <motion.span
-            className="shimmer-btn relative mb-3 inline-block overflow-hidden rounded-full bg-[var(--bronze)] px-3 py-1 text-xs font-semibold text-white"
-            initial={{ opacity: 0, scale: 0.8 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            viewport={VIEWPORT}
-            transition={{ delay: 0.5, duration: 0.5, ease: "easeOut" }}
-          >
+          <span className="shimmer-btn relative mb-3 inline-block overflow-hidden rounded-full bg-[var(--bronze)] px-3 py-1 text-xs font-semibold text-white">
             Más popular
-          </motion.span>
+          </span>
         )}
 
         <h3
@@ -84,32 +65,24 @@ export function PricingCard({ plan, index = 0 }: { plan: Plan; index?: number })
         </p>
 
         <ul className="mt-6 space-y-3 text-sm">
-          {plan.features.map((f, i) => (
-            <motion.li
+          {plan.features.map((f) => (
+            <li
               key={f}
               className={`flex items-center gap-2 ${
                 hl ? "text-[var(--text-cream)]/80" : "text-[var(--text-secondary)]"
               }`}
-              initial={{ opacity: 0, x: -10 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={VIEWPORT}
-              transition={{ delay: 0.25 + i * 0.1, duration: 0.5, ease: "easeOut" }}
             >
               <svg className="h-4 w-4 flex-shrink-0 text-[var(--emerald)]" viewBox="0 0 16 16" fill="none">
-                <motion.path
+                <path
                   d="M3 8L6.5 11.5L13 5"
                   stroke="currentColor"
                   strokeWidth="2"
                   strokeLinecap="round"
                   strokeLinejoin="round"
-                  initial={{ pathLength: 0 }}
-                  whileInView={{ pathLength: 1 }}
-                  viewport={VIEWPORT}
-                  transition={{ delay: 0.4 + i * 0.1, duration: 0.45 }}
                 />
               </svg>
               {f}
-            </motion.li>
+            </li>
           ))}
         </ul>
 

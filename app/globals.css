@@ -270,11 +270,15 @@ body {
   );
   filter: blur(10px);
 }
-.group:hover .saturn-border::before,
-.group:hover .saturn-border::after,
 .saturn-border-always::before,
 .saturn-border-always::after {
   opacity: 1;
+}
+.saturn-border-dim::before {
+  opacity: 0.55 !important;
+}
+.saturn-border-dim::after {
+  opacity: 0.4 !important;
 }
 
 /* Footer link underline from left */

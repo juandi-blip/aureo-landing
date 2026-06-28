@@ -1,0 +1,289 @@
+- generic [active] [ref=e1]:
+  - banner [ref=e2]:
+    - navigation [ref=e3]:
+      - link "Aureo — inicio" [ref=e4] [cursor=pointer]:
+        - /url: "#"
+        - img [ref=e5]
+        - generic [ref=e8]: Aureo
+      - generic [ref=e9]:
+        - link "Producto" [ref=e10] [cursor=pointer]:
+          - /url: "#producto"
+        - link "Cómo funciona" [ref=e11] [cursor=pointer]:
+          - /url: "#como"
+        - link "Precios" [ref=e12] [cursor=pointer]:
+          - /url: "#precios"
+        - link "Preguntas" [ref=e13] [cursor=pointer]:
+          - /url: "#faq"
+      - link "Unirme" [ref=e14] [cursor=pointer]:
+        - /url: "#waitlist"
+  - main [ref=e15]:
+    - generic [ref=e17]:
+      - generic [ref=e18]:
+        - generic [ref=e19]:
+          - generic:
+            - img
+          - heading "El control de tu inventario, ventas y bodega en un solo lugar." [level=1] [ref=e20]:
+            - generic [ref=e22]: El control de tu inventario,
+            - generic [ref=e24]: ventas y bodega en un solo lugar.
+        - paragraph [ref=e25]: Aureo le da a tu negocio la inteligencia logística que antes solo tenían las grandes empresas — sin su complejidad ni su precio.
+        - generic [ref=e26]:
+          - generic [ref=e27]:
+            - img
+            - generic [ref=e28]:
+              - generic [ref=e29]:
+                - textbox "Correo electrónico" [ref=e30]:
+                  - /placeholder: Tu correo
+                - button "Unirme" [ref=e31]
+              - alert [ref=e32]
+          - paragraph [ref=e33]: Acceso anticipado y precio de fundador para los primeros negocios.
+      - generic [ref=e36]:
+        - generic [ref=e37]:
+          - generic [ref=e38]: Panel Aureo
+          - generic [ref=e39]:
+            - generic [ref=e40]:
+              - img [ref=e41]
+              - generic [ref=e43]: 25 jun 2026
+            - generic [ref=e46]: En vivo
+        - generic [ref=e47]:
+          - generic [ref=e48]:
+            - generic [ref=e49]:
+              - paragraph [ref=e50]: Dashboard Operativo
+              - paragraph [ref=e51]: Transacciones y estado del depósito
+            - button [ref=e52]:
+              - img [ref=e53]
+          - generic [ref=e56]:
+            - generic [ref=e57]:
+              - img [ref=e59]
+              - paragraph [ref=e61]: Ingresos Totales
+              - paragraph [ref=e62]:
+                - generic [ref=e63]: $0.00
+              - paragraph [ref=e64]: 0% vs mes anterior
+            - generic [ref=e65]:
+              - img [ref=e67]
+              - paragraph [ref=e69]: Órdenes Emitidas
+              - paragraph [ref=e70]: "0"
+              - paragraph [ref=e71]: +8.1% este mes
+            - generic [ref=e72]:
+              - img [ref=e74]
+              - paragraph [ref=e75]: Artículos
+              - paragraph [ref=e76]: "0"
+              - paragraph [ref=e77]: 5 categorías
+            - generic [ref=e78]:
+              - img [ref=e80]
+              - paragraph [ref=e82]: Alertas
+              - paragraph [ref=e83]: "0"
+              - paragraph [ref=e84]: Stock crítico
+          - generic [ref=e85]:
+            - generic [ref=e86]:
+              - generic [ref=e87]:
+                - paragraph [ref=e88]: Curva de Facturación Semanal
+                - generic [ref=e89]: 22–28 JUN
+              - img [ref=e90]
+              - generic [ref=e93]:
+                - generic [ref=e94]: Lun
+                - generic [ref=e95]: Mar
+                - generic [ref=e96]: Mié
+                - generic [ref=e97]: Jue
+                - generic [ref=e98]: Vie
+                - generic [ref=e99]: Sáb
+                - generic [ref=e100]: Dom
+            - generic [ref=e101]:
+              - generic [ref=e102]:
+                - paragraph [ref=e103]: Últimas Transacciones
+                - generic [ref=e104]:
+                  - img [ref=e105]
+                  - text: NUEVA
+              - generic [ref=e106]:
+                - generic [ref=e107]:
+                  - img [ref=e109]
+                  - generic [ref=e111]:
+                    - paragraph [ref=e112]: Metalúrgica Maipú
+                    - paragraph [ref=e113]: FACT-2026-0003
+                  - generic [ref=e114]: $962,83
+                - generic [ref=e115]:
+                  - img [ref=e117]
+                  - generic [ref=e119]:
+                    - paragraph [ref=e120]: Ferretería El Tornillo
+                    - paragraph [ref=e121]: FACT-2026-0002
+                  - generic [ref=e122]: $1.847,56
+                - generic [ref=e123]:
+                  - img [ref=e125]
+                  - generic [ref=e127]:
+                    - paragraph [ref=e128]: Distribuidora Norte
+                    - paragraph [ref=e129]: FACT-2026-0001
+                  - generic [ref=e130]: $623
+    - generic [ref=e132]:
+      - generic [ref=e133]: El problema
+      - heading "Si tienes inventario y bodega, conoces estos dolores." [level=2] [ref=e134]
+      - paragraph [ref=e135]: Le pasa a ferreterías, distribuidoras, depósitos de construcción, repuestos y cualquier negocio con productos que mover.
+      - generic [ref=e136]:
+        - generic [ref=e137]:
+          - img [ref=e139]
+          - heading "Buscas productos a ciegas" [level=3] [ref=e142]
+          - paragraph [ref=e143]: Tu gente pierde horas caminando la bodega sin saber dónde está cada cosa.
+        - generic [ref=e144]:
+          - img [ref=e146]
+          - heading "No sabes qué rota y qué acumula polvo" [level=3] [ref=e148]
+          - paragraph [ref=e149]: Compras de más lo que no se vende y te quedas corto en lo que sí.
+        - generic [ref=e150]:
+          - img [ref=e152]
+          - heading "El despacho es lento" [level=3] [ref=e155]
+          - paragraph [ref=e156]: Preparar un pedido toma demasiado y el cliente espera.
+        - generic [ref=e157]:
+          - img [ref=e159]
+          - heading "El inventario nunca cuadra" [level=3] [ref=e163]
+          - paragraph [ref=e164]: Lo que dice el sistema y lo que hay en la bodega no coinciden.
+    - generic [ref=e166]:
+      - heading "Aureo lo resuelve en tres pasos." [level=2] [ref=e167]
+      - generic [ref=e169]:
+        - generic [ref=e170]:
+          - generic:
+            - generic: "1"
+          - generic [ref=e172]: "1"
+          - heading "Carga tu inventario" [level=3] [ref=e173]
+          - paragraph [ref=e174]: Sube tus productos y ubicaciones. Aureo organiza tu bodega por ti.
+        - generic [ref=e175]:
+          - generic:
+            - generic: "2"
+          - generic [ref=e177]: "2"
+          - heading "Vende y despacha" [level=3] [ref=e178]
+          - paragraph [ref=e179]: POS rápido, facturación y picking guiado para preparar pedidos sin errores.
+        - generic [ref=e180]:
+          - generic:
+            - generic: "3"
+          - generic [ref=e182]: "3"
+          - heading "Decide con datos" [level=3] [ref=e183]
+          - paragraph [ref=e184]: Análisis ABC y mapa de calor te dicen qué mover, qué comprar y dónde ubicarlo.
+    - generic [ref=e186]:
+      - heading "Todo lo que tu negocio necesita, en un solo sistema." [level=2] [ref=e187]
+      - generic [ref=e188]:
+        - generic [ref=e190]:
+          - img [ref=e192]
+          - heading "Punto de venta" [level=3] [ref=e196]
+          - paragraph [ref=e197]: Vende y factura en segundos, con o sin conexión.
+        - generic [ref=e199]:
+          - img [ref=e201]
+          - heading "Inventario inteligente" [level=3] [ref=e211]
+          - paragraph [ref=e212]: Control en tiempo real, alertas de stock y conteos físicos.
+        - generic [ref=e214]:
+          - img [ref=e216]
+          - heading "Mapa de calor de bodega" [level=3] [ref=e218]
+          - paragraph [ref=e219]: Ve tu bodega como un plano vivo y ubica lo que más rota cerca del despacho.
+        - generic [ref=e221]:
+          - img [ref=e223]
+          - heading "Análisis ABC / Pareto" [level=3] [ref=e224]
+          - paragraph [ref=e225]: Descubre el 20% de productos que generan el 80% de tus ventas.
+        - generic [ref=e227]:
+          - img [ref=e229]
+          - heading "Preparación de pedidos" [level=3] [ref=e233]
+          - paragraph [ref=e234]: Recorridos optimizados para despachar más rápido y sin errores.
+        - generic [ref=e236]:
+          - img [ref=e238]
+          - heading "Reubicación inteligente" [level=3] [ref=e241]
+          - paragraph [ref=e242]: Sugerencias para ubicar lo que más rota cerca del despacho.
+    - generic [ref=e244]:
+      - heading "Mira la inteligencia logística en acción." [level=2] [ref=e245]
+      - paragraph [ref=e246]: El mapa de calor y el análisis ABC son lo que separa a Aureo de un POS común.
+      - button "Activar sonido" [ref=e249]:
+        - img [ref=e250]
+        - text: Activar sonido
+    - generic [ref=e253]:
+      - heading "Lo que aprendimos manejando stock de verdad." [level=2] [ref=e254]
+      - paragraph [ref=e255]: Empezamos porque el inventario no cuadraba, el despacho era lento y las herramientas eran caras o incompletas. Aureo concentra POS, bodega y análisis en un solo sistema — pensado desde el piso del depósito.
+      - paragraph [ref=e256]: Primeras implementaciones en curso.
+    - generic [ref=e258]:
+      - heading "Un plan para cada etapa de tu negocio." [level=2] [ref=e259]
+      - generic [ref=e260]:
+        - generic [ref=e261]:
+          - heading "Starter" [level=3] [ref=e262]
+          - paragraph [ref=e263]: Para el negocio que necesita vender y controlar su stock.
+          - paragraph [ref=e264]: Por definir/mes
+          - list [ref=e265]:
+            - listitem [ref=e266]:
+              - img [ref=e267]
+              - text: Punto de venta y facturación
+            - listitem [ref=e269]:
+              - img [ref=e270]
+              - text: Inventario en tiempo real
+            - listitem [ref=e272]:
+              - img [ref=e273]
+              - text: Alertas de stock
+            - listitem [ref=e275]:
+              - img [ref=e276]
+              - text: Reportes básicos
+          - link "Quiero el plan Starter" [ref=e278] [cursor=pointer]:
+            - /url: "#waitlist"
+        - generic [ref=e279]:
+          - generic [ref=e280]: Más popular
+          - heading "Pro" [level=3] [ref=e281]
+          - paragraph [ref=e282]: Para el negocio con bodega que necesita logística de verdad.
+          - paragraph [ref=e283]: Por definir/mes
+          - list [ref=e284]:
+            - listitem [ref=e285]:
+              - img [ref=e286]
+              - text: Todo lo de Starter
+            - listitem [ref=e288]:
+              - img [ref=e289]
+              - text: Mapa de calor de bodega (WMS)
+            - listitem [ref=e291]:
+              - img [ref=e292]
+              - text: Análisis ABC / Pareto
+            - listitem [ref=e294]:
+              - img [ref=e295]
+              - text: Preparación de pedidos (picking)
+            - listitem [ref=e297]:
+              - img [ref=e298]
+              - text: Reubicación inteligente
+          - link "Quiero el plan Pro" [ref=e300] [cursor=pointer]:
+            - /url: "#waitlist"
+            - text: Quiero el plan Pro
+      - paragraph [ref=e301]: Precio de fundador garantizado para quienes entren por la lista de espera.
+    - generic [ref=e303]:
+      - heading "Preguntas frecuentes" [level=2] [ref=e304]
+      - generic [ref=e306]:
+        - heading "¿Necesito conocimientos técnicos?" [level=3] [ref=e309]:
+          - button "¿Necesito conocimientos técnicos?" [ref=e310]:
+            - text: ¿Necesito conocimientos técnicos?
+            - img
+        - heading "¿Funciona en la nube?" [level=3] [ref=e313]:
+          - button "¿Funciona en la nube?" [ref=e314]:
+            - text: ¿Funciona en la nube?
+            - img
+        - heading "¿Sirve solo para ferreterías?" [level=3] [ref=e317]:
+          - button "¿Sirve solo para ferreterías?" [ref=e318]:
+            - text: ¿Sirve solo para ferreterías?
+            - img
+        - heading "¿Qué pasa con mis datos?" [level=3] [ref=e321]:
+          - button "¿Qué pasa con mis datos?" [ref=e322]:
+            - text: ¿Qué pasa con mis datos?
+            - img
+        - heading "¿Cuándo estará disponible?" [level=3] [ref=e325]:
+          - button "¿Cuándo estará disponible?" [ref=e326]:
+            - text: ¿Cuándo estará disponible?
+            - img
+    - generic [ref=e328]:
+      - heading "Sé de los primeros en tener el control." [level=2] [ref=e329]
+      - paragraph [ref=e330]: Únete a la lista de espera y asegura tu precio de fundador.
+      - generic [ref=e332]:
+        - generic [ref=e333]:
+          - textbox "Correo electrónico" [ref=e334]:
+            - /placeholder: Tu correo
+          - button "Unirme" [ref=e335]
+        - alert [ref=e336]
+  - contentinfo [ref=e337]:
+    - generic [ref=e338]:
+      - generic [ref=e339]: Aureo
+      - paragraph [ref=e340]: Inteligencia logística para tu negocio.
+      - navigation [ref=e341]:
+        - link "Producto" [ref=e342] [cursor=pointer]:
+          - /url: "#producto"
+        - link "Cómo funciona" [ref=e343] [cursor=pointer]:
+          - /url: "#como"
+        - link "Precios" [ref=e344] [cursor=pointer]:
+          - /url: "#precios"
+        - link "Preguntas" [ref=e345] [cursor=pointer]:
+          - /url: "#faq"
+      - paragraph [ref=e346]: © 2026 Aureo. Todos los derechos reservados.
+  - link "Escríbenos por WhatsApp" [ref=e347] [cursor=pointer]:
+    - /url: https://wa.me/57XXXXXXXXXX
+    - img [ref=e348]

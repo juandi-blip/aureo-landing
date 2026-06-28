@@ -1,0 +1,173 @@
+- generic [active] [ref=e1]:
+  - banner [ref=e2]:
+    - navigation [ref=e3]:
+      - generic [ref=e4]: Aureo
+      - generic [ref=e5]:
+        - link "Producto" [ref=e6] [cursor=pointer]:
+          - /url: "#producto"
+        - link "Cómo funciona" [ref=e7] [cursor=pointer]:
+          - /url: "#como"
+        - link "Precios" [ref=e8] [cursor=pointer]:
+          - /url: "#precios"
+        - link "Preguntas" [ref=e9] [cursor=pointer]:
+          - /url: "#faq"
+      - link "Unirme" [ref=e10] [cursor=pointer]:
+        - /url: "#waitlist"
+  - main [ref=e11]:
+    - generic [ref=e13]:
+      - generic [ref=e14]:
+        - heading "El control de tu inventario, ventas y bodega en un solo lugar." [level=1] [ref=e15]
+        - paragraph [ref=e16]: Aureo le da a tu negocio la inteligencia logística que antes solo tenían las grandes empresas — sin su complejidad ni su precio.
+        - generic [ref=e17]:
+          - generic [ref=e18]:
+            - textbox "Correo electrónico" [ref=e19]:
+              - /placeholder: Tu correo
+            - button "Unirme" [ref=e20]
+          - paragraph [ref=e21]: Acceso anticipado y precio de fundador para los primeros negocios.
+      - generic [ref=e23]: Captura del producto
+    - generic [ref=e25]:
+      - heading "Si tienes inventario y bodega, conoces estos dolores." [level=2] [ref=e26]
+      - paragraph [ref=e27]: Le pasa a ferreterías, distribuidoras, depósitos de construcción, repuestos y cualquier negocio con productos que mover.
+      - generic [ref=e28]:
+        - generic [ref=e29]:
+          - heading "Buscas productos a ciegas" [level=3] [ref=e30]
+          - paragraph [ref=e31]: Tu gente pierde horas caminando la bodega sin saber dónde está cada cosa.
+        - generic [ref=e32]:
+          - heading "No sabes qué rota y qué acumula polvo" [level=3] [ref=e33]
+          - paragraph [ref=e34]: Compras de más lo que no se vende y te quedas corto en lo que sí.
+        - generic [ref=e35]:
+          - heading "El despacho es lento" [level=3] [ref=e36]
+          - paragraph [ref=e37]: Preparar un pedido toma demasiado y el cliente espera.
+        - generic [ref=e38]:
+          - heading "El inventario nunca cuadra" [level=3] [ref=e39]
+          - paragraph [ref=e40]: Lo que dice el sistema y lo que hay en la bodega no coinciden.
+    - generic [ref=e42]:
+      - heading "Aureo lo resuelve en tres pasos." [level=2] [ref=e43]
+      - generic [ref=e44]:
+        - generic [ref=e45]:
+          - text: "1"
+          - heading "Carga tu inventario" [level=3] [ref=e46]
+          - paragraph [ref=e47]: Sube tus productos y ubicaciones. Aureo organiza tu bodega por ti.
+        - generic [ref=e48]:
+          - text: "2"
+          - heading "Vende y despacha" [level=3] [ref=e49]
+          - paragraph [ref=e50]: POS rápido, facturación y picking guiado para preparar pedidos sin errores.
+        - generic [ref=e51]:
+          - text: "3"
+          - heading "Decide con datos" [level=3] [ref=e52]
+          - paragraph [ref=e53]: Análisis ABC y mapa de calor te dicen qué mover, qué comprar y dónde ubicarlo.
+    - generic [ref=e55]:
+      - heading "Todo lo que tu negocio necesita, en un solo sistema." [level=2] [ref=e56]
+      - generic [ref=e57]:
+        - generic [ref=e58]:
+          - generic [ref=e60]: P
+          - heading "Punto de venta" [level=3] [ref=e61]
+          - paragraph [ref=e62]: Vende y factura en segundos, con o sin conexión.
+        - generic [ref=e63]:
+          - generic [ref=e65]: I
+          - heading "Inventario inteligente" [level=3] [ref=e66]
+          - paragraph [ref=e67]: Control en tiempo real, alertas de stock y conteos físicos.
+        - generic [ref=e68]:
+          - generic [ref=e70]: M
+          - heading "Mapa de calor de bodega" [level=3] [ref=e71]
+          - paragraph [ref=e72]: Ve tu bodega como un plano vivo y ubica lo que más rota cerca del despacho.
+        - generic [ref=e73]:
+          - generic [ref=e75]: A
+          - heading "Análisis ABC / Pareto" [level=3] [ref=e76]
+          - paragraph [ref=e77]: Descubre el 20% de productos que generan el 80% de tus ventas.
+        - generic [ref=e78]:
+          - generic [ref=e80]: P
+          - heading "Preparación de pedidos" [level=3] [ref=e81]
+          - paragraph [ref=e82]: Recorridos optimizados para despachar más rápido y sin errores.
+    - generic [ref=e84]:
+      - heading "Mira la inteligencia logística en acción." [level=2] [ref=e85]
+      - paragraph [ref=e86]: El mapa de calor y el análisis ABC son lo que separa a Aureo de un POS común.
+      - generic [ref=e87]: Demo en video — próximamente.
+    - generic [ref=e89]:
+      - heading "Hecho por gente que vivió el problema." [level=2] [ref=e90]
+      - paragraph [ref=e91]: "Aureo nació de una ferretería real. Lo construimos Juan y Leif porque vimos de cerca lo que cuesta manejar un negocio con inventario sin las herramientas adecuadas. No somos una corporación: somos dos emprendedores que quieren que tu negocio crezca."
+      - paragraph [ref=e92]: Primeros negocios usando Aureo — muy pronto.
+    - generic [ref=e94]:
+      - heading "Un plan para cada etapa de tu negocio." [level=2] [ref=e95]
+      - generic [ref=e96]:
+        - generic [ref=e97]:
+          - heading "Starter" [level=3] [ref=e98]
+          - paragraph [ref=e99]: Para el negocio que necesita vender y controlar su stock.
+          - paragraph [ref=e100]: Por definir/mes
+          - list [ref=e101]:
+            - listitem [ref=e102]:
+              - generic [ref=e103]: ✓
+              - text: Punto de venta y facturación
+            - listitem [ref=e104]:
+              - generic [ref=e105]: ✓
+              - text: Inventario en tiempo real
+            - listitem [ref=e106]:
+              - generic [ref=e107]: ✓
+              - text: Alertas de stock
+            - listitem [ref=e108]:
+              - generic [ref=e109]: ✓
+              - text: Reportes básicos
+          - link "Quiero el plan Starter" [ref=e110] [cursor=pointer]:
+            - /url: "#waitlist"
+        - generic [ref=e111]:
+          - generic [ref=e112]: Recomendado
+          - heading "Pro" [level=3] [ref=e113]
+          - paragraph [ref=e114]: Para el negocio con bodega que necesita logística de verdad.
+          - paragraph [ref=e115]: Por definir/mes
+          - list [ref=e116]:
+            - listitem [ref=e117]:
+              - generic [ref=e118]: ✓
+              - text: Todo lo de Starter
+            - listitem [ref=e119]:
+              - generic [ref=e120]: ✓
+              - text: Mapa de calor de bodega (WMS)
+            - listitem [ref=e121]:
+              - generic [ref=e122]: ✓
+              - text: Análisis ABC / Pareto
+            - listitem [ref=e123]:
+              - generic [ref=e124]: ✓
+              - text: Preparación de pedidos (picking)
+            - listitem [ref=e125]:
+              - generic [ref=e126]: ✓
+              - text: Reubicación inteligente
+          - link "Quiero el plan Pro" [ref=e127] [cursor=pointer]:
+            - /url: "#waitlist"
+      - paragraph [ref=e128]: Precio de fundador garantizado para quienes entren por la lista de espera.
+    - generic [ref=e130]:
+      - heading "Preguntas frecuentes" [level=2] [ref=e131]
+      - generic [ref=e132]:
+        - heading "¿Necesito conocimientos técnicos?" [level=3] [ref=e134]:
+          - button "¿Necesito conocimientos técnicos?" [ref=e135]:
+            - text: ¿Necesito conocimientos técnicos?
+            - img
+        - heading "¿Funciona en la nube?" [level=3] [ref=e137]:
+          - button "¿Funciona en la nube?" [ref=e138]:
+            - text: ¿Funciona en la nube?
+            - img
+        - heading "¿Sirve solo para ferreterías?" [level=3] [ref=e140]:
+          - button "¿Sirve solo para ferreterías?" [ref=e141]:
+            - text: ¿Sirve solo para ferreterías?
+            - img
+        - heading "¿Qué pasa con mis datos?" [level=3] [ref=e143]:
+          - button "¿Qué pasa con mis datos?" [ref=e144]:
+            - text: ¿Qué pasa con mis datos?
+            - img
+        - heading "¿Cuándo estará disponible?" [level=3] [ref=e146]:
+          - button "¿Cuándo estará disponible?" [ref=e147]:
+            - text: ¿Cuándo estará disponible?
+            - img
+    - generic [ref=e149]:
+      - heading "Sé de los primeros en tener el control." [level=2] [ref=e150]
+      - paragraph [ref=e151]: Únete a la lista de espera y asegura tu precio de fundador.
+      - generic [ref=e153]:
+        - textbox "Correo electrónico" [ref=e154]:
+          - /placeholder: Tu correo
+        - button "Unirme" [ref=e155]
+  - contentinfo [ref=e156]:
+    - generic [ref=e157]:
+      - generic [ref=e158]: Aureo
+      - paragraph [ref=e159]: Inteligencia logística para tu negocio.
+      - paragraph [ref=e160]: © 2026 Aureo. Todos los derechos reservados.
+  - link "Escríbenos por WhatsApp" [ref=e161] [cursor=pointer]:
+    - /url: https://wa.me/57XXXXXXXXXX
+    - generic [ref=e162]: WA

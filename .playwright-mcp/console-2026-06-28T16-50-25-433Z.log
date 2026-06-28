@@ -1,0 +1,18 @@
+[     486ms] [ERROR] Error: <path> attribute d: Unexpected end of attribute. Expected number, "…6 12,6 18,6 24,6". @ https://aureo-landing.vercel.app/:0
+[     486ms] [ERROR] Error: <path> attribute d: Unexpected end of attribute. Expected number, "…12,10 18,8 24,12". @ https://aureo-landing.vercel.app/:0
+[   16338ms] [ERROR] Error: <path> attribute d: Unexpected end of attribute. Expected number, "…6 12,6 18,6 24,6". @ https://aureo-landing.vercel.app/:0
+[   16339ms] [ERROR] Error: <path> attribute d: Unexpected end of attribute. Expected number, "…12,10 18,8 24,12". @ https://aureo-landing.vercel.app/:0
+[  240387ms] [ERROR] Error: <path> attribute d: Unexpected end of attribute. Expected number, "…6 12,6 18,6 24,6". @ https://aureo-landing.vercel.app/:0
+[  240387ms] [ERROR] Error: <path> attribute d: Unexpected end of attribute. Expected number, "…12,10 18,8 24,12". @ https://aureo-landing.vercel.app/:0
+[  542292ms] [ERROR] Error: <path> attribute d: Unexpected end of attribute. Expected number, "…6 12,6 18,6 24,6". @ https://aureo-landing.vercel.app/:0
+[  542292ms] [ERROR] Error: <path> attribute d: Unexpected end of attribute. Expected number, "…12,10 18,8 24,12". @ https://aureo-landing.vercel.app/:0
+[  547230ms] [LOG] Error @ https://aureo-landing.vercel.app/149e9513-01fa-4fb0-aad4-566afd725d1b/2d206a39-8ed7-437e-a3be-862e0f06eea3/a-4-a/c.js?i=0&v=3&h=aureo-landing.vercel.app:0
+[  547740ms] [ERROR] Failed to load resource: the server responded with a status of 400 () @ https://aureo-landing.vercel.app/api/waitlist:0
+[  940871ms] [ERROR] Error: <path> attribute d: Unexpected end of attribute. Expected number, "…6 12,6 18,6 24,6". @ https://aureo-landing.vercel.app/:0
+[  940872ms] [ERROR] Error: <path> attribute d: Unexpected end of attribute. Expected number, "…12,10 18,8 24,12". @ https://aureo-landing.vercel.app/:0
+[  943410ms] [ERROR] Error: <path> attribute d: Unexpected end of attribute. Expected number, "…6 12,6 18,6 24,6". @ https://aureo-landing.vercel.app/:0
+[  943410ms] [ERROR] Error: <path> attribute d: Unexpected end of attribute. Expected number, "…12,10 18,8 24,12". @ https://aureo-landing.vercel.app/:0
+[ 1069156ms] [ERROR] Error: <path> attribute d: Unexpected end of attribute. Expected number, "…6 12,6 18,6 24,6". @ https://aureo-landing.vercel.app/:0
+[ 1069156ms] [ERROR] Error: <path> attribute d: Unexpected end of attribute. Expected number, "…12,10 18,8 24,12". @ https://aureo-landing.vercel.app/:0
+[ 1109525ms] [ERROR] Error: <path> attribute d: Unexpected end of attribute. Expected number, "…6 12,6 18,6 24,6". @ https://aureo-landing.vercel.app/:0
+[ 1109525ms] [ERROR] Error: <path> attribute d: Unexpected end of attribute. Expected number, "…12,10 18,8 24,12". @ https://aureo-landing.vercel.app/:0
