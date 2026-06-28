@@ -36,14 +36,31 @@ export function ModuleCard({ module }: { module: Module }) {
       ref={ref}
       onMouseMove={onMouseMove}
       onMouseLeave={onMouseLeave}
-      style={{ rotateX: rX, rotateY: rY, transformPerspective: 800 }}
-      whileHover={{ boxShadow: "0 20px 40px rgba(168,116,43,0.15)" }}
-      className="group flex h-full cursor-default flex-col rounded-[var(--radius-lg)] border border-[var(--border-subtle)] bg-[var(--bg-surface)] p-6"
+      style={{ rotateX: rX, rotateY: rY, transformPerspective: 900 }}
+      whileHover={{
+        boxShadow: "0 20px 48px rgba(168,116,43,0.18)",
+        borderColor: "rgba(168,116,43,0.35)",
+      }}
+      transition={{ duration: 0.2 }}
+      className="group relative flex h-full cursor-default flex-col overflow-hidden rounded-[var(--radius-lg)] border border-[var(--border-subtle)] bg-[var(--bg-surface)] p-6"
     >
+      {/* Shimmer sweep on hover */}
+      <motion.div
+        className="pointer-events-none absolute inset-0"
+        initial={{ x: "-100%" }}
+        whileHover={{ x: "200%" }}
+        transition={{ duration: 0.55, ease: "easeInOut" }}
+        style={{
+          background:
+            "linear-gradient(105deg, transparent 35%, rgba(168,116,43,0.12) 50%, transparent 65%)",
+        }}
+        aria-hidden
+      />
+
       <motion.div
         className="mb-4 flex h-11 w-11 items-center justify-center rounded-[var(--radius-md)] bg-[var(--primary)]/10"
-        whileHover={{ scale: 1.2, backgroundColor: "rgba(168,116,43,0.15)" }}
-        transition={{ type: "spring", stiffness: 300 }}
+        whileHover={{ scale: 1.18, backgroundColor: "rgba(168,116,43,0.18)" }}
+        transition={{ type: "spring", stiffness: 320, damping: 18 }}
       >
         <Icon aria-hidden className="h-5 w-5 text-[var(--primary)] transition-colors group-hover:text-[var(--bronze)]" />
       </motion.div>
