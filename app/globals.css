@@ -225,7 +225,16 @@ body {
   animation: glow-pulse 2s ease-in-out infinite;
 }
 
-/* Gold border animation — traveling spotlight on card edge */
+/* Gold glowing border — pricing cards */
+@keyframes gold-glow-pulse {
+  0%, 100% { opacity: 0.55; }
+  50%       { opacity: 1; }
+}
+@keyframes gold-glow-pulse-dim {
+  0%, 100% { opacity: 0.18; }
+  50%       { opacity: 0.38; }
+}
+
 .gold-card-border {
   position: relative;
   z-index: 0;
@@ -237,53 +246,34 @@ body {
   border-radius: inherit;
   z-index: 0;
 }
-/* Traveling highlight on border */
+/* Static gold gradient border ring */
 .gold-card-border::before {
   inset: -1.5px;
-  background: conic-gradient(
-    from var(--angle),
-    rgba(168,116,43,0.14) 0%,
-    rgba(168,116,43,0.14) 55%,
-    rgba(168,116,43,0.55) 68%,
-    rgba(255,210,70,1)    78%,
-    rgba(255,245,180,1)   83%,
-    rgba(255,210,70,1)    88%,
-    rgba(168,116,43,0.55) 97%,
-    rgba(168,116,43,0.14) 100%
+  background: linear-gradient(135deg,
+    #fff5b3 0%,
+    #ffd246 22%,
+    #a8742b 45%,
+    #ffd246 68%,
+    #fff5b3 100%
   );
-  animation: rotate-angle 4s linear infinite;
 }
-/* Soft inner glow — tight, no floating ring effect */
+/* Breathing outer glow halo */
 .gold-card-border::after {
-  inset: -3px;
-  background: conic-gradient(
-    from var(--angle),
-    transparent 0%,
-    transparent 64%,
-    rgba(168,116,43,0.22) 74%,
-    rgba(255,200,50,0.55) 81%,
-    rgba(255,240,100,0.45) 84%,
-    rgba(168,116,43,0.22) 93%,
-    transparent 100%
+  inset: -6px;
+  background: linear-gradient(135deg,
+    rgba(255,210,70,0.65) 0%,
+    rgba(168,116,43,0.45) 45%,
+    rgba(255,210,70,0.65) 100%
   );
-  filter: blur(4px);
-  animation: rotate-angle 4s linear infinite;
+  filter: blur(10px);
+  animation: gold-glow-pulse 3s ease-in-out infinite;
 }
+/* Dim variant — non-highlighted card */
 .gold-card-border-dim::before {
-  background: conic-gradient(
-    from var(--angle),
-    rgba(168,116,43,0.07) 0%,
-    rgba(168,116,43,0.07) 55%,
-    rgba(168,116,43,0.3)  68%,
-    rgba(255,210,70,0.65) 78%,
-    rgba(255,245,180,0.6) 83%,
-    rgba(255,210,70,0.65) 88%,
-    rgba(168,116,43,0.3)  97%,
-    rgba(168,116,43,0.07) 100%
-  );
+  opacity: 0.38;
 }
 .gold-card-border-dim::after {
-  opacity: 0.5;
+  animation: gold-glow-pulse-dim 3s ease-in-out infinite;
 }
 
 /* Footer link underline from left */
