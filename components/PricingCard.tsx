@@ -33,11 +33,11 @@ export function PricingCard({ plan, index = 0 }: { plan: Plan; index?: number })
         } : {}}
         transition={hl ? {
           boxShadow: { duration: 2.8, repeat: Infinity, ease: "easeInOut" },
-          opacity: { type: "spring", damping: 25, stiffness: 100, delay: 0.15 },
-          x: { type: "spring", damping: 25, stiffness: 100, delay: 0.15 },
-          y: { type: "spring", damping: 25, stiffness: 100, delay: 0.15 },
+          opacity: { duration: 0.7, ease: "easeOut", delay: 0.1 },
+          x: { duration: 0.9, ease: [0.22, 1, 0.36, 1], delay: 0.1 },
+          y: { duration: 0.9, ease: [0.22, 1, 0.36, 1], delay: 0.1 },
         } : {
-          type: "spring", damping: 25, stiffness: 100,
+          duration: 0.9, ease: [0.22, 1, 0.36, 1],
         }}
       >
         {hl && (
@@ -46,7 +46,7 @@ export function PricingCard({ plan, index = 0 }: { plan: Plan; index?: number })
             initial={{ opacity: 0, scale: 0.8 }}
             whileInView={{ opacity: 1, scale: 1 }}
             viewport={VIEWPORT}
-            transition={{ delay: 0.35 }}
+            transition={{ delay: 0.5, duration: 0.5, ease: "easeOut" }}
           >
             Más popular
           </motion.span>
@@ -93,7 +93,7 @@ export function PricingCard({ plan, index = 0 }: { plan: Plan; index?: number })
               initial={{ opacity: 0, x: -10 }}
               whileInView={{ opacity: 1, x: 0 }}
               viewport={VIEWPORT}
-              transition={{ delay: 0.15 + i * 0.06 }}
+              transition={{ delay: 0.25 + i * 0.1, duration: 0.5, ease: "easeOut" }}
             >
               <svg className="h-4 w-4 flex-shrink-0 text-[var(--emerald)]" viewBox="0 0 16 16" fill="none">
                 <motion.path
@@ -105,7 +105,7 @@ export function PricingCard({ plan, index = 0 }: { plan: Plan; index?: number })
                   initial={{ pathLength: 0 }}
                   whileInView={{ pathLength: 1 }}
                   viewport={VIEWPORT}
-                  transition={{ delay: 0.3 + i * 0.06, duration: 0.3 }}
+                  transition={{ delay: 0.4 + i * 0.1, duration: 0.45 }}
                 />
               </svg>
               {f}
