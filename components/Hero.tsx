@@ -31,31 +31,55 @@ export function Hero() {
       <div className="relative z-10 grid items-center gap-10 lg:grid-cols-[minmax(0,0.92fr)_minmax(0,1.08fr)] lg:gap-8 xl:gap-10">
         {/* Copy */}
         <div className="relative z-10 min-w-0 xl:pr-6">
-          <h1 className="font-display text-[2.35rem] font-extrabold leading-[1.06] tracking-tight text-[var(--text-primary)] sm:text-5xl lg:text-[3rem] lg:leading-[1.08] xl:text-[3.5rem]">
-            {site.hero.tituloLineas.map((line, i) => (
-              <span key={line} className="block overflow-hidden">
-                <motion.span
-                  className="block"
-                  initial={{ y: reduce ? 0 : "110%", opacity: reduce ? 1 : 0 }}
-                  animate={{ y: 0, opacity: 1 }}
-                  transition={
-                    reduce
-                      ? { duration: 0 }
-                      : {
-                          delay:
-                            i === 0
-                              ? HERO_TIMING.titleLine1
-                              : HERO_TIMING.titleLine2,
-                          duration: 0.65,
-                          ease: [0.22, 1, 0.36, 1],
-                        }
-                  }
+          <div className="relative">
+            {/* Anillo de Saturno detrás del título */}
+            {!reduce && (
+              <motion.div
+                className="pointer-events-none absolute inset-0 flex items-center"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 1.4, duration: 1.6, ease: "easeOut" }}
+                aria-hidden
+              >
+                <motion.svg
+                  viewBox="0 0 340 110"
+                  className="absolute -left-6 w-[105%] text-[var(--bronze)]"
+                  animate={{ rotate: 360 }}
+                  transition={{ duration: 90, repeat: Infinity, ease: "linear" }}
+                  style={{ opacity: 0.13 }}
                 >
-                  {line}
-                </motion.span>
-              </span>
-            ))}
-          </h1>
+                  <ellipse cx="170" cy="55" rx="164" ry="46" fill="none" stroke="currentColor" strokeWidth="1.5" />
+                  <ellipse cx="170" cy="55" rx="120" ry="32" fill="none" stroke="currentColor" strokeWidth="0.7" />
+                </motion.svg>
+              </motion.div>
+            )}
+
+            <h1 className="relative z-10 font-display text-[2.35rem] font-extrabold leading-[1.06] tracking-tight text-[var(--text-primary)] sm:text-5xl lg:text-[3rem] lg:leading-[1.08] xl:text-[3.5rem]">
+              {site.hero.tituloLineas.map((line, i) => (
+                <span key={line} className="block overflow-hidden">
+                  <motion.span
+                    className="block"
+                    initial={{ y: reduce ? 0 : "110%", opacity: reduce ? 1 : 0 }}
+                    animate={{ y: 0, opacity: 1 }}
+                    transition={
+                      reduce
+                        ? { duration: 0 }
+                        : {
+                            delay:
+                              i === 0
+                                ? HERO_TIMING.titleLine1
+                                : HERO_TIMING.titleLine2,
+                            duration: 0.65,
+                            ease: [0.22, 1, 0.36, 1],
+                          }
+                    }
+                  >
+                    {line}
+                  </motion.span>
+                </span>
+              ))}
+            </h1>
+          </div>
 
           <motion.div
             className="mt-4 h-0.5 w-14 origin-left rounded-full bg-[var(--bronze)]"
@@ -80,7 +104,31 @@ export function Hero() {
             animate={{ opacity: 1, y: 0 }}
             transition={reducedTransition(reduce, HERO_TIMING.form)}
           >
-            <WaitlistForm origen="hero" />
+            <div className="group relative w-full max-w-md">
+              {/* Anillo orbital en hover/focus */}
+              {!reduce && (
+                <motion.svg
+                  viewBox="0 0 420 80"
+                  className="pointer-events-none absolute -inset-x-4 -inset-y-4 h-[calc(100%+2rem)] w-[calc(100%+2rem)] text-[var(--bronze)]"
+                  aria-hidden
+                  initial={{ opacity: 0 }}
+                  whileHover={{ opacity: 1 }}
+                  transition={{ duration: 0.4 }}
+                >
+                  <motion.ellipse
+                    cx="210" cy="40" rx="200" ry="34"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="1"
+                    strokeOpacity="0.35"
+                    animate={{ rotate: 360 }}
+                    transition={{ duration: 8, repeat: Infinity, ease: "linear" }}
+                    style={{ transformOrigin: "210px 40px" }}
+                  />
+                </motion.svg>
+              )}
+              <WaitlistForm origen="hero" />
+            </div>
             <p className="mt-3 text-sm text-[var(--text-secondary)]">
               {site.hero.nota}
             </p>

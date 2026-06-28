@@ -41,7 +41,7 @@ export function WaitlistForm({ origen }: { origen: string }) {
   }
 
   return (
-    <form onSubmit={onSubmit} className="relative flex w-full max-w-md flex-col gap-3 sm:flex-row" noValidate>
+    <form onSubmit={onSubmit} className="flex w-full max-w-md flex-col gap-2" noValidate>
       {/* Honeypot: hidden from real users, attractive to bots. */}
       <input
         type="text"
@@ -53,23 +53,29 @@ export function WaitlistForm({ origen }: { origen: string }) {
         aria-hidden="true"
         className="absolute left-[-9999px] h-0 w-0 opacity-0"
       />
-      <Input
-        type="email"
-        required
-        placeholder="Tu correo"
-        aria-label="Correo electrónico"
-        autoComplete="email"
-        inputMode="email"
-        value={email}
-        onChange={(e) => setEmail(e.target.value)}
-        className="flex-1 min-h-11"
-      />
-      <Button type="submit" disabled={state === "loading"} aria-busy={state === "loading"} className="min-h-11">
-        {state === "loading" ? "Enviando…" : "Unirme"}
-      </Button>
-      {state === "error" && (
-        <p role="alert" className="text-[var(--terracotta)] text-sm sm:absolute sm:top-full sm:mt-1">{msg}</p>
-      )}
+      <div className="flex flex-col gap-3 sm:flex-row">
+        <Input
+          type="email"
+          required
+          placeholder="Tu correo"
+          aria-label="Correo electrónico"
+          autoComplete="email"
+          inputMode="email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          className="flex-1 min-h-11"
+        />
+        <Button type="submit" disabled={state === "loading"} aria-busy={state === "loading"} className="min-h-11">
+          {state === "loading" ? "Enviando…" : "Unirme"}
+        </Button>
+      </div>
+      <p
+        role="alert"
+        aria-live="polite"
+        className="min-h-5 text-sm text-[var(--terracotta)]"
+      >
+        {state === "error" ? msg : ""}
+      </p>
     </form>
   );
 }

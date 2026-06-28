@@ -37,14 +37,29 @@ export function Nav() {
       }
     >
       <nav className="mx-auto flex max-w-7xl items-center justify-between px-5 py-4">
-        <motion.span
-          className="font-display text-2xl font-extrabold text-[var(--primary)]"
+        <motion.a
+          href="#"
+          aria-label="Aureo — inicio"
+          className="flex items-center gap-2 text-[var(--primary)] no-underline"
           initial={{ opacity: 0, x: reduce ? 0 : -16 }}
           animate={{ opacity: 1, x: 0 }}
           transition={reducedTransition(reduce, 0.1, 0.45)}
         >
-          {site.marca}
-        </motion.span>
+          <svg
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="1.9"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            className="h-7 w-7 shrink-0"
+            aria-hidden="true"
+          >
+            <circle cx="12" cy="11" r="5.1" />
+            <ellipse cx="12" cy="11" rx="10.6" ry="3.5" transform="rotate(-24 12 11)" />
+          </svg>
+          <span className="font-display text-2xl font-extrabold">{site.marca}</span>
+        </motion.a>
 
         <motion.div
           className="hidden gap-7 text-sm font-semibold text-[var(--text-secondary)] md:flex"
