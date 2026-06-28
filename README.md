@@ -1,36 +1,79 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Aureo — Landing Page
 
-## Getting Started
+Landing page de **Aureo**, el sistema de control logístico para ferreterías y negocios de bodega. Inventario, ventas y análisis ABC en un solo lugar.
 
-First, run the development server:
+## Stack
+
+- **Next.js 16** (App Router, estático + 1 serverless function)
+- **TypeScript** + **Tailwind CSS v4**
+- **Motion (Framer)** — animaciones cinematográficas por sección
+- **Supabase** — waitlist (tabla `waitlist`, RLS habilitado)
+- **Vercel Blob** — video demo servido desde CDN
+- **Upstash Redis** — rate limiting (5 req/min/IP, sliding window)
+- **Vercel BotID** — detección de bots en el endpoint de waitlist
+
+## Desarrollo local
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
+pnpm install
+cp .env.local.example .env.local   # completar con tus vars
 pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Abre [http://localhost:3001](http://localhost:3001) (el 3000 puede estar ocupado por Remotion).
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Variables de entorno
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Ver `.env.local.example`. Las obligatorias para producción:
 
-## Learn More
+| Variable | Descripción |
+|---|---|
+| `NEXT_PUBLIC_SUPABASE_URL` | URL del proyecto Supabase |
+| `SUPABASE_SERVICE_ROLE_KEY` | Service role key (solo server-side) |
+| `UPSTASH_REDIS_REST_URL` | URL del store Redis en Upstash |
+| `UPSTASH_REDIS_REST_TOKEN` | Token REST de Upstash |
+| `NEXT_PUBLIC_DEMO_VIDEO_URL` | URL pública del video en Vercel Blob |
 
-To learn more about Next.js, take a look at the following resources:
+Sin `UPSTASH_*`: el rate limiting se desactiva (fail-open), el resto funciona.  
+Sin `NEXT_PUBLIC_DEMO_VIDEO_URL`: el video se sirve desde `/public/aureo-video.mp4` (local).
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Subir video al Blob
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+```bash
+$env:BLOB_READ_WRITE_TOKEN = "vercel_blob_rw_..."
+node scripts/upload-video-to-blob.mjs
+```
 
-## Deploy on Vercel
+Requiere un Blob store público (`aureo-assets`) conectado al proyecto en Vercel.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Seguridad del endpoint `/api/waitlist`
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Capas de protección apiladas:
+1. **Cross-origin check** — rechaza `Origin` externo (403)
+2. **Vercel BotID** — challenge criptográfico en Vercel (fail-open local)
+3. **Rate limiting** — Upstash Redis, 5 req/min por IP (429)
+4. **Honeypot** — campo oculto `sitio_web`; si está lleno → 200 falso
+5. **Validación** — email RFC + caps de longitud por campo
+
+## Estructura
+
+```
+app/
+  page.tsx              # página principal (estática)
+  layout.tsx            # metadata, fonts, Analytics
+  api/waitlist/route.ts # único endpoint serverless
+components/             # secciones animadas de la landing
+lib/
+  validation.ts         # parseWaitlistPayload + honeypot
+  ratelimit.ts          # checkRateLimit con Upstash
+  supabase.ts           # getSupabaseAdmin (singleton)
+  motion.ts             # variantes de animación compartidas
+scripts/
+  upload-video-to-blob.mjs
+instrumentation-client.ts  # initBotId
+```
+
+## Deploy
+
+Push a `main` triggerea deploy automático en Vercel (integración git).  
+Rama de desarrollo activa: `feat/cinematic-redesign`.
