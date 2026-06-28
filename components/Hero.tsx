@@ -1,26 +1,112 @@
+// components/Hero.tsx
+"use client";
+import { motion, useReducedMotion } from "motion/react";
 import { site } from "@/content/site";
 import { WaitlistForm } from "@/components/WaitlistForm";
+import { FloatingParticles } from "@/components/ui/FloatingParticles";
+import { DashboardMock } from "@/components/ui/DashboardMock";
+import {
+  HERO_TIMING,
+  reducedTransition,
+} from "@/lib/motion";
 
 export function Hero() {
+  const reduce = useReducedMotion();
+
   return (
-    <section id="waitlist" className="mx-auto max-w-6xl px-5 py-20 md:py-28">
-      <div className="grid items-center gap-12 md:grid-cols-2">
-        <div>
-          <h1 className="font-display text-4xl font-extrabold leading-tight text-[var(--text-primary)] md:text-5xl">
-            {site.hero.titulo}
+    <section
+      id="waitlist"
+      className="relative mx-auto max-w-7xl overflow-visible px-5 py-14 md:py-20 lg:px-8 lg:py-24"
+    >
+      <motion.div
+        className="pointer-events-none absolute inset-0 overflow-hidden"
+        aria-hidden
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={reducedTransition(reduce, HERO_TIMING.particles, 1.2)}
+      >
+        <FloatingParticles count={22} className="z-0" />
+      </motion.div>
+
+      <div className="relative z-10 grid items-center gap-10 lg:grid-cols-[minmax(0,0.92fr)_minmax(0,1.08fr)] lg:gap-8 xl:gap-10">
+        {/* Copy */}
+        <div className="relative z-10 min-w-0 xl:pr-6">
+          <h1 className="font-display text-[2.35rem] font-extrabold leading-[1.06] tracking-tight text-[var(--text-primary)] sm:text-5xl lg:text-[3rem] lg:leading-[1.08] xl:text-[3.5rem]">
+            {site.hero.tituloLineas.map((line, i) => (
+              <span key={line} className="block overflow-hidden">
+                <motion.span
+                  className="block"
+                  initial={{ y: reduce ? 0 : "110%", opacity: reduce ? 1 : 0 }}
+                  animate={{ y: 0, opacity: 1 }}
+                  transition={
+                    reduce
+                      ? { duration: 0 }
+                      : {
+                          delay:
+                            i === 0
+                              ? HERO_TIMING.titleLine1
+                              : HERO_TIMING.titleLine2,
+                          duration: 0.65,
+                          ease: [0.22, 1, 0.36, 1],
+                        }
+                  }
+                >
+                  {line}
+                </motion.span>
+              </span>
+            ))}
           </h1>
-          <p className="mt-6 text-lg text-[var(--text-secondary)]">{site.hero.subtitulo}</p>
-          <div className="mt-8">
+
+          <motion.div
+            className="mt-4 h-0.5 w-14 origin-left rounded-full bg-[var(--bronze)]"
+            initial={{ scaleX: 0, opacity: 0 }}
+            animate={{ scaleX: 1, opacity: 1 }}
+            transition={reducedTransition(reduce, HERO_TIMING.bronzeLine, 0.5)}
+            aria-hidden
+          />
+
+          <motion.p
+            className="mt-5 max-w-md text-base leading-relaxed text-[var(--text-secondary)] md:mt-6 md:text-lg"
+            initial={{ opacity: 0, y: reduce ? 0 : 16 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={reducedTransition(reduce, HERO_TIMING.subtitle)}
+          >
+            {site.hero.subtitulo}
+          </motion.p>
+
+          <motion.div
+            className="mt-7 md:mt-8"
+            initial={{ opacity: 0, y: reduce ? 0 : 16 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={reducedTransition(reduce, HERO_TIMING.form)}
+          >
             <WaitlistForm origen="hero" />
-            <p className="mt-3 text-sm text-[var(--text-secondary)]">{site.hero.nota}</p>
-          </div>
+            <p className="mt-3 text-sm text-[var(--text-secondary)]">
+              {site.hero.nota}
+            </p>
+          </motion.div>
         </div>
-        <div className="rounded-[var(--radius-lg)] border border-[var(--border-subtle)] bg-[var(--bg-surface)] p-3 shadow-sm">
-          {/* Captura real del dashboard de Aureo — reemplazar src en Task 17 */}
-          <div className="flex aspect-[4/3] items-center justify-center rounded-[var(--radius-md)] bg-[var(--bg-subtle)] text-[var(--text-muted)]">
-            Captura del producto
+
+        {/* Dashboard */}
+        <motion.div
+          className="relative z-0 min-w-0 w-full"
+          initial={reduce ? false : { opacity: 0, x: 48, scale: 0.96 }}
+          animate={{ opacity: 1, x: 0, scale: 1 }}
+          transition={
+            reduce
+              ? { duration: 0 }
+              : {
+                  delay: HERO_TIMING.dashboard,
+                  type: "spring",
+                  damping: 28,
+                  stiffness: 110,
+                }
+          }
+        >
+          <div className="mx-auto w-full max-w-lg p-3 sm:max-w-xl sm:p-4 lg:mx-0 lg:max-w-none">
+            <DashboardMock className="w-full" boot />
           </div>
-        </div>
+        </motion.div>
       </div>
     </section>
   );

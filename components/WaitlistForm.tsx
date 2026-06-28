@@ -2,11 +2,13 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { HONEYPOT_FIELD } from "@/lib/validation";
 
 type State = "idle" | "loading" | "success" | "error";
 
 export function WaitlistForm({ origen }: { origen: string }) {
   const [email, setEmail] = useState("");
+  const [hp, setHp] = useState("");
   const [state, setState] = useState<State>("idle");
   const [msg, setMsg] = useState("");
 
@@ -18,7 +20,7 @@ export function WaitlistForm({ origen }: { origen: string }) {
       const res = await fetch("/api/waitlist", {
         method: "POST",
         headers: { "content-type": "application/json" },
-        body: JSON.stringify({ email, origen }),
+        body: JSON.stringify({ email, origen, [HONEYPOT_FIELD]: hp }),
       });
       const json = await res.json();
       if (res.ok && json.ok) {
@@ -40,6 +42,17 @@ export function WaitlistForm({ origen }: { origen: string }) {
 
   return (
     <form onSubmit={onSubmit} className="relative flex w-full max-w-md flex-col gap-3 sm:flex-row" noValidate>
+      {/* Honeypot: hidden from real users, attractive to bots. */}
+      <input
+        type="text"
+        name={HONEYPOT_FIELD}
+        value={hp}
+        onChange={(e) => setHp(e.target.value)}
+        tabIndex={-1}
+        autoComplete="off"
+        aria-hidden="true"
+        className="absolute left-[-9999px] h-0 w-0 opacity-0"
+      />
       <Input
         type="email"
         required

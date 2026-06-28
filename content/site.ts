@@ -9,7 +9,10 @@ export const site = {
   marca: "Aureo",
   whatsapp: "https://wa.me/57XXXXXXXXXX", // TODO real number antes de prod
   hero: {
-    titulo: "El control de tu inventario, ventas y bodega en un solo lugar.",
+    tituloLineas: [
+      "El control de tu inventario,",
+      "ventas y bodega en un solo lugar.",
+    ],
     subtitulo: "Aureo le da a tu negocio la inteligencia logística que antes solo tenían las grandes empresas — sin su complejidad ni su precio.",
     cta: "Unirme a la lista de espera",
     nota: "Acceso anticipado y precio de fundador para los primeros negocios.",
@@ -38,6 +41,7 @@ export const site = {
     { id: "wms", titulo: "Mapa de calor de bodega", beneficio: "Ve tu bodega como un plano vivo y ubica lo que más rota cerca del despacho.", icono: "map" },
     { id: "abc", titulo: "Análisis ABC / Pareto", beneficio: "Descubre el 20% de productos que generan el 80% de tus ventas.", icono: "bar-chart" },
     { id: "picking", titulo: "Preparación de pedidos", beneficio: "Recorridos optimizados para despachar más rápido y sin errores.", icono: "route" },
+    { id: "reubicacion", titulo: "Reubicación inteligente", beneficio: "Sugerencias para ubicar lo que más rota cerca del despacho.", icono: "arrow-right-left" },
   ] as Module[],
   demo: {
     titulo: "Mira la inteligencia logística en acción.",
@@ -45,9 +49,9 @@ export const site = {
     placeholder: "Demo en video — próximamente.",
   },
   fundadores: {
-    titulo: "Hecho por gente que vivió el problema.",
-    texto: "Aureo nació de una ferretería real. Lo construimos Juan y Leif porque vimos de cerca lo que cuesta manejar un negocio con inventario sin las herramientas adecuadas. No somos una corporación: somos dos emprendedores que quieren que tu negocio crezca.",
-    socialProofPlaceholder: "Primeros negocios usando Aureo — muy pronto.",
+    titulo: "Lo que aprendimos manejando stock de verdad.",
+    texto: "Empezamos porque el inventario no cuadraba, el despacho era lento y las herramientas eran caras o incompletas. Aureo concentra POS, bodega y análisis en un solo sistema — pensado desde el piso del depósito.",
+    socialProofPlaceholder: "Primeras implementaciones en curso.",
   },
   planes: [
     {
