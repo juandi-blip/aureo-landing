@@ -49,3 +49,8 @@ next-env.d.ts
 /playwright-report/
 /blob-report/
 /playwright/.cache/
+/.playwright-mcp/
+
+# temp screenshots from testing
+*.png
+*.jpg
