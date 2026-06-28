@@ -321,7 +321,7 @@ export function DashboardMock({
           ))}
         </div>
 
-        <div className="grid gap-2.5 md:grid-cols-5 md:gap-3">
+        <div className="hidden gap-2.5 md:grid md:grid-cols-5 md:gap-3">
           <motion.div
             className="rounded-[var(--radius-md)] bg-[var(--bg-subtle)] p-3 md:col-span-3"
             initial={{ opacity: 0, y: reduce ? 0 : 10 }}

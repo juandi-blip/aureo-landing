@@ -8,7 +8,7 @@ import { fadeUp, VIEWPORT } from "@/lib/motion";
 
 export function PricingTable() {
   return (
-    <section id="precios" className="py-24">
+    <section id="precios" className="overflow-hidden py-24">
       <div className="mx-auto max-w-5xl px-5">
         <SectionHeading className="text-center">
           Un plan para cada etapa de tu negocio.

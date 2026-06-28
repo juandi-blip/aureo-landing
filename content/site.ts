@@ -7,7 +7,7 @@ export type FaqItem = { pregunta: string; respuesta: string };
 
 export const site = {
   marca: "Aureo",
-  whatsapp: "https://wa.me/57XXXXXXXXXX", // TODO real number antes de prod
+  whatsapp: "https://wa.me/573205638153",
   hero: {
     tituloLineas: [
       "El control de tu inventario,",

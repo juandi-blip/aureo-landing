@@ -225,60 +225,65 @@ body {
   animation: glow-pulse 2s ease-in-out infinite;
 }
 
-/* Saturn ring orbit border — pricing cards */
-.saturn-border {
+/* Gold border animation — traveling spotlight on card edge */
+.gold-card-border {
   position: relative;
   z-index: 0;
 }
-.saturn-border::before,
-.saturn-border::after {
+.gold-card-border::before,
+.gold-card-border::after {
   content: '';
   position: absolute;
   border-radius: inherit;
-  animation: rotate-angle 2.4s linear infinite;
-  opacity: 0;
-  transition: opacity 0.4s ease;
   z-index: 0;
 }
-/* Sharp ring fragment */
-.saturn-border::before {
+/* Traveling highlight on border */
+.gold-card-border::before {
+  inset: -1.5px;
+  background: conic-gradient(
+    from var(--angle),
+    rgba(168,116,43,0.14) 0%,
+    rgba(168,116,43,0.14) 55%,
+    rgba(168,116,43,0.55) 68%,
+    rgba(255,210,70,1)    78%,
+    rgba(255,245,180,1)   83%,
+    rgba(255,210,70,1)    88%,
+    rgba(168,116,43,0.55) 97%,
+    rgba(168,116,43,0.14) 100%
+  );
+  animation: rotate-angle 4s linear infinite;
+}
+/* Soft inner glow — tight, no floating ring effect */
+.gold-card-border::after {
   inset: -3px;
   background: conic-gradient(
     from var(--angle),
     transparent 0%,
-    transparent 70%,
-    rgba(168,116,43,0.6)  78%,
-    rgba(255,210,70,1)    84%,
-    rgba(255,245,130,1)   87%,
-    rgba(255,210,70,1)    90%,
-    rgba(168,116,43,0.6)  97%,
+    transparent 64%,
+    rgba(168,116,43,0.22) 74%,
+    rgba(255,200,50,0.55) 81%,
+    rgba(255,240,100,0.45) 84%,
+    rgba(168,116,43,0.22) 93%,
     transparent 100%
   );
+  filter: blur(4px);
+  animation: rotate-angle 4s linear infinite;
 }
-/* Blurred glow duplicate */
-.saturn-border::after {
-  inset: -6px;
+.gold-card-border-dim::before {
   background: conic-gradient(
     from var(--angle),
-    transparent 0%,
-    transparent 68%,
-    rgba(168,116,43,0.25) 76%,
-    rgba(255,190,50,0.6)  84%,
-    rgba(255,230,80,0.5)  87%,
-    rgba(168,116,43,0.25) 95%,
-    transparent 100%
+    rgba(168,116,43,0.07) 0%,
+    rgba(168,116,43,0.07) 55%,
+    rgba(168,116,43,0.3)  68%,
+    rgba(255,210,70,0.65) 78%,
+    rgba(255,245,180,0.6) 83%,
+    rgba(255,210,70,0.65) 88%,
+    rgba(168,116,43,0.3)  97%,
+    rgba(168,116,43,0.07) 100%
   );
-  filter: blur(10px);
 }
-.saturn-border-always::before,
-.saturn-border-always::after {
-  opacity: 1;
-}
-.saturn-border-dim::before {
-  opacity: 0.55 !important;
-}
-.saturn-border-dim::after {
-  opacity: 0.4 !important;
+.gold-card-border-dim::after {
+  opacity: 0.5;
 }
 
 /* Footer link underline from left */

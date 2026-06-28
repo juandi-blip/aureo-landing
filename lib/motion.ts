@@ -41,7 +41,7 @@ export const clipReveal = {
   },
 };
 
-export const VIEWPORT = { once: true, margin: "-100px" } as const;
+export const VIEWPORT = { once: true, margin: "-50px" } as const;
 
 /** Orchestrated hero entrance — total ~1.5s */
 export const HERO_TIMING = {

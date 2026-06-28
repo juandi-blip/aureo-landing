@@ -8,8 +8,8 @@ export function PricingCard({ plan }: { plan: Plan }) {
 
   return (
     <div className="group relative">
-      {/* Saturn ring orbit border — separate div so overflow-hidden on card doesn't clip it */}
-      <div className={`saturn-border saturn-border-always pointer-events-none absolute inset-0 rounded-[var(--radius-lg)]${hl ? "" : " saturn-border-dim"}`} aria-hidden />
+      {/* Gold border animation — follows exact card shape */}
+      <div className={`gold-card-border pointer-events-none absolute inset-0 rounded-[var(--radius-lg)]${hl ? "" : " gold-card-border-dim"}`} aria-hidden />
       <motion.div
         className={`relative z-[1] overflow-hidden rounded-[var(--radius-lg)] p-8 transition-shadow duration-300 ${
           hl
