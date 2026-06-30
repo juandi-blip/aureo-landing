@@ -11,7 +11,7 @@
 import { put } from "@vercel/blob";
 import { readFile } from "node:fs/promises";
 
-const FILE = "public/aureo-video.mp4";
+const FILE = process.env.VIDEO_PATH || "public/aureo-video.mp4";
 
 if (!process.env.BLOB_READ_WRITE_TOKEN) {
   console.error("Missing BLOB_READ_WRITE_TOKEN env var.");
