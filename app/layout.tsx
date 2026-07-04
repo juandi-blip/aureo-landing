@@ -22,7 +22,7 @@ const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "https://aureo.com.co";
 const SITE_NAME = "Aureo";
 const TITLE = "Aureo — Inventario, ventas y bodega para tu negocio";
 const DESCRIPTION =
-  "Software de gestión de inventario, punto de venta y bodega para ferreterías, distribuidoras y negocios con stock. Control logístico en tiempo real. Acceso anticipado disponible.";
+  "Software de gestión de inventario, punto de venta y bodega para ferreterías y distribuidoras. Control en tiempo real. Únete a la lista de espera.";
 const OG_IMAGE = `${SITE_URL}/og-image.png`;
 
 export const metadata: Metadata = {
@@ -158,13 +158,17 @@ const jsonLd = {
       "@id": `${SITE_URL}/#org`,
       name: "Aureo",
       url: SITE_URL,
-      logo: {
-        "@type": "ImageObject",
-        url: `${SITE_URL}/icon.svg`,
+      logo: `${SITE_URL}/icon`,
+      email: "aureosaas@gmail.com",
+      address: {
+        "@type": "PostalAddress",
+        addressLocality: "Barranquilla",
+        addressCountry: "CO",
       },
       contactPoint: {
         "@type": "ContactPoint",
         contactType: "customer support",
+        email: "aureosaas@gmail.com",
         availableLanguage: "Spanish",
       },
       sameAs: [],
@@ -220,6 +224,16 @@ const jsonLd = {
           },
         },
       ],
+    },
+    {
+      "@type": "VideoObject",
+      "@id": `${SITE_URL}/#demo-video`,
+      name: "Demo de Aureo — Inventario, ventas y bodega",
+      description: DESCRIPTION,
+      thumbnailUrl: `${SITE_URL}/aureo-video-poster.jpg`,
+      contentUrl: process.env.NEXT_PUBLIC_DEMO_VIDEO_URL ?? `${SITE_URL}/aureo-video.mp4`,
+      uploadDate: "2026-06-28T00:00:00-05:00",
+      publisher: { "@id": `${SITE_URL}/#org` },
     },
   ],
 };
