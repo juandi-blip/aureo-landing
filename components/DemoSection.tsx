@@ -10,6 +10,8 @@ import { SpotlightGlow, useSpotlight } from "@/components/ui/Spotlight";
 const VIDEO_SRC =
   process.env.NEXT_PUBLIC_DEMO_VIDEO_URL || "/aureo-video.mp4";
 
+const DEMO_URL = process.env.NEXT_PUBLIC_DEMO_URL || "";
+
 export function DemoSection() {
   const videoRef = useRef<HTMLVideoElement>(null);
   const [muted, setMuted] = useState(true);
@@ -114,6 +116,41 @@ export function DemoSection() {
             )}
           </motion.button>
         </motion.div>
+
+        {DEMO_URL && (
+          <motion.div
+            className="mt-9 flex flex-col items-center gap-3.5"
+            variants={fadeUp}
+            initial="hidden"
+            whileInView="visible"
+            viewport={VIEWPORT}
+          >
+            <a
+              href={DEMO_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group inline-flex items-center gap-2.5 rounded-full border border-[var(--bronze)]/50 bg-gradient-to-r from-[var(--bronze)]/15 via-[var(--bronze)]/10 to-[var(--bronze)]/15 px-7 py-3 text-sm font-semibold text-[var(--text-cream)] shadow-[0_0_26px_-10px_var(--bronze-glow)] transition-all hover:border-[var(--bronze)]/80 hover:shadow-[0_0_34px_-8px_var(--bronze-glow)]"
+            >
+              {site.demo.ctaExplorar}
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                className="h-4 w-4 text-[var(--bronze)] transition-transform group-hover:translate-x-1"
+                aria-hidden="true"
+              >
+                <path d="M5 12h14" />
+                <path d="m12 5 7 7-7 7" />
+              </svg>
+            </a>
+            <p className="max-w-sm text-sm leading-relaxed text-[var(--text-cream)]/60">
+              {site.demo.ctaExplorarNota}
+            </p>
+          </motion.div>
+        )}
       </div>
     </section>
   );
