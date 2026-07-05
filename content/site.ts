@@ -1,7 +1,10 @@
 export type Module = { id: string; titulo: string; beneficio: string; icono: string };
+export type Moneda = "cop" | "usd";
+export type Periodo = "mensual" | "anual";
+export type PlanPrecios = { cop: Record<Periodo, number>; usd: Record<Periodo, number> };
 export type Plan = {
-  nombre: string; precio: string; periodo: string; resumen: string;
-  destacado: boolean; features: string[]; cta: string;
+  nombre: string; resumen: string; destacado: boolean;
+  precios: PlanPrecios; features: string[]; cta: string;
 };
 export type FaqItem = { pregunta: string; respuesta: string };
 
@@ -57,18 +60,49 @@ export const site = {
   },
   planes: [
     {
-      nombre: "Starter", precio: "Por definir", periodo: "/mes", destacado: false,
-      resumen: "Para el negocio que necesita vender y controlar su stock.",
-      features: ["Punto de venta y facturación", "Inventario en tiempo real", "Alertas de stock", "Reportes básicos"],
-      cta: "Quiero el plan Starter",
+      nombre: "Starter",
+      resumen: "Para vender y controlar tu stock sin desorden.",
+      destacado: false,
+      precios: { cop: { mensual: 24900, anual: 20750 }, usd: { mensual: 6, anual: 5 } },
+      features: [
+        "Punto de venta y facturación DIAN",
+        "Inventario en tiempo real",
+        "Alertas de stock",
+        "1 usuario · 1 bodega · 1 dispositivo",
+        "Soporte por WhatsApp",
+      ],
+      cta: "Unirme a la lista de espera",
     },
     {
-      nombre: "Pro", precio: "Por definir", periodo: "/mes", destacado: true,
-      resumen: "Para el negocio con bodega que necesita logística de verdad.",
-      features: ["Todo lo de Starter", "Mapa de calor de bodega (WMS)", "Análisis ABC / Pareto", "Preparación de pedidos (picking)", "Reubicación inteligente"],
-      cta: "Quiero el plan Pro",
+      nombre: "Pro",
+      resumen: "Para operar en serio, con equipo y reportes.",
+      destacado: false,
+      precios: { cop: { mensual: 54900, anual: 45750 }, usd: { mensual: 14, anual: 12 } },
+      features: [
+        "Todo lo de Starter",
+        "Usuarios y roles: admin, depósito, caja",
+        "Inventario ilimitado y conteos físicos",
+        "Reportes",
+        "Varios dispositivos",
+      ],
+      cta: "Unirme a la lista de espera",
+    },
+    {
+      nombre: "Logística",
+      resumen: "La inteligencia logística que te diferencia.",
+      destacado: true,
+      precios: { cop: { mensual: 94900, anual: 79100 }, usd: { mensual: 24, anual: 20 } },
+      features: [
+        "Todo lo de Pro",
+        "Mapa de calor de bodega (WMS)",
+        "Análisis ABC / Pareto",
+        "Preparación de pedidos (picking)",
+        "Reubicación inteligente · multi-bodega",
+      ],
+      cta: "Unirme a la lista de espera",
     },
   ] as Plan[],
+  preciosTrial: "Empieza con 14 días gratis. Sin tarjeta.",
   preciosNota: "Precio de fundador garantizado para quienes entren por la lista de espera.",
   faq: [
     { pregunta: "¿Necesito conocimientos técnicos?", respuesta: "No. Aureo está pensado para que cualquier persona del negocio lo use desde el primer día." },

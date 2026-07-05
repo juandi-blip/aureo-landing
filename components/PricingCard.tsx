@@ -1,10 +1,25 @@
 // components/PricingCard.tsx
 "use client";
 import { motion } from "motion/react";
-import type { Plan } from "@/content/site";
+import type { Plan, Moneda, Periodo } from "@/content/site";
 
-export function PricingCard({ plan }: { plan: Plan }) {
+function formatPrecio(valor: number, moneda: Moneda) {
+  return moneda === "cop"
+    ? `$${valor.toLocaleString("es-CO")}`
+    : `$${valor}`;
+}
+
+export function PricingCard({
+  plan,
+  moneda,
+  periodo,
+}: {
+  plan: Plan;
+  moneda: Moneda;
+  periodo: Periodo;
+}) {
   const hl = plan.destacado;
+  const precio = formatPrecio(plan.precios[moneda][periodo], moneda);
 
   return (
     <div className="group relative">
@@ -53,15 +68,24 @@ export function PricingCard({ plan }: { plan: Plan }) {
               hl ? "text-[var(--bronze)]" : "text-[var(--primary)]"
             }`}
           >
-            {plan.precio}
+            {precio}
           </span>
           <span
             className={
               hl ? "text-[var(--text-cream)]/60" : "text-[var(--text-secondary)]"
             }
           >
-            {plan.periodo}
+            {moneda === "usd" ? " USD" : ""}/mes
           </span>
+        </p>
+        <p
+          className={`mt-1 text-xs ${
+            hl ? "text-[var(--text-cream)]/50" : "text-[var(--text-secondary)]/80"
+          }`}
+        >
+          {periodo === "anual"
+            ? "facturado anual · 2 meses gratis"
+            : "14 días gratis, sin tarjeta"}
         </p>
 
         <ul className="mt-6 space-y-3 text-sm">
