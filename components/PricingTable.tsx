@@ -123,6 +123,23 @@ export function PricingTable() {
         >
           {site.preciosNota}
         </motion.p>
+
+        <motion.p
+          className="mt-3 flex items-center justify-center gap-1.5 text-center text-sm text-[var(--text-secondary)]"
+          variants={fadeUp}
+          initial="hidden"
+          whileInView="visible"
+          viewport={VIEWPORT}
+        >
+          <svg className="h-3.5 w-3.5 text-[var(--emerald)]" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+            <rect width="18" height="11" x="3" y="11" rx="2" ry="2" />
+            <path d="M7 11V7a5 5 0 0 1 10 0v4" />
+          </svg>
+          Pagos protegidos y cifrados.{" "}
+          <a href="#seguridad" className="font-medium text-[var(--primary)] underline-offset-2 hover:underline">
+            Mira cómo te cuidamos
+          </a>
+        </motion.p>
       </div>
     </section>
   );

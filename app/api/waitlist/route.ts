@@ -26,6 +26,13 @@ export async function POST(request: Request) {
     return NextResponse.json({ ok: false, error: "Solicitud inválida." }, { status: 415 });
   }
 
+  // Payload size guard: the legit payload is <1 KB; reject anything bloated
+  // before parsing so oversized bodies never reach JSON.parse.
+  const len = Number(request.headers.get("content-length") ?? "0");
+  if (!Number.isFinite(len) || len > 10_000) {
+    return NextResponse.json({ ok: false, error: "Solicitud inválida." }, { status: 413 });
+  }
+
   // BotID: active on Vercel. Locally throws (no OIDC token) — fail open so
   // a BotID outage never blocks real users; rate limiter + honeypot still apply.
   try {

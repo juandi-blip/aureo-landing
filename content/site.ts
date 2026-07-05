@@ -104,6 +104,43 @@ export const site = {
   ] as Plan[],
   preciosTrial: "Empieza con 14 días gratis. Sin tarjeta.",
   preciosNota: "Precio de fundador garantizado para quienes entren por la lista de espera.",
+  seguridad: {
+    titulo: "Tu plata y tus datos, protegidos desde el día uno.",
+    intro:
+      "Hoy no pagas nada: la lista de espera reserva tu precio de fundador sin pedirte tarjeta. Y cuando abramos los pagos, así será pagar Aureo — y así te protegemos.",
+    metodosTitulo: "Así pagarás tu plan al lanzamiento",
+    metodos: [
+      { id: "tarjetas", nombre: "Tarjeta crédito y débito", detalle: "Visa, Mastercard y Amex", icono: "credit-card" },
+      { id: "pse", nombre: "PSE", detalle: "Directo desde tu banco", icono: "landmark" },
+      { id: "billeteras", nombre: "Nequi y Daviplata", detalle: "Desde tu billetera móvil", icono: "smartphone" },
+      { id: "internacional", nombre: "Pagos en USD", detalle: "Para clientes fuera de Colombia", icono: "globe" },
+    ],
+    garantiasTitulo: "Cómo te protegemos",
+    garantias: [
+      {
+        titulo: "Nunca tocamos tu tarjeta",
+        texto: "Los pagos los procesará una pasarela certificada PCI DSS Nivel 1. Los datos de tu tarjeta jamás pasan ni se guardan en nuestros servidores.",
+        icono: "shield-check",
+      },
+      {
+        titulo: "Todo viaja cifrado",
+        texto: "El sitio completo corre sobre HTTPS con HSTS y cabeceras de seguridad estrictas. Cada dato que nos envías va cifrado, siempre.",
+        icono: "lock",
+      },
+      {
+        titulo: "Tus datos, aislados y respaldados",
+        texto: "Base de datos con Row Level Security y respaldos automáticos. Nadie puede leer tu información desde afuera, y nunca la compartimos.",
+        icono: "database",
+      },
+      {
+        titulo: "Defensa activa contra fraude",
+        texto: "Detección de bots, límite de intentos y validación estricta en cada formulario. La misma disciplina aplicará a cada pago.",
+        icono: "radar",
+      },
+    ],
+    nota: "La misma seguridad que ves aquí — desde la demo hasta el producto que contratas en tu plan.",
+    cta: "Reservar mi precio de fundador",
+  },
   faq: [
     { pregunta: "¿Necesito conocimientos técnicos?", respuesta: "No. Aureo está pensado para que cualquier persona del negocio lo use desde el primer día." },
     { pregunta: "¿Funciona en la nube?", respuesta: "Sí. Accedes desde cualquier dispositivo, sin instalar nada, con tus datos siempre respaldados." },
