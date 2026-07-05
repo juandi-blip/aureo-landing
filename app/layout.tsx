@@ -23,7 +23,8 @@ const SITE_NAME = "Aureo";
 const TITLE = "Aureo — Inventario, ventas y bodega para tu negocio";
 const DESCRIPTION =
   "Software de gestión de inventario, punto de venta y bodega para ferreterías y distribuidoras. Control en tiempo real. Únete a la lista de espera.";
-const OG_IMAGE = `${SITE_URL}/og-image.png`;
+// Served by app/opengraph-image.tsx — /og-image.png does not exist in public/.
+const OG_IMAGE = `${SITE_URL}/opengraph-image`;
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),

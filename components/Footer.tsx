@@ -11,6 +11,8 @@ const NAV_LINKS = [
   { label: "Preguntas", href: "#faq" },
 ];
 
+const CONTACT_EMAIL = "aureosaas@gmail.com";
+
 export function Footer() {
   return (
     <motion.footer
@@ -36,6 +38,12 @@ export function Footer() {
             </a>
           ))}
         </nav>
+        <a
+          href={`mailto:${CONTACT_EMAIL}`}
+          className="link-underline text-sm text-[var(--text-muted)] transition-colors hover:text-[var(--primary)]"
+        >
+          {CONTACT_EMAIL}
+        </a>
         <p className="text-xs text-[var(--text-muted)]">{site.footer.derechos}</p>
       </div>
     </motion.footer>

@@ -35,13 +35,14 @@ describe("POST /api/waitlist", () => {
     expect(insertMock).not.toHaveBeenCalled();
   });
 
-  it("trata duplicado (código 23505) como éxito suave", async () => {
+  it("trata duplicado (código 23505) como éxito sin delatar que el email ya existe", async () => {
     insertMock.mockResolvedValue({ error: { code: "23505" } });
     const res = await POST(req({ email: "a@b.com" }));
     expect(res.status).toBe(200);
     const json = await res.json();
     expect(json.ok).toBe(true);
-    expect(json.duplicate).toBe(true);
+    // Anti-enumeración: la respuesta debe ser indistinguible de un alta nueva.
+    expect(json).not.toHaveProperty("duplicate");
   });
 
   it("responde 500 si Supabase falla con otro error", async () => {

@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useMemo } from "react";
 import { useReducedMotion } from "motion/react";
 
 type Particle = {
@@ -11,6 +11,18 @@ type Particle = {
   delay: number;
 };
 
+// PRNG determinista (mulberry32): mismas partículas en servidor y cliente,
+// así se renderizan en el HTML inicial sin efecto ni segundo render.
+function mulberry32(seed: number) {
+  return () => {
+    seed |= 0;
+    seed = (seed + 0x6d2b79f5) | 0;
+    let t = Math.imul(seed ^ (seed >>> 15), 1 | seed);
+    t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
+    return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+  };
+}
+
 export function FloatingParticles({
   count = 14,
   className = "",
@@ -19,19 +31,17 @@ export function FloatingParticles({
   className?: string;
 }) {
   const reduce = useReducedMotion();
-  const [particles, setParticles] = useState<Particle[]>([]);
 
-  useEffect(() => {
-    setParticles(
-      Array.from({ length: count }, (_, i) => ({
-        id: i,
-        x: Math.random() * 100,
-        y: Math.random() * 100,
-        size: Math.random() * 3 + 2,
-        duration: Math.random() * 4 + 4,
-        delay: Math.random() * 3,
-      }))
-    );
+  const particles = useMemo<Particle[]>(() => {
+    const rand = mulberry32(count * 2654435761);
+    return Array.from({ length: count }, (_, i) => ({
+      id: i,
+      x: rand() * 100,
+      y: rand() * 100,
+      size: rand() * 3 + 2,
+      duration: rand() * 4 + 4,
+      delay: rand() * 3,
+    }));
   }, [count]);
 
   if (reduce) return null;

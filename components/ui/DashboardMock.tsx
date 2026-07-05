@@ -186,11 +186,10 @@ export function DashboardMock({
   });
 
   useEffect(() => {
-    if (!boot || reduce) {
-      setLiveOn(true);
-      return;
-    }
-    const t = window.setTimeout(() => setLiveOn(true), BOOT.live * 1000);
+    // Timeout también en el caso inmediato: evita el setState síncrono en el
+    // efecto (render en cascada) que marcaba react-hooks/set-state-in-effect.
+    const delay = !boot || reduce ? 0 : BOOT.live * 1000;
+    const t = window.setTimeout(() => setLiveOn(true), delay);
     return () => clearTimeout(t);
   }, [boot, reduce]);
 
@@ -305,14 +304,12 @@ export function DashboardMock({
               Transacciones y estado del depósito
             </p>
           </div>
-          <button
-            type="button"
-            tabIndex={-1}
+          <div
             aria-hidden
             className="flex h-7 w-7 items-center justify-center rounded-md border border-[var(--border-subtle)] bg-[var(--bg-subtle)] text-[var(--text-secondary)]"
           >
             <Bell className="h-3.5 w-3.5" />
-          </button>
+          </div>
         </motion.div>
 
         <div className="grid grid-cols-2 gap-2 sm:grid-cols-4 md:gap-2.5">
