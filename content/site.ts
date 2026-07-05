@@ -104,6 +104,9 @@ export const site = {
   ] as Plan[],
   preciosTrial: "Empieza con 14 días gratis. Sin tarjeta.",
   preciosNota: "Precio de fundador garantizado para quienes entren por la lista de espera.",
+  // Contenido de components/SecuritySection.tsx — sección deshabilitada
+  // mientras estemos en fase lista de espera (sin pasarela de pago aún).
+  // Se conserva para reactivación futura, ver nota en ese componente.
   seguridad: {
     titulo: "Tu plata y tus datos, protegidos desde el día uno.",
     intro:

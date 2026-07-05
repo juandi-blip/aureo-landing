@@ -135,10 +135,7 @@ export function PricingTable() {
             <rect width="18" height="11" x="3" y="11" rx="2" ry="2" />
             <path d="M7 11V7a5 5 0 0 1 10 0v4" />
           </svg>
-          Pagos protegidos y cifrados.{" "}
-          <a href="#seguridad" className="font-medium text-[var(--primary)] underline-offset-2 hover:underline">
-            Mira cómo te cuidamos
-          </a>
+          Sin tarjeta y sin cobros hoy: solo reservas tu cupo y tu precio de fundador.
         </motion.p>
       </div>
     </section>

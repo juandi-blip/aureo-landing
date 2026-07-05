@@ -1,4 +1,13 @@
 // components/SecuritySection.tsx
+//
+// NOTA (fase lista de espera, 2026-07): este componente no se renderiza
+// actualmente en app/page.tsx. Muestra métodos de pago (tarjeta/PSE/Nequi)
+// y garantías de seguridad de pago, pero hoy no existe pasarela de pago ni
+// facturación DIAN integrada — no se puede cobrar nada todavía, así que
+// prometer "cómo protegemos tu pago" es prematuro y genera expectativa
+// falsa. Se conserva el componente y el contenido (site.seguridad en
+// content/site.ts) intactos para reactivarlo apenas haya una pasarela real:
+// basta con volver a importarlo y renderizarlo en app/page.tsx.
 "use client";
 import { motion } from "motion/react";
 import {
