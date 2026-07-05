@@ -102,8 +102,13 @@ export const site = {
       cta: "Unirme a la lista de espera",
     },
   ] as Plan[],
-  preciosTrial: "Empieza con 14 días gratis. Sin tarjeta.",
-  preciosNota: "Precio de fundador garantizado para quienes entren por la lista de espera.",
+  preciosTrial: "Al lanzamiento: 14 días gratis, sin tarjeta.",
+  preciosNota: "Precio de fundador de por vida para quienes entran por la lista de espera — nunca sube para ti, aunque suba después del lanzamiento.",
+  earlyBird: {
+    badge: "Fundador temprano",
+    titulo: "Los primeros en la lista se llevan el mejor precio.",
+    texto: "Quienes se unan en esta primera etapa acceden a un descuento extra sobre el precio de fundador. Cuanto antes entres, mejor cupo aseguras.",
+  },
   // Contenido de components/SecuritySection.tsx — sección deshabilitada
   // mientras estemos en fase lista de espera (sin pasarela de pago aún).
   // Se conserva para reactivación futura, ver nota en ese componente.
@@ -155,6 +160,7 @@ export const site = {
     titulo: "Sé de los primeros en tener el control.",
     texto: "Únete a la lista de espera y asegura tu precio de fundador.",
     cta: "Unirme ahora",
+    referido: "¿Conoces a alguien con ferretería, distribuidora o bodega? Comparte tu invitación — cada referido que se una te acerca más a un cupo temprano.",
   },
   footer: {
     tagline: "Inteligencia logística para tu negocio.",

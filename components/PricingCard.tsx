@@ -85,7 +85,7 @@ export function PricingCard({
         >
           {periodo === "anual"
             ? "facturado anual · 2 meses gratis"
-            : "14 días gratis, sin tarjeta"}
+            : "Al lanzamiento: 14 días gratis"}
         </p>
 
         <ul className="mt-6 space-y-3 text-sm">

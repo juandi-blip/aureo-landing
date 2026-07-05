@@ -58,6 +58,16 @@ export function FinalCTA() {
         >
           <WaitlistForm origen="final" />
         </motion.div>
+
+        <motion.p
+          className="mx-auto mt-6 max-w-md text-sm text-[var(--text-cream)]/60"
+          variants={fadeUp}
+          initial="hidden"
+          whileInView="visible"
+          viewport={VIEWPORT}
+        >
+          {site.finalCta.referido}
+        </motion.p>
       </div>
     </section>
   );

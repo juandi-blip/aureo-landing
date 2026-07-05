@@ -87,6 +87,20 @@ export function PricingTable() {
           {site.preciosTrial}
         </motion.p>
 
+        <motion.div
+          className="mx-auto mt-6 flex max-w-xl flex-col items-center gap-1 rounded-2xl border border-[var(--emerald)]/25 bg-[var(--emerald)]/5 px-5 py-4 text-center"
+          variants={fadeUp}
+          initial="hidden"
+          whileInView="visible"
+          viewport={VIEWPORT}
+        >
+          <span className="rounded-full bg-[var(--emerald)]/15 px-2.5 py-0.5 text-[0.7rem] font-semibold uppercase tracking-wide text-[var(--emerald)]">
+            {site.earlyBird.badge}
+          </span>
+          <p className="mt-2 text-sm font-medium text-[var(--text-primary)]">{site.earlyBird.titulo}</p>
+          <p className="text-sm text-[var(--text-secondary)]">{site.earlyBird.texto}</p>
+        </motion.div>
+
         <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
           <SegmentedToggle
             label="Periodo de facturación"
