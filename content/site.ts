@@ -4,7 +4,7 @@ export type Periodo = "mensual" | "anual";
 export type PlanPrecios = { cop: Record<Periodo, number>; usd: Record<Periodo, number> };
 export type Plan = {
   nombre: string; resumen: string; destacado: boolean;
-  precios: PlanPrecios; features: string[]; cta: string;
+  precios: PlanPrecios; precioRegular: PlanPrecios; features: string[]; cta: string;
 };
 export type FaqItem = { pregunta: string; respuesta: string };
 
@@ -64,6 +64,7 @@ export const site = {
       resumen: "Para vender y controlar tu stock sin desorden.",
       destacado: false,
       precios: { cop: { mensual: 24900, anual: 20750 }, usd: { mensual: 6, anual: 5 } },
+      precioRegular: { cop: { mensual: 34900, anual: 29100 }, usd: { mensual: 8, anual: 7 } },
       features: [
         "Punto de venta y facturación DIAN",
         "Inventario en tiempo real",
@@ -78,6 +79,7 @@ export const site = {
       resumen: "Para operar en serio, con equipo y reportes.",
       destacado: false,
       precios: { cop: { mensual: 54900, anual: 45750 }, usd: { mensual: 14, anual: 12 } },
+      precioRegular: { cop: { mensual: 79900, anual: 66600 }, usd: { mensual: 20, anual: 17 } },
       features: [
         "Todo lo de Starter",
         "Usuarios y roles: admin, depósito, caja",
@@ -92,6 +94,7 @@ export const site = {
       resumen: "La inteligencia logística que te diferencia.",
       destacado: true,
       precios: { cop: { mensual: 94900, anual: 79100 }, usd: { mensual: 24, anual: 20 } },
+      precioRegular: { cop: { mensual: 139900, anual: 116600 }, usd: { mensual: 35, anual: 29 } },
       features: [
         "Todo lo de Pro",
         "Mapa de calor de bodega (WMS)",

@@ -20,6 +20,7 @@ export function PricingCard({
 }) {
   const hl = plan.destacado;
   const precio = formatPrecio(plan.precios[moneda][periodo], moneda);
+  const precioRegular = formatPrecio(plan.precioRegular[moneda][periodo], moneda);
 
   return (
     <div className="group relative">
@@ -42,11 +43,20 @@ export function PricingCard({
           boxShadow: { duration: 2.8, repeat: Infinity, ease: "easeInOut" },
         } : {}}
       >
-        {hl && (
-          <span className="shimmer-btn relative mb-3 inline-block overflow-hidden rounded-full bg-[var(--bronze)] px-3 py-1 text-xs font-semibold text-white">
-            Más popular
+        <div className="mb-3 flex flex-wrap items-center gap-2">
+          {hl && (
+            <span className="shimmer-btn relative inline-block overflow-hidden rounded-full bg-[var(--bronze)] px-3 py-1 text-xs font-semibold text-white">
+              Más popular
+            </span>
+          )}
+          <span
+            className={`inline-block rounded-full px-3 py-1 text-xs font-semibold ${
+              hl ? "bg-[var(--emerald)]/25 text-[var(--text-cream)]" : "bg-[var(--emerald)]/15 text-[var(--emerald)]"
+            }`}
+          >
+            Precio fundador
           </span>
-        )}
+        </div>
 
         <h3
           className={`font-display text-2xl font-bold ${
@@ -62,7 +72,16 @@ export function PricingCard({
         >
           {plan.resumen}
         </p>
-        <p className="mt-4">
+        <p className="mt-4 flex flex-wrap items-baseline gap-2">
+          <span className="sr-only">Precio regular: </span>
+          <del
+            className={`text-sm line-through ${
+              hl ? "text-[var(--text-cream)]/40" : "text-[var(--text-secondary)]/60"
+            }`}
+          >
+            {precioRegular}
+          </del>
+          <span className="sr-only">Precio fundador: </span>
           <span
             className={`font-display text-3xl font-extrabold ${
               hl ? "text-[var(--bronze)]" : "text-[var(--primary)]"
