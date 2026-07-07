@@ -1,6 +1,7 @@
 import { Nav } from "@/components/Nav";
 import { Hero } from "@/components/Hero";
 import { ProblemSection } from "@/components/ProblemSection";
+import { ComparisonSection } from "@/components/ComparisonSection";
 import { HowItWorks } from "@/components/HowItWorks";
 import { ModulesGrid } from "@/components/ModulesGrid";
 import { DemoSection } from "@/components/DemoSection";
@@ -25,6 +26,7 @@ export default function Home() {
       <main>
         <Hero />
         <ProblemSection />
+        <ComparisonSection />
         <HowItWorks />
         <ModulesGrid />
         <DemoSection />
