@@ -79,10 +79,16 @@ export async function POST(request: Request) {
 
   try {
     const supabase = getSupabaseAdmin();
-    const { error } = await supabase.from("waitlist").insert(parsed.data);
+    const { data, error } = await supabase
+      .from("waitlist")
+      .insert(parsed.data)
+      .select("id")
+      .single();
     if (error) {
       if (error.code === "23505") {
         // Duplicate email: treat as success so users don't enumerate the list.
+        // Deliberately no `token` here — handing one out on a duplicate would let
+        // anyone who merely knows a registered email fetch its ownership token.
         return NextResponse.json({ ok: true }, { status: 200 });
       }
       return NextResponse.json({ ok: false, error: "No pudimos registrarte. Intenta de nuevo." }, { status: 500 });
@@ -91,7 +97,10 @@ export async function POST(request: Request) {
     // Fire-and-forget email notification — never block the response on it.
     notifyNewSignup(parsed.data.email, parsed.data.origen ?? "unknown").catch(() => {});
 
-    return NextResponse.json({ ok: true }, { status: 200 });
+    // `token` is this row's own id — an opaque ownership proof the client must
+    // send back on PATCH. It is only ever handed out here, on a genuine new
+    // insert, so possessing it proves the caller is the original submitter.
+    return NextResponse.json({ ok: true, token: data.id }, { status: 200 });
   } catch {
     return NextResponse.json({ ok: false, error: "Error del servidor." }, { status: 500 });
   }
@@ -100,6 +109,10 @@ export async function POST(request: Request) {
 // Enriquecimiento opcional (paso 2 del formulario): actualiza nombre/negocio/
 // ciudad de un registro ya existente. Nunca inserta, nunca notifica por
 // correo — es un update silencioso que no debe bloquear al usuario.
+//
+// Requiere `token` (el id devuelto por el POST original) además de `email`:
+// sin probar que el caller es quien hizo el alta, cualquiera que supiera un
+// correo registrado podría sobrescribir el perfil de otra persona (IDOR).
 export async function PATCH(request: Request) {
   const guardResponse = await runGuards(request);
   if (guardResponse) return guardResponse;
@@ -119,19 +132,29 @@ export async function PATCH(request: Request) {
     return NextResponse.json({ ok: false, error: parsed.error }, { status: 400 });
   }
 
+  const b = body as Record<string, unknown>;
+  const token = typeof b.token === "string" ? b.token.trim().slice(0, 64) : "";
+
   const { email, nombre, negocio, ciudad } = parsed.data;
   const updates: Record<string, string> = {};
   if (nombre) updates.nombre = nombre;
   if (negocio) updates.negocio = negocio;
   if (ciudad) updates.ciudad = ciudad;
 
-  if (Object.keys(updates).length === 0) {
+  if (!token || Object.keys(updates).length === 0) {
+    // Sin token no se puede probar propiedad del registro, y sin campos no
+    // hay nada que actualizar — en ambos casos se responde éxito genérico
+    // sin tocar la base ni delatar cuál de las dos condiciones falló.
     return NextResponse.json({ ok: true }, { status: 200 });
   }
 
   try {
     const supabase = getSupabaseAdmin();
-    const { error } = await supabase.from("waitlist").update(updates).eq("email", email);
+    const { error } = await supabase
+      .from("waitlist")
+      .update(updates)
+      .eq("email", email)
+      .eq("id", token);
     if (error) {
       return NextResponse.json({ ok: false, error: "No pudimos actualizar tu perfil." }, { status: 500 });
     }
