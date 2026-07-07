@@ -15,12 +15,14 @@ function isAllowedOrigin(request: Request): boolean {
   }
 }
 
-export async function POST(request: Request) {
+// Guardas comunes a POST y PATCH: origen, content-type, tamaño, bot y rate limit.
+// Devuelve la respuesta a retornar si alguna guarda bloquea la solicitud, o
+// null si puede continuar.
+async function runGuards(request: Request): Promise<NextResponse | null> {
   if (!isAllowedOrigin(request)) {
     return NextResponse.json({ ok: false, error: "Origen no permitido." }, { status: 403 });
   }
 
-  // Content-Type guard
   const ct = request.headers.get("content-type") ?? "";
   if (!ct.includes("application/json")) {
     return NextResponse.json({ ok: false, error: "Solicitud inválida." }, { status: 415 });
@@ -52,6 +54,13 @@ export async function POST(request: Request) {
     );
   }
 
+  return null;
+}
+
+export async function POST(request: Request) {
+  const guardResponse = await runGuards(request);
+  if (guardResponse) return guardResponse;
+
   let body: unknown;
   try {
     body = await request.json();
@@ -82,6 +91,50 @@ export async function POST(request: Request) {
     // Fire-and-forget email notification — never block the response on it.
     notifyNewSignup(parsed.data.email, parsed.data.origen ?? "unknown").catch(() => {});
 
+    return NextResponse.json({ ok: true }, { status: 200 });
+  } catch {
+    return NextResponse.json({ ok: false, error: "Error del servidor." }, { status: 500 });
+  }
+}
+
+// Enriquecimiento opcional (paso 2 del formulario): actualiza nombre/negocio/
+// ciudad de un registro ya existente. Nunca inserta, nunca notifica por
+// correo — es un update silencioso que no debe bloquear al usuario.
+export async function PATCH(request: Request) {
+  const guardResponse = await runGuards(request);
+  if (guardResponse) return guardResponse;
+
+  let body: unknown;
+  try {
+    body = await request.json();
+  } catch {
+    return NextResponse.json({ ok: false, error: "Solicitud inválida." }, { status: 400 });
+  }
+
+  const parsed = parseWaitlistPayload(body);
+  if (!parsed.ok) {
+    if ("bot" in parsed) {
+      return NextResponse.json({ ok: true }, { status: 200 });
+    }
+    return NextResponse.json({ ok: false, error: parsed.error }, { status: 400 });
+  }
+
+  const { email, nombre, negocio, ciudad } = parsed.data;
+  const updates: Record<string, string> = {};
+  if (nombre) updates.nombre = nombre;
+  if (negocio) updates.negocio = negocio;
+  if (ciudad) updates.ciudad = ciudad;
+
+  if (Object.keys(updates).length === 0) {
+    return NextResponse.json({ ok: true }, { status: 200 });
+  }
+
+  try {
+    const supabase = getSupabaseAdmin();
+    const { error } = await supabase.from("waitlist").update(updates).eq("email", email);
+    if (error) {
+      return NextResponse.json({ ok: false, error: "No pudimos actualizar tu perfil." }, { status: 500 });
+    }
     return NextResponse.json({ ok: true }, { status: 200 });
   } catch {
     return NextResponse.json({ ok: false, error: "Error del servidor." }, { status: 500 });
