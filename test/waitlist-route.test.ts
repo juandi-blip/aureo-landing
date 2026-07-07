@@ -87,6 +87,16 @@ describe("PATCH /api/waitlist", () => {
     expect(updateMock).not.toHaveBeenCalled();
   });
 
+  it("no actualiza nada si el token no coincide con ninguna fila (Supabase no devuelve error, solo 0 filas afectadas)", async () => {
+    eq2Mock.mockResolvedValue({ error: null });
+    const res = await PATCH(req({ email: "a@b.com", token: "wrong-token", nombre: "Ana" }, "PATCH"));
+    expect(res.status).toBe(200);
+    const json = await res.json();
+    expect(json.ok).toBe(true);
+    expect(updateMock).toHaveBeenCalledWith({ nombre: "Ana" });
+    expect(eq2Mock).toHaveBeenCalledWith("id", "wrong-token");
+  });
+
   it("responde 200 sin tocar la base si no hay campos para actualizar", async () => {
     const res = await PATCH(req({ email: "a@b.com", token: "row-uuid-1" }, "PATCH"));
     expect(res.status).toBe(200);
