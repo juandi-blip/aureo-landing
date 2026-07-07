@@ -7,6 +7,8 @@ export type Plan = {
   precios: PlanPrecios; precioRegular: PlanPrecios; features: string[]; cta: string;
 };
 export type FaqItem = { pregunta: string; respuesta: string };
+export type ComparativaValor = "si" | "no" | "parcial";
+export type ComparativaFila = { criterio: string; valores: ComparativaValor[] };
 
 export const site = {
   marca: "Aureo",
@@ -46,6 +48,18 @@ export const site = {
     { id: "picking", titulo: "Preparación de pedidos", beneficio: "Recorridos optimizados para despachar más rápido y sin errores.", icono: "route" },
     { id: "reubicacion", titulo: "Reubicación inteligente", beneficio: "Sugerencias para ubicar lo que más rota cerca del despacho.", icono: "arrow-right-left" },
   ] as Module[],
+  comparativa: {
+    titulo: "Por qué Aureo gana donde el cuaderno y el Excel se quedan cortos.",
+    columnas: ["Cuaderno o Excel", "Otro software", "Aureo"],
+    filas: [
+      { criterio: "Ubicar productos sin perder tiempo", valores: ["no", "parcial", "si"] },
+      { criterio: "Saber qué rota y qué no", valores: ["no", "parcial", "si"] },
+      { criterio: "Despacho rápido y guiado", valores: ["no", "no", "si"] },
+      { criterio: "Inventario que siempre cuadra", valores: ["no", "parcial", "si"] },
+      { criterio: "Precio para negocio pequeño", valores: ["si", "no", "si"] },
+      { criterio: "Empieza a usarse en minutos", valores: ["si", "no", "si"] },
+    ] as ComparativaFila[],
+  },
   demo: {
     titulo: "Mira la inteligencia logística en acción.",
     texto: "El mapa de calor y el análisis ABC son lo que separa a Aureo de un POS común.",
