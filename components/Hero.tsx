@@ -1,8 +1,9 @@
 // components/Hero.tsx
 "use client";
+import { useState } from "react";
 import { motion, useReducedMotion } from "motion/react";
 import { site } from "@/content/site";
-import { WaitlistForm } from "@/components/WaitlistForm";
+import { WaitlistForm, type WaitlistStep } from "@/components/WaitlistForm";
 import { FloatingParticles } from "@/components/ui/FloatingParticles";
 import { DashboardMock } from "@/components/ui/DashboardMock";
 import {
@@ -13,6 +14,7 @@ import { ParallaxLayer } from "@/components/ui/ParallaxLayer";
 
 export function Hero() {
   const reduce = useReducedMotion();
+  const [formStep, setFormStep] = useState<WaitlistStep>("email");
 
   return (
     <section
@@ -105,10 +107,12 @@ export function Hero() {
             animate={{ opacity: 1, y: 0 }}
             transition={reducedTransition(reduce, HERO_TIMING.form)}
           >
-            <WaitlistForm origen="hero" />
-            <p className="mt-3 text-sm text-[var(--text-secondary)]">
-              {site.hero.nota}
-            </p>
+            <WaitlistForm origen="hero" onStepChange={setFormStep} />
+            {formStep === "email" && (
+              <p className="mt-3 text-sm text-[var(--text-secondary)]">
+                {site.hero.nota}
+              </p>
+            )}
           </motion.div>
         </div>
 
