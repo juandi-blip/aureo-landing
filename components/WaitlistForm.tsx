@@ -140,6 +140,7 @@ function DetalleForm({
     setLoading(true);
     const negocioFinal = negocio === "Otro" ? negocioOtro : negocio;
     try {
+      // Response deliberately not inspected to keep genuine server errors indistinguishable from anti-IDOR silent no-ops.
       await fetch("/api/waitlist", {
         method: "PATCH",
         headers: { "content-type": "application/json" },
@@ -205,6 +206,7 @@ function DetalleForm({
           <button
             type="button"
             onClick={onDone}
+            disabled={loading}
             className="text-sm text-[var(--text-secondary)] underline underline-offset-2"
           >
             Ahora no
