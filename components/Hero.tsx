@@ -60,25 +60,9 @@ export function Hero() {
             <h1 className="relative z-10 font-display text-[2.35rem] font-extrabold leading-[1.06] tracking-tight text-[var(--text-primary)] sm:text-5xl lg:text-[3rem] lg:leading-[1.08] xl:text-[3.5rem]">
               {site.hero.tituloLineas.map((line, i) => (
                 <span key={line} className="block overflow-hidden">
-                  <motion.span
-                    className="block"
-                    initial={{ y: reduce ? 0 : "110%", opacity: reduce ? 1 : 0 }}
-                    animate={{ y: 0, opacity: 1 }}
-                    transition={
-                      reduce
-                        ? { duration: 0 }
-                        : {
-                            delay:
-                              i === 0
-                                ? HERO_TIMING.titleLine1
-                                : HERO_TIMING.titleLine2,
-                            duration: 0.65,
-                            ease: [0.22, 1, 0.36, 1],
-                          }
-                    }
-                  >
+                  <span className={`hero-line ${i === 0 ? "hero-line-1" : "hero-line-2"}`}>
                     {line}
-                  </motion.span>
+                  </span>
                 </span>
               ))}
             </h1>
@@ -92,28 +76,18 @@ export function Hero() {
             aria-hidden
           />
 
-          <motion.p
-            className="mt-5 max-w-md text-base leading-relaxed text-[var(--text-secondary)] md:mt-6 md:text-lg"
-            initial={{ opacity: 0, y: reduce ? 0 : 16 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={reducedTransition(reduce, HERO_TIMING.subtitle)}
-          >
+          <p className="hero-fade hero-fade-subtitle mt-5 max-w-md text-base leading-relaxed text-[var(--text-secondary)] md:mt-6 md:text-lg">
             {site.hero.subtitulo}
-          </motion.p>
+          </p>
 
-          <motion.div
-            className="mt-7 md:mt-8"
-            initial={{ opacity: 0, y: reduce ? 0 : 16 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={reducedTransition(reduce, HERO_TIMING.form)}
-          >
+          <div className="hero-fade hero-fade-form mt-7 md:mt-8">
             <WaitlistForm origen="hero" onStepChange={setFormStep} />
             {formStep === "email" && (
               <p className="mt-3 text-sm text-[var(--text-secondary)]">
                 {site.hero.nota}
               </p>
             )}
-          </motion.div>
+          </div>
         </div>
 
         {/* Dashboard */}

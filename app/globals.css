@@ -276,6 +276,35 @@ body {
   animation: gold-glow-pulse-dim 3s ease-in-out infinite;
 }
 
+/* Hero entrance — CSS-driven so LCP content paints without waiting for JS hydration */
+@keyframes hero-line-reveal {
+  from { opacity: 0; transform: translateY(110%); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes hero-fade-up {
+  from { opacity: 0; transform: translateY(16px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.hero-line {
+  display: block;
+  animation: hero-line-reveal 0.65s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+.hero-line-1 { animation-delay: 0.2s; }
+.hero-line-2 { animation-delay: 0.38s; }
+
+.hero-fade { animation: hero-fade-up 0.55s cubic-bezier(0.22, 1, 0.36, 1) both; }
+.hero-fade-subtitle { animation-delay: 0.58s; }
+.hero-fade-form { animation-delay: 0.72s; }
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-line, .hero-fade {
+    animation: none;
+    opacity: 1;
+    transform: none;
+  }
+}
+
 /* Footer link underline from left */
 .link-underline {
   position: relative;
