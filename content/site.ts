@@ -70,6 +70,7 @@ export const site = {
   fundadores: {
     titulo: "Lo que aprendimos manejando stock de verdad.",
     texto: "Empezamos porque el inventario no cuadraba, el despacho era lento y las herramientas eran caras o incompletas. Aureo concentra POS, bodega y análisis en un solo sistema — pensado desde el piso del depósito.",
+    nombres: "Leif Guy Florez y Juan David Florez, fundadores de Aureo.",
     socialProofPlaceholder: "Primeras implementaciones en curso.",
   },
   planes: [

@@ -22,6 +22,16 @@ export function FoundersStory() {
         </motion.p>
 
         <motion.p
+          className="mt-5 text-sm font-semibold text-[var(--text-primary)]"
+          variants={fadeUp}
+          initial="hidden"
+          whileInView="visible"
+          viewport={VIEWPORT}
+        >
+          {site.fundadores.nombres}
+        </motion.p>
+
+        <motion.p
           className="mt-6 text-xs uppercase tracking-widest text-[var(--text-muted)]"
           variants={fadeUp}
           initial="hidden"
