@@ -28,6 +28,7 @@ export function WaitlistForm({
   const [emailState, setEmailState] = useState<EmailState>("idle");
   const [msg, setMsg] = useState("");
   const [token, setToken] = useState("");
+  const [shareCode, setShareCode] = useState("");
   const [step, setStepState] = useState<WaitlistStep>("email");
   const [refCode, setRefCode] = useState("");
 
@@ -35,6 +36,30 @@ export function WaitlistForm({
     const ref = new URLSearchParams(window.location.search).get("ref");
     if (ref) setRefCode(ref.trim().slice(0, 40));
   }, []);
+
+  useEffect(() => {
+    if (!token) {
+      setShareCode("");
+      return;
+    }
+    let cancelled = false;
+    crypto.subtle
+      .digest("SHA-256", new TextEncoder().encode(token))
+      .then((buf) => {
+        if (cancelled) return;
+        const hex = Array.from(new Uint8Array(buf))
+          .map((b) => b.toString(16).padStart(2, "0"))
+          .join("");
+        // Prefijo "r-" garantiza que este codigo nunca coincide con un id
+        // real de Supabase (formato UUID), asi que aunque se comparta
+        // publicamente nunca sirve para autorizar el PATCH del perfil.
+        setShareCode(`r-${hex.slice(0, 24)}`);
+      })
+      .catch(() => setShareCode(""));
+    return () => {
+      cancelled = true;
+    };
+  }, [token]);
 
   function setStep(next: WaitlistStep) {
     setStepState(next);
@@ -73,8 +98,8 @@ export function WaitlistForm({
 
   if (step === "done") {
     const shareLink =
-      typeof window !== "undefined" && token
-        ? `${window.location.origin}${window.location.pathname}?ref=${token}`
+      typeof window !== "undefined" && shareCode
+        ? `${window.location.origin}${window.location.pathname}?ref=${shareCode}`
         : "";
     return (
       <div className="flex flex-col gap-2">

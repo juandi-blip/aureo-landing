@@ -63,7 +63,7 @@ test("captures ?ref= and shows a shareable link after signup", async ({ page }) 
   await page.getByRole("button", { name: "Ahora no" }).click();
   await expect(page.getByRole("status").first()).toContainText("Te avisaremos apenas lancemos");
   await expect(page.getByLabel("Tu link de invitación")).toHaveValue(
-    /ref=11111111-2222-3333-4444-555555555555$/
+    /\?ref=r-[0-9a-f]{24}$/
   );
 });
 
