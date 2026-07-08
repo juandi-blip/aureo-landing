@@ -8,24 +8,6 @@ export const fadeUp = {
   },
 };
 
-export const fadeLeft = {
-  hidden: { opacity: 0, x: -40 },
-  visible: {
-    opacity: 1,
-    x: 0,
-    transition: { type: "spring" as const, damping: 25, stiffness: 120 },
-  },
-};
-
-export const fadeRight = {
-  hidden: { opacity: 0, x: 40 },
-  visible: {
-    opacity: 1,
-    x: 0,
-    transition: { type: "spring" as const, damping: 25, stiffness: 120 },
-  },
-};
-
 export const staggerContainer = {
   hidden: {},
   visible: {
@@ -68,21 +50,6 @@ export const HERO_TIMING = {
 } as const;
 
 export const easeOut = [0.22, 1, 0.36, 1] as const;
-
-export const heroDashboardEnter = {
-  hidden: { opacity: 0, x: 48, scale: 0.96 },
-  visible: {
-    opacity: 1,
-    x: 0,
-    scale: 1,
-    transition: {
-      delay: HERO_TIMING.dashboard,
-      type: "spring" as const,
-      damping: 28,
-      stiffness: 110,
-    },
-  },
-};
 
 export function reducedTransition(
   reduce: boolean | null,

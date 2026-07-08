@@ -19,7 +19,6 @@ export const site = {
       "ventas y bodega en un solo lugar.",
     ],
     subtitulo: "Aureo le da a tu negocio la inteligencia logística que antes solo tenían las grandes empresas — sin su complejidad ni su precio.",
-    cta: "Unirme a la lista de espera",
     nota: "Acceso anticipado y precio de fundador para los primeros negocios.",
   },
   problema: {

@@ -12,6 +12,8 @@ import {
 } from "@/lib/motion";
 import { ParallaxLayer } from "@/components/ui/ParallaxLayer";
 
+const DEMO_URL = process.env.NEXT_PUBLIC_DEMO_URL || "";
+
 export function Hero() {
   const reduce = useReducedMotion();
   const [formStep, setFormStep] = useState<WaitlistStep>("email");
@@ -86,6 +88,16 @@ export function Hero() {
               <p className="mt-3 text-sm text-[var(--text-secondary)]">
                 {site.hero.nota}
               </p>
+            )}
+            {formStep === "email" && DEMO_URL && (
+              <a
+                href={DEMO_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="mt-2 inline-flex items-center gap-1.5 text-sm font-medium text-[var(--bronze)] underline underline-offset-2 hover:text-[var(--bronze)]/80"
+              >
+                o explora la demo sin registrarte →
+              </a>
             )}
           </div>
         </div>
