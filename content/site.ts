@@ -61,8 +61,10 @@ export const site = {
     ] as ComparativaFila[],
   },
   demo: {
+    eyebrow: "Producto real, no un mockup.",
     titulo: "Mira la inteligencia logística en acción.",
     texto: "El mapa de calor y el análisis ABC son lo que separa a Aureo de un POS común.",
+    badges: ["Mapa de calor en vivo", "Picking guiado", "Análisis ABC / Pareto"],
     placeholder: "Demo en video — próximamente.",
     ctaExplorar: "Explora la demo tú mismo",
     ctaExplorarNota: "No es un video — es Aureo funcionando. Recorre el inventario, el mapa de calor y el picking con datos reales, sin registrarte.",
