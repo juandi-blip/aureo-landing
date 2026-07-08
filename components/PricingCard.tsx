@@ -26,22 +26,12 @@ export function PricingCard({
     <div className="group relative">
       {/* Gold border animation — follows exact card shape */}
       <div className={`gold-card-border pointer-events-none absolute inset-0 rounded-[var(--radius-lg)]${hl ? "" : " gold-card-border-dim"}`} aria-hidden />
-      <motion.div
+      <div
         className={`relative z-[1] overflow-hidden rounded-[var(--radius-lg)] p-8 transition-shadow duration-300 ${
           hl
             ? "bg-[var(--bg-navy)] shadow-xl"
             : "bg-[var(--bg-surface)]"
         }`}
-        animate={hl ? {
-          boxShadow: [
-            "0 0 18px rgba(168,116,43,0.12), 0 20px 40px rgba(0,0,0,0.25)",
-            "0 0 38px rgba(168,116,43,0.28), 0 20px 40px rgba(0,0,0,0.25)",
-            "0 0 18px rgba(168,116,43,0.12), 0 20px 40px rgba(0,0,0,0.25)",
-          ],
-        } : {}}
-        transition={hl ? {
-          boxShadow: { duration: 2.8, repeat: Infinity, ease: "easeInOut" },
-        } : {}}
       >
         <div className="mb-3 flex flex-wrap items-center gap-2">
           {hl && (
@@ -152,7 +142,7 @@ export function PricingCard({
           )}
           {plan.cta}
         </motion.a>
-      </motion.div>
+      </div>
     </div>
   );
 }
