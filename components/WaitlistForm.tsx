@@ -1,5 +1,5 @@
 "use client";
-import { useId, useState } from "react";
+import { useEffect, useId, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { HONEYPOT_FIELD } from "@/lib/validation";
@@ -29,6 +29,12 @@ export function WaitlistForm({
   const [msg, setMsg] = useState("");
   const [token, setToken] = useState("");
   const [step, setStepState] = useState<WaitlistStep>("email");
+  const [refCode, setRefCode] = useState("");
+
+  useEffect(() => {
+    const ref = new URLSearchParams(window.location.search).get("ref");
+    if (ref) setRefCode(ref.trim().slice(0, 40));
+  }, []);
 
   function setStep(next: WaitlistStep) {
     setStepState(next);
@@ -43,7 +49,11 @@ export function WaitlistForm({
       const res = await fetch("/api/waitlist", {
         method: "POST",
         headers: { "content-type": "application/json" },
-        body: JSON.stringify({ email, origen, [HONEYPOT_FIELD]: hp }),
+        body: JSON.stringify({
+          email,
+          origen: refCode ? `${origen}:ref:${refCode}` : origen,
+          [HONEYPOT_FIELD]: hp,
+        }),
       });
       const json = await res.json();
       if (res.ok && json.ok) {
@@ -62,10 +72,36 @@ export function WaitlistForm({
   }
 
   if (step === "done") {
+    const shareLink =
+      typeof window !== "undefined" && token
+        ? `${window.location.origin}${window.location.pathname}?ref=${token}`
+        : "";
     return (
-      <p role="status" className="text-[var(--emerald)] font-semibold">
-        ¡Gracias! Te avisaremos apenas lancemos.
-      </p>
+      <div className="flex flex-col gap-2">
+        <p role="status" className="text-[var(--emerald)] font-semibold">
+          ¡Gracias! Te avisaremos apenas lancemos.
+        </p>
+        {shareLink && (
+          <div className="flex flex-col gap-1.5 sm:flex-row sm:items-center">
+            <input
+              readOnly
+              aria-label="Tu link de invitación"
+              value={shareLink}
+              onFocus={(e) => e.currentTarget.select()}
+              className="min-h-9 flex-1 rounded-lg border border-[var(--border-subtle)] bg-[var(--bg-base)] px-2.5 text-sm text-[var(--text-primary)]"
+            />
+            <button
+              type="button"
+              onClick={() => {
+                navigator.clipboard?.writeText(shareLink).catch(() => {});
+              }}
+              className="min-h-9 rounded-lg border border-[var(--bronze)] px-3 text-sm font-semibold text-[var(--bronze)]"
+            >
+              Copiar link
+            </button>
+          </div>
+        )}
+      </div>
     );
   }
 
