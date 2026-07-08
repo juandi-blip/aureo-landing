@@ -101,7 +101,7 @@ export function WaitlistForm({
           inputMode="email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
-          className="flex-1 min-h-11"
+          className="flex-1 min-h-11 bg-[var(--bg-base)] text-[var(--text-primary)] border-[var(--border-subtle)]"
         />
         <Button type="submit" disabled={emailState === "loading"} aria-busy={emailState === "loading"} className="min-h-11">
           {emailState === "loading" ? "Enviando…" : "Unirme"}
@@ -166,13 +166,13 @@ function DetalleForm({
           aria-label="Nombre"
           value={nombre}
           onChange={(e) => setNombre(e.target.value)}
-          className="min-h-11"
+          className="min-h-11 bg-[var(--bg-base)] text-[var(--text-primary)] border-[var(--border-subtle)]"
         />
         <select
           aria-label="Tipo de negocio"
           value={negocio}
           onChange={(e) => setNegocio(e.target.value)}
-          className="h-11 w-full rounded-lg border border-input bg-transparent px-2.5 text-base outline-none focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50"
+          className="h-11 w-full rounded-lg border border-[var(--border-subtle)] bg-[var(--bg-base)] px-2.5 text-base text-[var(--text-primary)] outline-none focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50"
         >
           <option value="">Tipo de negocio (opcional)</option>
           {NEGOCIO_OPCIONES.map((op) => (
@@ -188,7 +188,7 @@ function DetalleForm({
             aria-label="Especifica tu tipo de negocio"
             value={negocioOtro}
             onChange={(e) => setNegocioOtro(e.target.value)}
-            className="min-h-11"
+            className="min-h-11 bg-[var(--bg-base)] text-[var(--text-primary)] border-[var(--border-subtle)]"
           />
         )}
         <Input
@@ -197,7 +197,7 @@ function DetalleForm({
           aria-label="Ciudad"
           value={ciudad}
           onChange={(e) => setCiudad(e.target.value)}
-          className="min-h-11"
+          className="min-h-11 bg-[var(--bg-base)] text-[var(--text-primary)] border-[var(--border-subtle)]"
         />
         <div className="flex items-center gap-3">
           <Button type="submit" disabled={loading} aria-busy={loading} className="min-h-11">
@@ -207,7 +207,7 @@ function DetalleForm({
             type="button"
             onClick={onDone}
             disabled={loading}
-            className="text-sm text-[var(--text-secondary)] underline underline-offset-2"
+            className="text-sm text-[var(--bronze)] underline underline-offset-2 disabled:opacity-50"
           >
             Ahora no
           </button>
