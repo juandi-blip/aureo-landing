@@ -50,9 +50,10 @@ export const site = {
   ] as Module[],
   comparativa: {
     titulo: "Por qué Aureo gana donde el cuaderno y el Excel se quedan cortos.",
-    columnas: ["Cuaderno o Excel", "Otro software", "Aureo"],
+    columnas: ["Cuaderno o Excel", "Software contable (Siigo, Alegra…)", "Aureo"],
     filas: [
-      { criterio: "Ubicar productos sin perder tiempo", valores: ["no", "parcial", "si"] },
+      { criterio: "Ubicar productos sin perder tiempo", valores: ["no", "no", "si"] },
+      { criterio: "Mapa de calor y picking guiado de bodega", valores: ["no", "no", "si"] },
       { criterio: "Saber qué rota y qué no", valores: ["no", "parcial", "si"] },
       { criterio: "Despacho rápido y guiado", valores: ["no", "no", "si"] },
       { criterio: "Inventario que siempre cuadra", valores: ["no", "parcial", "si"] },
