@@ -8,7 +8,12 @@ function getRatelimit(): Ratelimit | null {
   if (ratelimit) return ratelimit;
   const url = process.env.UPSTASH_REDIS_REST_URL?.trim();
   const token = process.env.UPSTASH_REDIS_REST_TOKEN?.trim();
-  if (!url || !token || !url.startsWith("https")) return null;
+  if (!url || !token || !url.startsWith("https")) {
+    if (process.env.NODE_ENV === "production") {
+      console.warn("[ratelimit] Upstash no configurado — /api/waitlist queda sin límite de tasa.");
+    }
+    return null;
+  }
   ratelimit = new Ratelimit({
     redis: new Redis({ url, token }),
     limiter: Ratelimit.slidingWindow(5, "60 s"),
