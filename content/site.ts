@@ -171,6 +171,8 @@ export const site = {
     { pregunta: "¿Necesito conocimientos técnicos?", respuesta: "No. Aureo está pensado para que cualquier persona del negocio lo use desde el primer día." },
     { pregunta: "¿Funciona en la nube?", respuesta: "Sí. Accedes desde cualquier dispositivo, sin instalar nada, con tus datos siempre respaldados." },
     { pregunta: "¿Sirve solo para ferreterías?", respuesta: "No. Aureo es para cualquier negocio con inventario físico, ventas y bodega: distribuidoras, materiales de construcción, repuestos, agroinsumos y más." },
+    { pregunta: "Ya uso Siigo o Alegra, ¿para qué cambiar?", respuesta: "Siigo y Alegra son software contable — te ayudan a facturar y declarar. Aureo se enfoca en tu bodega: mapa de calor, qué rota y qué no, picking guiado. Muchos negocios usan Aureo junto a su contabilidad, no en reemplazo." },
+    { pregunta: "¿Es difícil migrar mi inventario?", respuesta: "No. Cargas tu inventario actual (por Excel o uno por uno) y Aureo lo organiza por ti. No necesitas empezar de cero." },
     { pregunta: "¿Qué pasa con mis datos?", respuesta: "Tus datos son tuyos. Los protegemos y nunca los compartimos." },
     { pregunta: "¿Cuándo estará disponible?", respuesta: "Estamos en desarrollo. Únete a la lista de espera para tener acceso anticipado y precio de fundador." },
   ] as FaqItem[],

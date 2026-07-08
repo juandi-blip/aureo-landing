@@ -218,6 +218,30 @@ const jsonLd = {
         },
         {
           "@type": "Question",
+          name: "Ya uso Siigo o Alegra, ¿para qué cambiar a Aureo?",
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: "Siigo y Alegra son software contable — ayudan a facturar y declarar. Aureo se enfoca en la bodega: mapa de calor, qué rota y qué no, picking guiado. Muchos negocios usan Aureo junto a su contabilidad, no en reemplazo.",
+          },
+        },
+        {
+          "@type": "Question",
+          name: "¿Es difícil migrar mi inventario a Aureo?",
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: "No. El inventario actual se carga por Excel o uno por uno y Aureo lo organiza automáticamente. No hace falta empezar de cero.",
+          },
+        },
+        {
+          "@type": "Question",
+          name: "¿Qué pasa con mis datos en Aureo?",
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: "Tus datos son tuyos. Los protegemos y nunca los compartimos.",
+          },
+        },
+        {
+          "@type": "Question",
           name: "¿Cuándo estará disponible Aureo?",
           acceptedAnswer: {
             "@type": "Answer",
