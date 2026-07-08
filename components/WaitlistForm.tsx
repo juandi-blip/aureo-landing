@@ -30,18 +30,14 @@ export function WaitlistForm({
   const [token, setToken] = useState("");
   const [shareCode, setShareCode] = useState("");
   const [step, setStepState] = useState<WaitlistStep>("email");
-  const [refCode, setRefCode] = useState("");
-
-  useEffect(() => {
+  const [refCode] = useState(() => {
+    if (typeof window === "undefined") return "";
     const ref = new URLSearchParams(window.location.search).get("ref");
-    if (ref) setRefCode(ref.trim().slice(0, 40));
-  }, []);
+    return ref ? ref.trim().slice(0, 40) : "";
+  });
 
   useEffect(() => {
-    if (!token) {
-      setShareCode("");
-      return;
-    }
+    if (!token) return;
     let cancelled = false;
     crypto.subtle
       .digest("SHA-256", new TextEncoder().encode(token))

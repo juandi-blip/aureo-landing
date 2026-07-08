@@ -5,13 +5,14 @@ describe("checkRateLimit", () => {
 
   beforeEach(() => {
     vi.resetModules();
-    (process.env as any).NODE_ENV = "production";
+    vi.stubEnv("NODE_ENV", "production");
     delete process.env.UPSTASH_REDIS_REST_URL;
     delete process.env.UPSTASH_REDIS_REST_TOKEN;
   });
 
   afterEach(() => {
     process.env = { ...originalEnv };
+    vi.unstubAllEnvs();
     vi.restoreAllMocks();
   });
 
@@ -26,7 +27,7 @@ describe("checkRateLimit", () => {
   });
 
   it("does not warn in non-production when Upstash is not configured", async () => {
-    (process.env as any).NODE_ENV = "test";
+    vi.stubEnv("NODE_ENV", "test");
     const warnSpy = vi.spyOn(console, "warn").mockImplementation(() => {});
     const { checkRateLimit } = await import("@/lib/ratelimit");
     await checkRateLimit("1.2.3.4");
