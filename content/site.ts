@@ -60,6 +60,18 @@ export const site = {
       { criterio: "Empieza a usarse en minutos", valores: ["si", "no", "si"] },
     ] as ComparativaFila[],
   },
+  melyor: {
+    eyebrow: "Exclusivo de Aureo",
+    titulo: "Conoce a Melyor, tu socio operativo de IA.",
+    texto: "Melyor no es un chatbot de soporte. Es el socio silencioso que vigila tu inventario, tus clientes y tus compras — y te avisa antes de que el problema te cueste una venta.",
+    capacidades: [
+      { titulo: "Compras óptimas", texto: "Sugiere cuánto y cuándo reabastecer, según tu demanda real y tiempos de entrega." },
+      { titulo: "Venta cruzada que se te escapa", texto: "Detecta clientes recurrentes a los que podrías venderles más, y te lo dice antes que tu competencia." },
+      { titulo: "Equivalencias al instante", texto: "Resuelve unidades y equivalencias técnicas sin que tengas que buscarlas." },
+      { titulo: "Respuestas sobre tu negocio", texto: "Preguntale por stock bajo, clientes inactivos o facturas pendientes y responde con tus datos reales." },
+    ],
+    nota: "Incluido en Aureo. Se activa junto con tu cuenta — sin configuración adicional.",
+  },
   demo: {
     eyebrow: "Producto real, no un mockup.",
     titulo: "Mira la inteligencia logística en acción.",

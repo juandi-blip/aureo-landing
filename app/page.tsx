@@ -4,6 +4,7 @@ import { ProblemSection } from "@/components/ProblemSection";
 import { ComparisonSection } from "@/components/ComparisonSection";
 import { HowItWorks } from "@/components/HowItWorks";
 import { ModulesGrid } from "@/components/ModulesGrid";
+import { MelyorSection } from "@/components/MelyorSection";
 import { DemoSection } from "@/components/DemoSection";
 import { FoundersStory } from "@/components/FoundersStory";
 import { PricingTable } from "@/components/PricingTable";
@@ -29,6 +30,7 @@ export default function Home() {
         <ComparisonSection />
         <HowItWorks />
         <ModulesGrid />
+        <MelyorSection />
         <DemoSection />
         <FoundersStory />
         <PricingTable />
