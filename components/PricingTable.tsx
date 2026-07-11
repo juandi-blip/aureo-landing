@@ -122,7 +122,7 @@ export function PricingTable() {
           />
         </div>
 
-        <div className="mt-10 grid gap-6 md:grid-cols-3 md:items-start">
+        <div className="mt-10 grid gap-6 lg:grid-cols-3 lg:items-start">
           {site.planes.map((p) => (
             <PricingCard key={p.nombre} plan={p} moneda={moneda} periodo={periodo} />
           ))}
