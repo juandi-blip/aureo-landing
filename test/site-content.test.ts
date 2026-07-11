@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { site } from "@/content/site";
+import { site, type Moneda, type Periodo } from "@/content/site";
 
 describe("site.modulos", () => {
   it("incluye los 10 módulos del producto, incluyendo los nuevos", () => {
@@ -47,9 +47,24 @@ describe("site.planes — precios", () => {
     expect(log.features.some((f) => f.includes("Compras inteligentes"))).toBe(true);
   });
 
-  it("cada plan tiene precio anual estrictamente menor al mensual x12", () => {
+  it("cada plan tiene precio anual menor al mensual (descuento por pago anual)", () => {
     for (const p of site.planes) {
       expect(p.precios.cop.anual).toBeLessThan(p.precios.cop.mensual);
+    }
+  });
+
+  it("precioRegular es siempre mayor que precios (founder < regular) en todos los planes/monedas/periodos", () => {
+    const monedas: Moneda[] = ["cop", "usd"];
+    const periodos: Periodo[] = ["mensual", "anual"];
+
+    for (const p of site.planes) {
+      for (const moneda of monedas) {
+        for (const periodo of periodos) {
+          expect(p.precioRegular[moneda][periodo]).toBeGreaterThan(
+            p.precios[moneda][periodo],
+          );
+        }
+      }
     }
   });
 });
