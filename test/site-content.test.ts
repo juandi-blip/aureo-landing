@@ -17,3 +17,14 @@ describe("site.modulos", () => {
     }
   });
 });
+
+describe("site.melyor", () => {
+  it("tiene identidad de modelo propia", () => {
+    expect(site.melyor.nombre).toBe("Melyor");
+    expect(site.melyor.version).toBe("1");
+  });
+
+  it("tiene 5 capacidades mapeadas a los módulos reales", () => {
+    expect(site.melyor.capacidades).toHaveLength(5);
+  });
+});
