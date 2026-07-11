@@ -33,7 +33,7 @@ export function MelyorSection() {
 
   return (
     <section
-      className="relative overflow-hidden bg-[var(--bg-navy)] py-24"
+      className="relative overflow-hidden bg-[var(--bg-navy)] py-24 border-t border-white/10"
       onMouseMove={spotlight.onMouseMove}
       onMouseLeave={spotlight.onMouseLeave}
     >
