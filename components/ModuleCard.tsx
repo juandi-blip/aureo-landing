@@ -2,7 +2,7 @@
 "use client";
 import { useRef } from "react";
 import { motion, useMotionValue, useSpring } from "motion/react";
-import { ShoppingCart, Boxes, Map, BarChart2, Route, ArrowRightLeft } from "lucide-react";
+import { ShoppingCart, Boxes, Map, BarChart2, Route, ArrowRightLeft, Users, Bell, FileText, ShoppingBag } from "lucide-react";
 import type { Module } from "@/content/site";
 
 const ICON_MAP: Record<string, React.ComponentType<{ className?: string }>> = {
@@ -12,6 +12,10 @@ const ICON_MAP: Record<string, React.ComponentType<{ className?: string }>> = {
   "bar-chart": BarChart2,
   route: Route,
   "arrow-right-left": ArrowRightLeft,
+  users: Users,
+  bell: Bell,
+  "file-text": FileText,
+  "shopping-bag": ShoppingBag,
 };
 
 export function ModuleCard({ module }: { module: Module }) {

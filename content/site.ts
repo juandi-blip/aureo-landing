@@ -46,6 +46,10 @@ export const site = {
     { id: "abc", titulo: "Análisis ABC / Pareto", beneficio: "Descubre el 20% de productos que generan el 80% de tus ventas.", icono: "bar-chart" },
     { id: "picking", titulo: "Preparación de pedidos", beneficio: "Recorridos optimizados para despachar más rápido y sin errores.", icono: "route" },
     { id: "reubicacion", titulo: "Reubicación inteligente", beneficio: "Sugerencias para ubicar lo que más rota cerca del despacho.", icono: "arrow-right-left" },
+    { id: "crm", titulo: "CRM de clientes", beneficio: "Historial de compras, notas y clientes inactivos, sin hoja de cálculo aparte.", icono: "users" },
+    { id: "alertas", titulo: "Alertas proactivas", beneficio: "Te avisa de stock bajo, clientes inactivos y facturas pendientes antes de que te cuesten una venta.", icono: "bell" },
+    { id: "reportes", titulo: "Reportes exportables", beneficio: "Ventas, rotación, rentabilidad y por cliente, listos para exportar cuando los necesites.", icono: "file-text" },
+    { id: "compras", titulo: "Compras inteligentes", beneficio: "Órdenes de compra agrupadas por proveedor, con numeración automática.", icono: "shopping-bag" },
   ] as Module[],
   comparativa: {
     titulo: "Por qué Aureo gana donde el cuaderno y el Excel se quedan cortos.",
