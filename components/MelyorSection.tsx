@@ -1,14 +1,14 @@
 // components/MelyorSection.tsx
 "use client";
 import { motion } from "motion/react";
-import { ShoppingBag, Users, Ruler, MessageCircle } from "lucide-react";
+import { ShoppingBag, Bell, Users, FileText, MessageCircle } from "lucide-react";
 import { site } from "@/content/site";
 import { staggerContainer, fadeUp, VIEWPORT } from "@/lib/motion";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { GrainOverlay } from "@/components/ui/GrainOverlay";
 import { SpotlightGlow, useSpotlight } from "@/components/ui/Spotlight";
 
-const CAPABILITY_ICONS = [ShoppingBag, Users, Ruler, MessageCircle];
+const CAPABILITY_ICONS = [ShoppingBag, Bell, Users, FileText, MessageCircle];
 
 function MelyorBadge() {
   return (
@@ -62,7 +62,22 @@ export function MelyorSection() {
             <MelyorBadge />
           </motion.div>
 
-          <div className="mt-5">
+          <motion.div
+            className="mt-5 flex items-center justify-center gap-2"
+            variants={fadeUp}
+            initial="hidden"
+            whileInView="visible"
+            viewport={VIEWPORT}
+          >
+            <span className="font-display text-2xl font-bold text-[var(--text-cream)]">
+              {site.melyor.nombre}
+            </span>
+            <span className="rounded-md border border-[var(--bronze)]/40 bg-[var(--bronze)]/15 px-2 py-0.5 font-mono text-sm font-semibold text-[var(--bronze)]">
+              {site.melyor.version}
+            </span>
+          </motion.div>
+
+          <div className="mt-3">
             <SectionHeading light>{site.melyor.titulo}</SectionHeading>
           </div>
 
