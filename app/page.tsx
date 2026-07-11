@@ -27,10 +27,10 @@ export default function Home() {
       <main>
         <Hero />
         <ProblemSection />
+        <MelyorSection />
         <ComparisonSection />
         <HowItWorks />
         <ModulesGrid />
-        <MelyorSection />
         <DemoSection />
         <FoundersStory />
         <PricingTable />
