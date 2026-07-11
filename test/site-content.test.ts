@@ -28,3 +28,28 @@ describe("site.melyor", () => {
     expect(site.melyor.capacidades).toHaveLength(5);
   });
 });
+
+describe("site.planes — precios", () => {
+  it("Starter no cambia de precio", () => {
+    const starter = site.planes.find((p) => p.nombre === "Starter")!;
+    expect(starter.precios.cop.mensual).toBe(24900);
+  });
+
+  it("Pro sube a 64.900 COP/mes fundador", () => {
+    const pro = site.planes.find((p) => p.nombre === "Pro")!;
+    expect(pro.precios.cop.mensual).toBe(64900);
+    expect(pro.features.some((f) => f.includes("CRM"))).toBe(true);
+  });
+
+  it("Logística sube a 114.900 COP/mes fundador", () => {
+    const log = site.planes.find((p) => p.nombre === "Logística")!;
+    expect(log.precios.cop.mensual).toBe(114900);
+    expect(log.features.some((f) => f.includes("Compras inteligentes"))).toBe(true);
+  });
+
+  it("cada plan tiene precio anual estrictamente menor al mensual x12", () => {
+    for (const p of site.planes) {
+      expect(p.precios.cop.anual).toBeLessThan(p.precios.cop.mensual);
+    }
+  });
+});
