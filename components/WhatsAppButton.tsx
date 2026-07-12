@@ -1,7 +1,7 @@
 "use client";
 import { motion, useReducedMotion } from "motion/react";
 import { site } from "@/content/site";
-import { HERO_TIMING, reducedTransition } from "@/lib/motion";
+import { HERO_TIMING } from "@/lib/motion";
 
 export function WhatsAppButton() {
   const reduce = useReducedMotion();

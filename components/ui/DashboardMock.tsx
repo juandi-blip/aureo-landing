@@ -54,7 +54,7 @@ const KPIS = [
     icon: Boxes,
     iconBg: "bg-[var(--bronze)]/12",
     iconColor: "text-[var(--bronze)]",
-    spark: "M0,6 C6,6 12,6 18,6 24,6",
+    spark: "M0,6 C6,6 12,6 18,6 S21,6 24,6",
     sparkColor: "var(--bronze)",
   },
   {
@@ -65,7 +65,7 @@ const KPIS = [
     icon: AlertTriangle,
     iconBg: "bg-[var(--terracotta)]/10",
     iconColor: "text-[var(--terracotta)]",
-    spark: "M0,4 C6,8 12,10 18,8 24,12",
+    spark: "M0,4 C6,8 12,10 18,8 S21,10 24,12",
     sparkColor: "var(--terracotta)",
   },
 ] as const;

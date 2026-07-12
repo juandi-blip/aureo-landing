@@ -109,6 +109,8 @@ export const metadata: Metadata = {
   other: {
     "theme-color": "#2E4A6E",
     "msapplication-TileColor": "#2E4A6E",
+    "mobile-web-app-capable": "yes",
+    // Retained for iOS Safari, which does not yet honor the standard tag above.
     "apple-mobile-web-app-capable": "yes",
     "apple-mobile-web-app-status-bar-style": "default",
     "apple-mobile-web-app-title": SITE_NAME,

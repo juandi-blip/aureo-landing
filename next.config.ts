@@ -8,9 +8,14 @@ import { withBotId } from "botid/next/config";
 // so they stay out of connect-src/img-src (less exfiltration surface if an XSS
 // ever lands). next/font self-hosts Google fonts, so fonts.gstatic.com is not
 // needed either.
+// React's dev build needs eval() for debugging features (rebuilding callstacks
+// across environments). It never uses eval() in production, so this stays out
+// of the shipped policy.
+const devScriptSrc = process.env.NODE_ENV === "development" ? " 'unsafe-eval'" : "";
+
 const csp = [
   "default-src 'self'",
-  "script-src 'self' 'unsafe-inline' https://va.vercel-scripts.com",
+  `script-src 'self' 'unsafe-inline'${devScriptSrc} https://va.vercel-scripts.com`,
   "style-src 'self' 'unsafe-inline'",
   "img-src 'self' data: blob: https://*.public.blob.vercel-storage.com",
   "font-src 'self'",

@@ -58,6 +58,9 @@ next-env.d.ts
 # squirrelscan audit tool config/cache
 squirrel.toml
 
+# unlighthouse audit output
+/.unlighthouse/
+
 # skills installed locally but not part of this repo's tracked set
 .claude/skills/audit-website/
 .claude/skills/canvas-design/

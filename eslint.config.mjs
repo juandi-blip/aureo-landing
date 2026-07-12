@@ -12,6 +12,11 @@ const eslintConfig = defineConfig([
     "out/**",
     "build/**",
     "next-env.d.ts",
+    // Generated Lighthouse audit output — bundled/minified vendor JS, not ours.
+    ".unlighthouse/**",
+    // Vendored agent-skill scripts (mirrored in both dirs), not app source.
+    ".claude/**",
+    ".agents/**",
   ]),
 ]);
 
