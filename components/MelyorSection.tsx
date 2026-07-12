@@ -1,14 +1,14 @@
 // components/MelyorSection.tsx
 "use client";
 import { motion } from "motion/react";
-import { ShoppingBag, Bell, Users, FileText, MessageCircle } from "lucide-react";
+import { ShoppingBag, Bell, Users, FileText, MessageCircle, Zap } from "lucide-react";
 import { site } from "@/content/site";
 import { staggerContainer, fadeUp, VIEWPORT } from "@/lib/motion";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { GrainOverlay } from "@/components/ui/GrainOverlay";
 import { SpotlightGlow, useSpotlight } from "@/components/ui/Spotlight";
 
-const CAPABILITY_ICONS = [ShoppingBag, Bell, Users, FileText, MessageCircle];
+const CAPABILITY_ICONS = [ShoppingBag, Bell, Users, FileText, MessageCircle, Zap];
 
 function MelyorBadge() {
   return (
