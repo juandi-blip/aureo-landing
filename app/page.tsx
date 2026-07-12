@@ -16,6 +16,7 @@ import { PricingTable } from "@/components/PricingTable";
 // integre una pasarela real — solo hay que reimportar y volver a renderizar.
 // import { SecuritySection } from "@/components/SecuritySection";
 import { FAQ } from "@/components/FAQ";
+import { ContactSection } from "@/components/ContactSection";
 import { FinalCTA } from "@/components/FinalCTA";
 import { Footer } from "@/components/Footer";
 import { WhatsAppButton } from "@/components/WhatsAppButton";
@@ -36,6 +37,7 @@ export default function Home() {
         <PricingTable />
         {/* <SecuritySection /> — ver nota de import más arriba */}
         <FAQ />
+        <ContactSection />
         <FinalCTA />
       </main>
       <Footer />

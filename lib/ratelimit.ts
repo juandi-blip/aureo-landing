@@ -31,9 +31,23 @@ export async function checkRateLimit(ip: string): Promise<boolean> {
   return success;
 }
 
-/** Best-effort client IP from proxy headers (Vercel sets x-forwarded-for). */
+/**
+ * Client IP para la key del rate limit.
+ *
+ * Fuente de confianza: `x-real-ip`. En Vercel lo SETEA el edge con la IP real de
+ * la conexión y sobrescribe cualquier valor que mande el cliente, así que no es
+ * falsificable. Priorizarlo es lo que cierra el bypass: un atacante ya no puede
+ * rotar `x-forwarded-for` para caer en keys distintas, porque cuando estamos
+ * detrás del edge nunca leemos XFF.
+ *
+ * Fallback `x-forwarded-for`: solo aplica fuera de Vercel (dev local u otro
+ * proxy), donde el spoofing no es una amenaza de producción. Usamos el PRIMER
+ * valor, que es la IP original del cliente según documenta Vercel.
+ */
 export function getClientIp(request: Request): string {
+  const real = request.headers.get("x-real-ip")?.trim();
+  if (real) return real;
   const fwd = request.headers.get("x-forwarded-for");
   if (fwd) return fwd.split(",")[0].trim();
-  return request.headers.get("x-real-ip")?.trim() || "unknown";
+  return "unknown";
 }

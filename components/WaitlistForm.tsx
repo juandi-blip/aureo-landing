@@ -1,5 +1,6 @@
 "use client";
 import { useEffect, useId, useState } from "react";
+import { track } from "@vercel/analytics";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { HONEYPOT_FIELD } from "@/lib/validation";
@@ -24,6 +25,7 @@ export function WaitlistForm({
 }) {
   const honeypotId = useId();
   const [email, setEmail] = useState("");
+  const [consent, setConsent] = useState(false);
   const [hp, setHp] = useState("");
   const [emailState, setEmailState] = useState<EmailState>("idle");
   const [msg, setMsg] = useState("");
@@ -64,6 +66,11 @@ export function WaitlistForm({
 
   async function onSubmit(e: React.FormEvent) {
     e.preventDefault();
+    if (!consent) {
+      setEmailState("error");
+      setMsg("Debes aceptar la Política de Privacidad para continuar.");
+      return;
+    }
     setEmailState("loading");
     setMsg("");
     try {
@@ -78,6 +85,8 @@ export function WaitlistForm({
       });
       const json = await res.json();
       if (res.ok && json.ok) {
+        // Evento de conversión: el alta a la waitlist es la métrica principal.
+        track("waitlist_signup", { origen: refCode ? `${origen}:ref` : origen });
         setEmailState("success");
         setMsg("¡Listo! Cuéntanos un poco más para priorizar tu acceso.");
         setToken(typeof json.token === "string" ? json.token : "");
@@ -164,6 +173,27 @@ export function WaitlistForm({
           {emailState === "loading" ? "Enviando…" : "Unirme"}
         </Button>
       </div>
+      <label className="flex items-start gap-2 text-xs text-[var(--text-muted)]">
+        <input
+          type="checkbox"
+          checked={consent}
+          onChange={(e) => setConsent(e.target.checked)}
+          className="mt-0.5 h-4 w-4 shrink-0 accent-[var(--bronze)]"
+          aria-label="Acepto la Política de Privacidad"
+        />
+        <span>
+          Acepto la{" "}
+          <a
+            href="/privacidad"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="underline underline-offset-2 hover:text-[var(--primary)]"
+          >
+            Política de Privacidad
+          </a>{" "}
+          y el tratamiento de mis datos para recibir información sobre Aureo.
+        </span>
+      </label>
       <p
         role="alert"
         aria-live="polite"

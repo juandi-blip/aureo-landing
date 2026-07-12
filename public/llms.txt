@@ -1,0 +1,31 @@
+# Aureo
+
+> Aureo es un software de gestión de inventario, ventas y bodega (WMS + POS) para negocios con inventario físico en Colombia — ferreterías, distribuidoras, depósitos de construcción, repuestos y agroinsumos. Da inteligencia logística (mapa de calor de bodega, análisis ABC de rotación, picking guiado) que antes solo tenían las grandes empresas, sin su complejidad ni su precio. Actualmente en desarrollo con lista de espera y precio de fundador para los primeros negocios.
+
+## Qué resuelve
+
+- **Ubicación de productos**: mapa de bodega para dejar de buscar a ciegas.
+- **Rotación**: análisis ABC y mapa de calor indican qué se vende, qué acumula polvo, qué comprar y dónde ubicarlo.
+- **Despacho**: picking guiado para preparar pedidos rápido y sin errores.
+- **Cuadre de inventario**: conteos que concilian lo del sistema con lo físico.
+- **Ventas**: POS rápido y facturación integrados.
+- **Melyor**: asistente de IA que responde sobre stock, alertas, clientes y KPIs con los datos reales del negocio.
+
+## Para quién
+
+Negocios con inventario físico, ventas y bodega en Colombia: ferreterías, distribuidoras, depósitos de materiales de construcción, repuestos, agroinsumos y similares. No es software contable — complementa a herramientas como Siigo o Alegra enfocándose en la operación de bodega.
+
+## Estado y acceso
+
+En desarrollo. El acceso es por lista de espera; los primeros negocios obtienen precio de fundador. Registro en la página principal.
+
+## Páginas
+
+- [Inicio y lista de espera](https://aureo.com.co/): descripción del producto, módulos, cómo funciona, precios y registro.
+- [Política de Privacidad](https://aureo.com.co/privacidad): tratamiento de datos personales (Ley 1581 de Colombia).
+- [Términos y Condiciones](https://aureo.com.co/terminos): condiciones de uso del sitio y la lista de espera.
+
+## Contacto
+
+- WhatsApp: https://wa.me/573205638153
+- Email: aureosaas@gmail.com

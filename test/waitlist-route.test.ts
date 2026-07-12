@@ -50,13 +50,16 @@ describe("POST /api/waitlist", () => {
     expect(insertMock).not.toHaveBeenCalled();
   });
 
-  it("trata duplicado (código 23505) como éxito sin devolver token", async () => {
+  it("trata duplicado (código 23505) como éxito con token señuelo (anti-enumeración)", async () => {
     singleMock.mockResolvedValue({ data: null, error: { code: "23505" } });
     const res = await POST(req({ email: "a@b.com" }));
     expect(res.status).toBe(200);
     const json = await res.json();
     expect(json.ok).toBe(true);
-    expect(json).not.toHaveProperty("token");
+    // La respuesta debe ser indistinguible de un alta nueva: incluye un token,
+    // pero es un UUID señuelo aleatorio, NO el id real de la fila existente.
+    expect(typeof json.token).toBe("string");
+    expect(json.token).not.toBe("row-uuid-1");
     expect(json).not.toHaveProperty("duplicate");
   });
 

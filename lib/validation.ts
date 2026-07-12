@@ -40,7 +40,8 @@ export function parseWaitlistPayload(
     return { ok: false, bot: true };
   }
 
-  const emailRaw = typeof b.email === "string" ? b.email.trim().toLowerCase() : "";
+  const emailRaw =
+    typeof b.email === "string" ? b.email.normalize("NFC").trim().toLowerCase() : "";
   if (!isValidEmail(emailRaw)) {
     return { ok: false, error: "Ingresa un correo válido." };
   }

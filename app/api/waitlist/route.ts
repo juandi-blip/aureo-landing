@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import { randomUUID } from "node:crypto";
 import { checkBotId } from "botid/server";
 import { parseWaitlistPayload } from "@/lib/validation";
 import { getSupabaseAdmin } from "@/lib/supabase";
@@ -71,8 +72,10 @@ export async function POST(request: Request) {
   const parsed = parseWaitlistPayload(body);
   if (!parsed.ok) {
     if ("bot" in parsed) {
-      // Honeypot tripped: pretend success so bots don't learn they were caught.
-      return NextResponse.json({ ok: true }, { status: 200 });
+      // Honeypot tripped: fingimos éxito Y devolvemos un token señuelo para que
+      // la respuesta sea byte-a-byte indistinguible de un alta real (si no, la
+      // ausencia de `token` delataría que el bot fue detectado).
+      return NextResponse.json({ ok: true, token: randomUUID() }, { status: 200 });
     }
     return NextResponse.json({ ok: false, error: parsed.error }, { status: 400 });
   }
@@ -86,10 +89,11 @@ export async function POST(request: Request) {
       .single();
     if (error) {
       if (error.code === "23505") {
-        // Duplicate email: treat as success so users don't enumerate the list.
-        // Deliberately no `token` here — handing one out on a duplicate would let
-        // anyone who merely knows a registered email fetch its ownership token.
-        return NextResponse.json({ ok: true }, { status: 200 });
+        // Email duplicado: respondemos éxito con un token SEÑUELO aleatorio (no
+        // el id real). Así la respuesta es indistinguible de un alta nueva y no
+        // se puede enumerar la lista. El PATCH con ese token hará `.eq("id", …)`
+        // contra un UUID inexistente → 0 filas → ok silencioso, sin IDOR.
+        return NextResponse.json({ ok: true, token: randomUUID() }, { status: 200 });
       }
       return NextResponse.json({ ok: false, error: "No pudimos registrarte. Intenta de nuevo." }, { status: 500 });
     }

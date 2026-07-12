@@ -8,6 +8,7 @@ test("usuario se une a la waitlist y completa su perfil", async ({ page }) => {
   await page.goto("/");
   const hero = page.locator("#waitlist");
   await hero.getByLabel("Correo electrónico").fill("prueba@aureo.app");
+  await hero.getByLabel(/Acepto la Política de Privacidad/i).check();
   await hero.getByRole("button", { name: /^unirme$/i }).click();
 
   await expect(hero.getByRole("status")).toContainText(/cuéntanos un poco más/i);
@@ -28,6 +29,7 @@ test("usuario puede omitir el paso de detalle", async ({ page }) => {
   await page.goto("/");
   const hero = page.locator("#waitlist");
   await hero.getByLabel("Correo electrónico").fill("prueba2@aureo.app");
+  await hero.getByLabel(/Acepto la Política de Privacidad/i).check();
   await hero.getByRole("button", { name: /^unirme$/i }).click();
 
   await expect(hero.getByRole("status")).toContainText(/cuéntanos un poco más/i);
@@ -55,6 +57,7 @@ test("captures ?ref= and shows a shareable link after signup", async ({ page }) 
 
   await page.goto("/?ref=abc123");
   await page.locator("#waitlist input[type=email]").fill("referido@example.com");
+  await page.locator("#waitlist").getByLabel(/Acepto la Política de Privacidad/i).check();
   await page.locator("#waitlist button[type=submit]").click();
 
   await expect(page.getByRole("status").first()).toContainText(/cuéntanos un poco más/i);
@@ -67,6 +70,23 @@ test("captures ?ref= and shows a shareable link after signup", async ({ page }) 
   );
 });
 
+test("exige aceptar la Política de Privacidad antes de enviar", async ({ page }) => {
+  let apiCalled = false;
+  await page.route("**/api/waitlist", (route) => {
+    apiCalled = true;
+    route.fulfill({ status: 200, contentType: "application/json", body: JSON.stringify({ ok: true }) });
+  });
+
+  await page.goto("/");
+  const hero = page.locator("#waitlist");
+  await hero.getByLabel("Correo electrónico").fill("sinconsent@aureo.app");
+  // Sin marcar el checkbox de consentimiento.
+  await hero.getByRole("button", { name: /^unirme$/i }).click();
+
+  await expect(hero.getByRole("alert")).toContainText(/Política de Privacidad/i);
+  expect(apiCalled).toBe(false);
+});
+
 test("muestra error con email inválido devuelto por la API", async ({ page }) => {
   await page.route("**/api/waitlist", (route) =>
     route.fulfill({ status: 400, contentType: "application/json", body: JSON.stringify({ ok: false, error: "Ingresa un correo válido." }) })
@@ -74,6 +94,7 @@ test("muestra error con email inválido devuelto por la API", async ({ page }) =
   await page.goto("/");
   const hero = page.locator("#waitlist");
   await hero.getByLabel("Correo electrónico").fill("x@y.com");
+  await hero.getByLabel(/Acepto la Política de Privacidad/i).check();
   await hero.getByRole("button", { name: /^unirme$/i }).click();
   // Scope to #waitlist to avoid conflict with Next.js route announcer (role="alert")
   await expect(hero.getByRole("alert")).toContainText(/correo válido/i);

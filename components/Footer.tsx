@@ -44,6 +44,20 @@ export function Footer() {
         >
           {CONTACT_EMAIL}
         </a>
+        <nav className="flex flex-wrap justify-center gap-4 text-sm text-[var(--text-muted)]">
+          <a
+            href="/privacidad"
+            className="link-underline transition-colors hover:text-[var(--primary)]"
+          >
+            Política de Privacidad
+          </a>
+          <a
+            href="/terminos"
+            className="link-underline transition-colors hover:text-[var(--primary)]"
+          >
+            Términos y Condiciones
+          </a>
+        </nav>
         <p className="text-xs text-[var(--text-muted)]">{site.footer.derechos}</p>
       </div>
     </motion.footer>
