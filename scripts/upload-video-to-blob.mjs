@@ -13,13 +13,17 @@ import { readFile } from "node:fs/promises";
 
 const FILE = process.env.VIDEO_PATH || "public/aureo-video.mp4";
 
+// El blob se cachea un año, asi que cada version del video sube con su propio
+// nombre — sobrescribir el mismo pathname dejaria el CDN sirviendo el viejo.
+const NAME = process.env.BLOB_NAME || "aureo-video.mp4";
+
 if (!process.env.BLOB_READ_WRITE_TOKEN) {
   console.error("Missing BLOB_READ_WRITE_TOKEN env var.");
   process.exit(1);
 }
 
 const data = await readFile(FILE);
-const blob = await put("aureo-video.mp4", data, {
+const blob = await put(NAME, data, {
   access: "public",
   contentType: "video/mp4",
   allowOverwrite: true,
