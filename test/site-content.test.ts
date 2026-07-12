@@ -2,11 +2,11 @@ import { describe, it, expect } from "vitest";
 import { site, type Moneda, type Periodo } from "@/content/site";
 
 describe("site.modulos", () => {
-  it("incluye los 10 módulos del producto, incluyendo los nuevos", () => {
-    expect(site.modulos).toHaveLength(10);
+  it("incluye los 12 módulos del producto, incluyendo los nuevos", () => {
+    expect(site.modulos).toHaveLength(12);
     const ids = site.modulos.map((m) => m.id);
     expect(ids).toEqual(
-      expect.arrayContaining(["crm", "alertas", "reportes", "compras"]),
+      expect.arrayContaining(["crm", "alertas", "reportes", "compras", "conteos", "permisos"]),
     );
   });
 
@@ -24,8 +24,24 @@ describe("site.melyor", () => {
     expect(site.melyor.version).toBe("1");
   });
 
-  it("tiene 5 capacidades mapeadas a los módulos reales", () => {
-    expect(site.melyor.capacidades).toHaveLength(5);
+  it("tiene 6 capacidades mapeadas a los módulos reales", () => {
+    expect(site.melyor.capacidades).toHaveLength(6);
+  });
+
+  it("ninguna capacidad implica que el dashboard es prescindible", () => {
+    for (const cap of site.melyor.capacidades) {
+      expect(cap.texto.toLowerCase()).not.toContain("sin abrir el dashboard");
+    }
+  });
+});
+
+describe("site.contacto", () => {
+  it("tiene 3 puntos de confianza con título e icono no vacíos", () => {
+    expect(site.contacto.confianza).toHaveLength(3);
+    for (const c of site.contacto.confianza) {
+      expect(c.titulo.length).toBeGreaterThan(0);
+      expect(c.icono.length).toBeGreaterThan(0);
+    }
   });
 });
 

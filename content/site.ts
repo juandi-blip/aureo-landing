@@ -50,6 +50,8 @@ export const site = {
     { id: "alertas", titulo: "Alertas proactivas", beneficio: "Te avisa de stock bajo, clientes inactivos y facturas pendientes antes de que te cuesten una venta.", icono: "bell" },
     { id: "reportes", titulo: "Reportes exportables", beneficio: "Ventas, rotación, rentabilidad y por cliente, listos para exportar cuando los necesites.", icono: "file-text" },
     { id: "compras", titulo: "Compras inteligentes", beneficio: "Órdenes de compra agrupadas por proveedor, con numeración automática.", icono: "shopping-bag" },
+    { id: "conteos", titulo: "Conteos físicos", beneficio: "Programa conteos físicos, detecta diferencias y concilia el stock sin parar la operación.", icono: "clipboard-check" },
+    { id: "permisos", titulo: "Permisos por rol", beneficio: "Define qué ve cada rol del equipo, módulo por módulo, sin tocar una línea de código.", icono: "shield" },
   ] as Module[],
   comparativa: {
     titulo: "Por qué Aureo gana donde el cuaderno y el Excel se quedan cortos.",
@@ -76,8 +78,16 @@ export const site = {
       { titulo: "Venta cruzada que se te escapa", texto: "Detecta en tu historial de clientes a quién podrías venderle más, y te lo dice antes que tu competencia." },
       { titulo: "Reportes que se explican solos", texto: "No solo te muestra el reporte de rotación o rentabilidad — te dice qué significa y qué deberías hacer." },
       { titulo: "Pregúntale directamente", texto: "Además de todo esto, puedes chatear con Melyor sobre stock bajo, clientes inactivos o facturas pendientes, en lenguaje natural." },
+      { titulo: "Cifras exactas, al instante", texto: "Pregunta tu facturación, cantidad de facturas o stock total y te responde con el número real del momento — sin buscar en menús ni filtros." },
     ],
     nota: "Incluido en Aureo. Se activa junto con tu cuenta — sin configuración adicional.",
+  },
+  contacto: {
+    confianza: [
+      { titulo: "Respuesta el mismo día", icono: "clock" },
+      { titulo: "Hablas directo con los fundadores — no un bot de soporte", icono: "users" },
+      { titulo: "Sin compromiso, sin tarjeta", icono: "shield-check" },
+    ],
   },
   demo: {
     eyebrow: "Producto real, no un mockup.",
