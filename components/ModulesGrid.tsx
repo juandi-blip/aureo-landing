@@ -14,19 +14,33 @@ export function ModulesGrid() {
           Todo lo que tu negocio necesita, en un solo sistema.
         </SectionHeading>
 
-        <motion.div
-          className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3"
-          variants={staggerContainer}
-          initial="hidden"
-          whileInView="visible"
-          viewport={VIEWPORT}
-        >
-          {site.modulos.map((m) => (
-            <motion.div key={m.id} variants={fadeUp} className="h-full">
-              <ModuleCard module={m} />
-            </motion.div>
-          ))}
-        </motion.div>
+        <div className="mt-12 flex flex-col gap-12">
+          {site.categoriasModulos.map((categoria) => {
+            const modulosDeCategoria = site.modulos.filter(
+              (m) => m.categoria === categoria.id,
+            );
+            return (
+              <div key={categoria.id}>
+                <h3 className="text-sm font-semibold uppercase tracking-wider text-[var(--text-secondary)]">
+                  {categoria.titulo}
+                </h3>
+                <motion.div
+                  className="mt-5 grid gap-6 sm:grid-cols-2 lg:grid-cols-4"
+                  variants={staggerContainer}
+                  initial="hidden"
+                  whileInView="visible"
+                  viewport={VIEWPORT}
+                >
+                  {modulosDeCategoria.map((m) => (
+                    <motion.div key={m.id} variants={fadeUp} className="h-full">
+                      <ModuleCard module={m} />
+                    </motion.div>
+                  ))}
+                </motion.div>
+              </div>
+            );
+          })}
+        </div>
       </div>
     </section>
   );
