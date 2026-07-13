@@ -13,7 +13,7 @@
 - Scope is `aureo-landing` only — do not touch `aureo/` (the app repo). Per spec: `docs/superpowers/specs/2026-07-12-landing-conversion-polish-design.md`.
 - Do not reposition/modify the Melyor chat widget inside the `aureo` app — explicitly deferred by the user to a later conversation.
 - All new copy must describe real, already-implemented behavior (verified against `aureo/inventory.js`, `aureo/permissions.js`, `aureo/melyor.js` — see spec for exact grounding). Do not invent capabilities.
-- Contact section must NOT switch to `bg-[var(--bg-navy)]` — `DemoSection` (immediately preceding it in `app/page.tsx`) is already navy; stacking two dark sections breaks visual rhythm. Keep `bg-[var(--bg-subtle)]`.
+- Contact section must NOT switch to `bg-[var(--bg-navy)]` — `FinalCTA` (immediately following it in `app/page.tsx`) is already navy; stacking two dark sections breaks visual rhythm. Keep `bg-[var(--bg-subtle)]`. (Corrected post-implementation: original spec/plan text wrongly attributed this to `DemoSection` preceding it — the actual neighbor requiring the light background is `FinalCTA` after it.)
 - New Melyor capability copy must NOT say "sin abrir el dashboard" or otherwise imply the dashboard is skippable — `DemoSection` sells the dashboard/heatmap as the product's visual differentiator; new copy competes with menu/filter navigation friction instead.
 - Follow existing repo conventions: content lives in `content/site.ts`, components read from `site`, motion patterns use `fadeUp`/`staggerContainer`/`VIEWPORT` from `@/lib/motion`.
 - Run `npm run build` and `npx vitest run` before the final commit — both must pass clean.
