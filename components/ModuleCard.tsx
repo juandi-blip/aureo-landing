@@ -70,6 +70,11 @@ export function ModuleCard({ module }: { module: Module }) {
       >
         <Icon aria-hidden className="h-5 w-5 text-[var(--primary)] transition-colors group-hover:text-[var(--bronze)]" />
       </motion.div>
+      {module.melyorPowered && (
+        <span className="mb-2 inline-flex w-fit items-center gap-1.5 rounded-full border border-[var(--bronze)]/40 bg-[var(--bronze)]/10 px-2.5 py-0.5 text-[10px] font-semibold uppercase tracking-wider text-[var(--bronze)]">
+          Potenciado por Melyor
+        </span>
+      )}
       <h3 className="text-lg font-semibold text-[var(--text-primary)]">
         {module.titulo}
       </h3>
