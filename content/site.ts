@@ -1,4 +1,13 @@
-export type Module = { id: string; titulo: string; beneficio: string; icono: string };
+export type ModuloCategoriaId = "ventas" | "bodega" | "datos";
+export type Module = {
+  id: string;
+  titulo: string;
+  beneficio: string;
+  icono: string;
+  categoria: ModuloCategoriaId;
+  melyorPowered?: boolean;
+};
+export type ModuloCategoria = { id: ModuloCategoriaId; titulo: string };
 export type Moneda = "cop" | "usd";
 export type Periodo = "mensual" | "anual";
 export type PlanPrecios = { cop: Record<Periodo, number>; usd: Record<Periodo, number> };
@@ -39,19 +48,24 @@ export const site = {
       { titulo: "Decide con datos", texto: "Análisis ABC y mapa de calor te dicen qué mover, qué comprar y dónde ubicarlo." },
     ],
   },
+  categoriasModulos: [
+    { id: "ventas", titulo: "Ventas y clientes" },
+    { id: "bodega", titulo: "Inventario y bodega" },
+    { id: "datos", titulo: "Datos y control" },
+  ] as ModuloCategoria[],
   modulos: [
-    { id: "pos", titulo: "Punto de venta", beneficio: "Vende y factura en segundos, con o sin conexión.", icono: "shopping-cart" },
-    { id: "inventario", titulo: "Inventario inteligente", beneficio: "Control en tiempo real, alertas de stock y conteos físicos.", icono: "boxes" },
-    { id: "wms", titulo: "Mapa de calor de bodega", beneficio: "Ve tu bodega como un plano vivo y ubica lo que más rota cerca del despacho.", icono: "map" },
-    { id: "abc", titulo: "Análisis ABC / Pareto", beneficio: "Descubre el 20% de productos que generan el 80% de tus ventas.", icono: "bar-chart" },
-    { id: "picking", titulo: "Preparación de pedidos", beneficio: "Recorridos optimizados para despachar más rápido y sin errores.", icono: "route" },
-    { id: "reubicacion", titulo: "Reubicación inteligente", beneficio: "Sugerencias para ubicar lo que más rota cerca del despacho.", icono: "arrow-right-left" },
-    { id: "crm", titulo: "CRM de clientes", beneficio: "Historial de compras, notas y clientes inactivos, sin hoja de cálculo aparte.", icono: "users" },
-    { id: "alertas", titulo: "Alertas proactivas", beneficio: "Te avisa de stock bajo, clientes inactivos y facturas pendientes antes de que te cuesten una venta.", icono: "bell" },
-    { id: "reportes", titulo: "Reportes exportables", beneficio: "Ventas, rotación, rentabilidad y por cliente, listos para exportar cuando los necesites.", icono: "file-text" },
-    { id: "compras", titulo: "Compras inteligentes", beneficio: "Órdenes de compra agrupadas por proveedor, con numeración automática.", icono: "shopping-bag" },
-    { id: "conteos", titulo: "Conteos físicos", beneficio: "Programa conteos físicos, detecta diferencias y concilia el stock sin parar la operación.", icono: "clipboard-check" },
-    { id: "permisos", titulo: "Permisos por rol", beneficio: "Define qué ve cada rol del equipo, módulo por módulo, sin tocar una línea de código.", icono: "shield" },
+    { id: "pos", titulo: "Punto de venta", beneficio: "Vende y factura en segundos, con o sin conexión.", icono: "shopping-cart", categoria: "ventas" },
+    { id: "inventario", titulo: "Inventario inteligente", beneficio: "Control en tiempo real, alertas de stock y conteos físicos.", icono: "boxes", categoria: "bodega" },
+    { id: "wms", titulo: "Mapa de calor de bodega", beneficio: "Ve tu bodega como un plano vivo y ubica lo que más rota cerca del despacho.", icono: "map", categoria: "bodega" },
+    { id: "abc", titulo: "Análisis ABC / Pareto", beneficio: "Descubre el 20% de productos que generan el 80% de tus ventas.", icono: "bar-chart", categoria: "datos" },
+    { id: "picking", titulo: "Preparación de pedidos", beneficio: "Recorridos optimizados para despachar más rápido y sin errores.", icono: "route", categoria: "datos" },
+    { id: "reubicacion", titulo: "Reubicación inteligente", beneficio: "Sugerencias para ubicar lo que más rota cerca del despacho.", icono: "arrow-right-left", categoria: "bodega" },
+    { id: "crm", titulo: "CRM de clientes", beneficio: "Historial de compras, notas y clientes inactivos, sin hoja de cálculo aparte.", icono: "users", categoria: "ventas", melyorPowered: true },
+    { id: "alertas", titulo: "Alertas proactivas", beneficio: "Te avisa de stock bajo, clientes inactivos y facturas pendientes antes de que te cuesten una venta.", icono: "bell", categoria: "ventas", melyorPowered: true },
+    { id: "reportes", titulo: "Reportes exportables", beneficio: "Ventas, rotación, rentabilidad y por cliente, listos para exportar cuando los necesites.", icono: "file-text", categoria: "datos", melyorPowered: true },
+    { id: "compras", titulo: "Compras inteligentes", beneficio: "Órdenes de compra agrupadas por proveedor, con numeración automática.", icono: "shopping-bag", categoria: "ventas", melyorPowered: true },
+    { id: "conteos", titulo: "Conteos físicos", beneficio: "Programa conteos físicos, detecta diferencias y concilia el stock sin parar la operación.", icono: "clipboard-check", categoria: "bodega" },
+    { id: "permisos", titulo: "Permisos por rol", beneficio: "Define qué ve cada rol del equipo, módulo por módulo, sin tocar una línea de código.", icono: "shield", categoria: "datos" },
   ] as Module[],
   comparativa: {
     titulo: "Por qué Aureo gana donde el cuaderno y el Excel se quedan cortos.",

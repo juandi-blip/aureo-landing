@@ -16,6 +16,37 @@ describe("site.modulos", () => {
       expect(m.beneficio.length).toBeGreaterThan(0);
     }
   });
+
+  it("cada módulo tiene una categoría válida", () => {
+    const validCategorias = ["ventas", "bodega", "datos"];
+    for (const m of site.modulos) {
+      expect(validCategorias).toContain(m.categoria);
+    }
+  });
+
+  it("cada categoría tiene exactamente 4 módulos", () => {
+    const porCategoria = { ventas: 0, bodega: 0, datos: 0 };
+    for (const m of site.modulos) {
+      porCategoria[m.categoria as keyof typeof porCategoria]++;
+    }
+    expect(porCategoria).toEqual({ ventas: 4, bodega: 4, datos: 4 });
+  });
+
+  it("exactamente 4 módulos están potenciados por Melyor: alertas, compras, crm, reportes", () => {
+    const melyorIds = site.modulos.filter((m) => m.melyorPowered).map((m) => m.id).sort();
+    expect(melyorIds).toEqual(["alertas", "compras", "crm", "reportes"]);
+  });
+});
+
+describe("site.categoriasModulos", () => {
+  it("tiene exactamente 3 categorías con título no vacío", () => {
+    expect(site.categoriasModulos).toHaveLength(3);
+    const ids = site.categoriasModulos.map((c) => c.id).sort();
+    expect(ids).toEqual(["bodega", "datos", "ventas"]);
+    for (const c of site.categoriasModulos) {
+      expect(c.titulo.length).toBeGreaterThan(0);
+    }
+  });
 });
 
 describe("site.melyor", () => {
