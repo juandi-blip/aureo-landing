@@ -22,6 +22,7 @@ export function DemoGateModal({
   reason: GateReason;
 }) {
   const honeypotId = useId();
+  const descriptionId = useId();
   const [email, setEmail] = useState("");
   const [nombre, setNombre] = useState("");
   const [hp, setHp] = useState("");
@@ -72,9 +73,14 @@ export function DemoGateModal({
     <Dialog.Root open={open} onOpenChange={onOpenChange}>
       <Dialog.Portal>
         <Dialog.Backdrop className="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm" />
-        <Dialog.Popup className="fixed left-1/2 top-1/2 z-50 w-[min(92vw,28rem)] -translate-x-1/2 -translate-y-1/2 rounded-[var(--radius-lg)] border border-[var(--border-subtle)] bg-[var(--bg-navy)] p-6 text-[var(--text-cream)] shadow-2xl">
+        <Dialog.Popup
+          aria-describedby={descriptionId}
+          className="fixed left-1/2 top-1/2 z-50 w-[min(92vw,28rem)] -translate-x-1/2 -translate-y-1/2 rounded-[var(--radius-lg)] border border-[var(--border-subtle)] bg-[var(--bg-navy)] p-6 text-[var(--text-cream)] shadow-2xl"
+        >
           <Dialog.Title className="text-lg font-semibold">{heading}</Dialog.Title>
-          <p className="mt-1.5 text-sm text-[var(--text-cream)]/70">{texto}</p>
+          <p id={descriptionId} className="mt-1.5 text-sm text-[var(--text-cream)]/70">
+            {texto}
+          </p>
           <form onSubmit={onSubmit} className="mt-5 flex flex-col gap-3" noValidate>
             <label htmlFor={honeypotId} className="sr-only">
               Deja este campo vacío
