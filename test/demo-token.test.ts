@@ -31,7 +31,9 @@ describe("signDemoToken / verifyDemoToken", () => {
   it("rechaza un token con el email cambiado (firma ya no coincide)", () => {
     const { token } = signDemoToken("a@b.com");
     const decoded = Buffer.from(token, "base64url").toString("utf8");
-    const [, expStr, sig] = decoded.split(".");
+    const parts = decoded.split(".");
+    const sig = parts[parts.length - 1];
+    const expStr = parts[parts.length - 2];
     const tampered = Buffer.from(`c@d.com.${expStr}.${sig}`, "utf8").toString("base64url");
     expect(verifyDemoToken(tampered).ok).toBe(false);
   });
