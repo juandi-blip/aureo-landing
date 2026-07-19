@@ -1,62 +1,9 @@
 import { NextResponse } from "next/server";
 import { randomUUID } from "node:crypto";
-import { checkBotId } from "botid/server";
 import { parseWaitlistPayload } from "@/lib/validation";
 import { getSupabaseAdmin } from "@/lib/supabase";
-import { checkRateLimit, getClientIp } from "@/lib/ratelimit";
+import { runGuards } from "@/lib/api-guards";
 import { notifyNewSignup } from "@/lib/email";
-
-function isAllowedOrigin(request: Request): boolean {
-  const origin = request.headers.get("origin");
-  if (!origin) return true; // Same-origin form posts may omit Origin on some browsers
-  try {
-    return new URL(origin).host === request.headers.get("host");
-  } catch {
-    return false;
-  }
-}
-
-// Guardas comunes a POST y PATCH: origen, content-type, tamaño, bot y rate limit.
-// Devuelve la respuesta a retornar si alguna guarda bloquea la solicitud, o
-// null si puede continuar.
-async function runGuards(request: Request): Promise<NextResponse | null> {
-  if (!isAllowedOrigin(request)) {
-    return NextResponse.json({ ok: false, error: "Origen no permitido." }, { status: 403 });
-  }
-
-  const ct = request.headers.get("content-type") ?? "";
-  if (!ct.includes("application/json")) {
-    return NextResponse.json({ ok: false, error: "Solicitud inválida." }, { status: 415 });
-  }
-
-  // Payload size guard: the legit payload is <1 KB; reject anything bloated
-  // before parsing so oversized bodies never reach JSON.parse.
-  const len = Number(request.headers.get("content-length") ?? "0");
-  if (!Number.isFinite(len) || len > 10_000) {
-    return NextResponse.json({ ok: false, error: "Solicitud inválida." }, { status: 413 });
-  }
-
-  // BotID: active on Vercel. Locally throws (no OIDC token) — fail open so
-  // a BotID outage never blocks real users; rate limiter + honeypot still apply.
-  try {
-    const bot = await checkBotId();
-    if (bot.isBot) {
-      return NextResponse.json({ ok: false, error: "Acceso denegado." }, { status: 403 });
-    }
-  } catch {
-    // intentional: botid unavailable locally or on cold start
-  }
-
-  const allowed = await checkRateLimit(getClientIp(request));
-  if (!allowed) {
-    return NextResponse.json(
-      { ok: false, error: "Demasiados intentos. Espera un momento." },
-      { status: 429 }
-    );
-  }
-
-  return null;
-}
 
 export async function POST(request: Request) {
   const guardResponse = await runGuards(request);
