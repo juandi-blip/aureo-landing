@@ -22,7 +22,7 @@ export async function POST(request: Request) {
   }
 
   try {
-    const { token } = signDemoToken(email);
+    const { token } = signDemoToken();
     return NextResponse.json({ ok: true, token }, { status: 200 });
   } catch {
     return NextResponse.json({ ok: false, error: "Error del servidor." }, { status: 500 });
