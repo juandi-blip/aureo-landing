@@ -6,5 +6,6 @@ initBotId({
   protect: [
     { path: "/api/waitlist", method: "POST" },
     { path: "/api/waitlist", method: "PATCH" },
+    { path: "/api/demo-token", method: "POST" },
   ],
 });
