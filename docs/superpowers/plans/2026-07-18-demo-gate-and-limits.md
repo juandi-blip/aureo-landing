@@ -16,7 +16,7 @@
 - `aureo-demo` has no build system and no npm dependencies in its serverless functions (matches existing `api/melyor-chat.js`) — plain Node `crypto`, CommonJS `module.exports`.
 - `aureo-demo` is **not** a git repository (no `.git` — verified). Tasks there are plain file edits with manual browser verification; no `git commit` steps for that side. `aureo-landing` **is** a git repo — commit after each task there as usual.
 - Reuse existing guards (`origin` check, content-type, payload size, BotID, rate limit) for every new landing API route — never re-implement them ad hoc.
-- Token format: `base64url(\`${email}.${exp}.${sig}\`)` where `sig = HMAC-SHA256(\`${email}.${exp}\`, DEMO_TOKEN_SECRET)` in hex. Identical algorithm on both sides — verified by cross-checking Tasks 2 and 7 produce/consume the same bytes.
+- Token format: `base64url(\`${sessionId}.${exp}.${sig}\`)` where `sessionId` is a random opaque hex string (never the visitor's email — a security review during execution flagged that embedding the email in a URL-carried token leaks PII via browser history, Referer headers, and analytics tools that log full URLs; the token only needs to prove "a real gate happened," not carry the identity) and `sig = HMAC-SHA256(\`${sessionId}.${exp}\`, DEMO_TOKEN_SECRET)` in hex. Identical algorithm on both sides — verified by cross-checking Tasks 2 and 7 produce/consume the same bytes.
 
 ---
 
@@ -128,13 +128,25 @@ git commit -m "refactor: extract shared API request guards into lib/api-guards.t
 
 ### Task 2: `lib/demo-token.ts` — sign and verify demo session tokens
 
+> **AMENDED during execution:** the original version of this task signed
+> `${email}.${exp}` and returned the email back out of `verifyDemoToken`. A
+> security review caught that this puts the visitor's email in cleartext
+> (base64 is not encryption) inside a token that travels in a URL —
+> exposed via browser history, Referer headers, and any analytics tool
+> that logs full page URLs (this app already calls `track()` from
+> `@vercel/analytics` on the redirect page). The token doesn't need the
+> email at all: nothing downstream (`aureo-demo`) ever reads it back out.
+> Fixed to sign a random opaque `sessionId` instead — the token proves
+> "a real gate happened," not who went through it. The code below reflects
+> the corrected version.
+
 **Files:**
 - Create: `aureo-landing/lib/demo-token.ts`
 - Test: `aureo-landing/test/demo-token.test.ts`
 
 **Interfaces:**
-- Produces: `signDemoToken(email: string): { token: string; exp: number }` and
-  `verifyDemoToken(token: string): { ok: true; email: string; exp: number } | { ok: false }`
+- Produces: `signDemoToken(): { token: string; exp: number }` and
+  `verifyDemoToken(token: string): { ok: true; exp: number } | { ok: false }`
   — used by Task 3's route.
 
 - [ ] **Step 1: Write the failing tests**
@@ -156,34 +168,42 @@ import { signDemoToken, verifyDemoToken } from "@/lib/demo-token";
 
 describe("signDemoToken / verifyDemoToken", () => {
   it("firma un token que verifica válido con el mismo secreto", () => {
-    const { token, exp } = signDemoToken("a@b.com");
+    const { token, exp } = signDemoToken();
     const result = verifyDemoToken(token);
     expect(result.ok).toBe(true);
     if (result.ok) {
-      expect(result.email).toBe("a@b.com");
       expect(result.exp).toBe(exp);
     }
   });
 
   it("exp queda 30 minutos en el futuro", () => {
     const before = Date.now();
-    const { exp } = signDemoToken("a@b.com");
+    const { exp } = signDemoToken();
     expect(exp).toBeGreaterThanOrEqual(before + 29 * 60 * 1000);
     expect(exp).toBeLessThanOrEqual(before + 31 * 60 * 1000);
   });
 
-  it("rechaza un token con el email cambiado (firma ya no coincide)", () => {
-    const { token } = signDemoToken("a@b.com");
+  it("dos tokens firmados en el mismo instante no son iguales (sessionId aleatorio)", () => {
+    const a = signDemoToken();
+    const b = signDemoToken();
+    expect(a.token).not.toBe(b.token);
+  });
+
+  it("rechaza un token con la firma alterada", () => {
+    const { token } = signDemoToken();
     const decoded = Buffer.from(token, "base64url").toString("utf8");
-    const [, expStr, sig] = decoded.split(".");
-    const tampered = Buffer.from(`c@d.com.${expStr}.${sig}`, "utf8").toString("base64url");
+    const [sessionId, expStr, sig] = decoded.split(".");
+    const flippedSig = sig[0] === "0" ? "f" + sig.slice(1) : "0" + sig.slice(1);
+    const tampered = Buffer.from(`${sessionId}.${expStr}.${flippedSig}`, "utf8").toString(
+      "base64url"
+    );
     expect(verifyDemoToken(tampered).ok).toBe(false);
   });
 
   it("rechaza un token expirado", () => {
     vi.useFakeTimers();
     vi.setSystemTime(new Date("2026-01-01T00:00:00Z"));
-    const { token } = signDemoToken("a@b.com");
+    const { token } = signDemoToken();
     vi.setSystemTime(new Date("2026-01-01T00:31:00Z"));
     expect(verifyDemoToken(token).ok).toBe(false);
   });
@@ -194,7 +214,7 @@ describe("signDemoToken / verifyDemoToken", () => {
 
   it("lanza si DEMO_TOKEN_SECRET no está configurado", () => {
     delete process.env.DEMO_TOKEN_SECRET;
-    expect(() => signDemoToken("a@b.com")).toThrow();
+    expect(() => signDemoToken()).toThrow();
   });
 });
 ```
@@ -207,7 +227,7 @@ Expected: FAIL with "Cannot find module '@/lib/demo-token'" (or similar)
 - [ ] **Step 3: Write `lib/demo-token.ts`**
 
 ```ts
-import { createHmac, timingSafeEqual } from "node:crypto";
+import { createHmac, timingSafeEqual, randomBytes } from "node:crypto";
 
 const SESSION_MS = 30 * 60 * 1000;
 
@@ -221,17 +241,16 @@ function sign(payload: string, secret: string): string {
   return createHmac("sha256", secret).update(payload).digest("hex");
 }
 
-export function signDemoToken(email: string): { token: string; exp: number } {
+export function signDemoToken(): { token: string; exp: number } {
   const exp = Date.now() + SESSION_MS;
-  const payload = `${email}.${exp}`;
+  const sessionId = randomBytes(16).toString("hex");
+  const payload = `${sessionId}.${exp}`;
   const sig = sign(payload, getSecret());
   const token = Buffer.from(`${payload}.${sig}`, "utf8").toString("base64url");
   return { token, exp };
 }
 
-export function verifyDemoToken(
-  token: string
-): { ok: true; email: string; exp: number } | { ok: false } {
+export function verifyDemoToken(token: string): { ok: true; exp: number } | { ok: false } {
   let decoded: string;
   try {
     decoded = Buffer.from(token, "base64url").toString("utf8");
@@ -241,13 +260,13 @@ export function verifyDemoToken(
 
   const parts = decoded.split(".");
   if (parts.length !== 3) return { ok: false };
-  const [email, expStr, sig] = parts;
+  const [sessionId, expStr, sig] = parts;
   const exp = Number(expStr);
-  if (!email || !Number.isFinite(exp)) return { ok: false };
+  if (!sessionId || !Number.isFinite(exp)) return { ok: false };
 
   let expected: string;
   try {
-    expected = sign(`${email}.${exp}`, getSecret());
+    expected = sign(`${sessionId}.${exp}`, getSecret());
   } catch {
     return { ok: false };
   }
@@ -257,9 +276,12 @@ export function verifyDemoToken(
   if (a.length !== b.length || !timingSafeEqual(a, b)) return { ok: false };
   if (Date.now() > exp) return { ok: false };
 
-  return { ok: true, email, exp };
+  return { ok: true, exp };
 }
 ```
+
+(`sessionId` is hex-only, so it can never contain a `.` — the 3-way
+split is unambiguous. No email-with-dots parsing edge case here.)
 
 - [ ] **Step 4: Run the tests to verify they pass**
 
@@ -276,6 +298,12 @@ git commit -m "feat: add HMAC sign/verify helpers for demo session tokens"
 ---
 
 ### Task 3: `POST /api/demo-token` route
+
+> **AMENDED during execution:** matches Task 2's amendment — the route
+> still requires and validates a real-looking `email` in the request body
+> (that's still the anti-abuse gate: no token without a plausible email),
+> but no longer forwards it into `signDemoToken()`, which now takes no
+> arguments. The code below reflects the corrected version.
 
 **Files:**
 - Create: `aureo-landing/app/api/demo-token/route.ts`
@@ -374,7 +402,7 @@ export async function POST(request: Request) {
   }
 
   try {
-    const { token } = signDemoToken(email);
+    const { token } = signDemoToken();
     return NextResponse.json({ ok: true, token }, { status: 200 });
   } catch {
     return NextResponse.json({ ok: false, error: "Error del servidor." }, { status: 500 });
@@ -786,7 +814,9 @@ git commit -m "feat: gate the demo CTA behind DemoGateModal and handle ?demo= re
 - Produces: `GET /api/verify-demo-token?token=...` → `{ ok: true, exp: number }`
   (200) or `{ ok: false }` (400/401/405/500) — consumed by Task 8's
   `demo-gate.js`. Must decode/verify tokens byte-identically to Task 2's
-  `signDemoToken`/`verifyDemoToken`.
+  (amended) `signDemoToken`/`verifyDemoToken` — the token's first segment
+  is an opaque random `sessionId` (hex, never an email), so the 3-way
+  `split(".")` below is safe and unambiguous.
 
 - [ ] **Step 1: Create the serverless function**
 
@@ -795,10 +825,12 @@ git commit -m "feat: gate the demo CTA behind DemoGateModal and handle ?demo= re
 // emite tras capturar el email del visitante (gate de la demo pública).
 //
 // Mismo algoritmo que aureo-landing/lib/demo-token.ts: HMAC-SHA256 sobre
-// `${email}.${exp}` con el secreto compartido DEMO_TOKEN_SECRET (env var
-// idéntica en ambos proyectos Vercel). Sin dependencias npm — mismo criterio
-// que api/melyor-chat.js: ninguno de los dos proyectos tiene hoy un flujo de
-// build.
+// `${sessionId}.${exp}` con el secreto compartido DEMO_TOKEN_SECRET (env var
+// idéntica en ambos proyectos Vercel). El token NO lleva el email del
+// visitante — solo un sessionId aleatorio opaco — para no exponer PII en una
+// URL (historial del navegador, Referer, analytics). Sin dependencias npm —
+// mismo criterio que api/melyor-chat.js: ninguno de los dos proyectos tiene
+// hoy un flujo de build.
 
 const crypto = require("crypto");
 
@@ -833,16 +865,16 @@ module.exports = async (req, res) => {
         res.status(401).json({ ok: false });
         return;
     }
-    const [email, expStr, sig] = parts;
+    const [sessionId, expStr, sig] = parts;
     const exp = Number(expStr);
-    if (!email || !Number.isFinite(exp)) {
+    if (!sessionId || !Number.isFinite(exp)) {
         res.status(401).json({ ok: false });
         return;
     }
 
     const expected = crypto
         .createHmac("sha256", secret)
-        .update(`${email}.${exp}`)
+        .update(`${sessionId}.${exp}`)
         .digest("hex");
     const a = Buffer.from(sig, "hex");
     const b = Buffer.from(expected, "hex");
@@ -873,7 +905,8 @@ node -e "
 const crypto = require('crypto');
 const secret = process.env.DEMO_TOKEN_SECRET;
 const exp = Date.now() + 30*60*1000;
-const payload = 'test@example.com.' + exp;
+const sessionId = crypto.randomBytes(16).toString('hex');
+const payload = sessionId + '.' + exp;
 const sig = crypto.createHmac('sha256', secret).update(payload).digest('hex');
 console.log(Buffer.from(payload + '.' + sig).toString('base64url'));
 "
