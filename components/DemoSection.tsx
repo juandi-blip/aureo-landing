@@ -6,16 +6,27 @@ import { SectionHeading } from "@/components/ui/SectionHeading";
 import { fadeUp, VIEWPORT } from "@/lib/motion";
 import { GrainOverlay } from "@/components/ui/GrainOverlay";
 import { SpotlightGlow, useSpotlight } from "@/components/ui/Spotlight";
+import { DemoGateModal, type GateReason } from "@/components/DemoGateModal";
 
 const VIDEO_SRC =
   process.env.NEXT_PUBLIC_DEMO_VIDEO_URL || "/aureo-video.mp4";
 
 const DEMO_URL = process.env.NEXT_PUBLIC_DEMO_URL || "";
 
+// Reads the `?demo=` param (set when aureo-demo redirects back after a
+// missing/expired gate session) once, on initial mount.
+function readInitialGateReason(): GateReason {
+  if (typeof window === "undefined") return null;
+  const demoParam = new URLSearchParams(window.location.search).get("demo");
+  return demoParam === "required" || demoParam === "expired" ? demoParam : null;
+}
+
 export function DemoSection() {
   const videoRef = useRef<HTMLVideoElement>(null);
   const [muted, setMuted] = useState(true);
   const spotlight = useSpotlight();
+  const [gateReason, setGateReason] = useState<GateReason>(readInitialGateReason);
+  const [gateOpen, setGateOpen] = useState(() => readInitialGateReason() !== null);
 
   useEffect(() => {
     const video = videoRef.current;
@@ -172,10 +183,12 @@ export function DemoSection() {
             whileInView="visible"
             viewport={VIEWPORT}
           >
-            <a
-              href={DEMO_URL}
-              target="_blank"
-              rel="noopener noreferrer"
+            <button
+              type="button"
+              onClick={() => {
+                setGateReason(null);
+                setGateOpen(true);
+              }}
               className="group inline-flex items-center gap-2.5 rounded-full border border-[var(--bronze)]/50 bg-gradient-to-r from-[var(--bronze)]/15 via-[var(--bronze)]/10 to-[var(--bronze)]/15 px-7 py-3 text-sm font-semibold text-[var(--text-cream)] shadow-[0_0_26px_-10px_var(--bronze-glow)] transition-all hover:border-[var(--bronze)]/80 hover:shadow-[0_0_34px_-8px_var(--bronze-glow)]"
             >
               {site.demo.ctaExplorar}
@@ -192,12 +205,18 @@ export function DemoSection() {
                 <path d="M5 12h14" />
                 <path d="m12 5 7 7-7 7" />
               </svg>
-            </a>
+            </button>
             <p className="max-w-sm text-sm leading-relaxed text-[var(--text-cream)]/60">
               {site.demo.ctaExplorarNota}
             </p>
           </motion.div>
         )}
+        <DemoGateModal
+          open={gateOpen}
+          onOpenChange={setGateOpen}
+          demoUrl={DEMO_URL}
+          reason={gateReason}
+        />
       </div>
     </section>
   );
