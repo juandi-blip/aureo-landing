@@ -54,12 +54,16 @@ next-env.d.ts
 # temp screenshots from testing
 *.png
 *.jpg
+!/public/melyor-panel-*.png
 
 # squirrelscan audit tool config/cache
 squirrel.toml
 
 # unlighthouse audit output
 /.unlighthouse/
+
+# subagent-driven-development scratch workspace (per-plan ledgers/briefs)
+/.superpowers/
 
 # skills installed locally but not part of this repo's tracked set
 .claude/skills/audit-website/
