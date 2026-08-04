@@ -87,14 +87,12 @@ export const site = {
     titulo: "El motor de IA detrás de todo Aureo.",
     texto: "Melyor no es un chatbot de soporte. Es el motor de inteligencia que corre por debajo de cada módulo de Aureo — el que genera tus alertas, arma tus compras, detecta tus oportunidades de venta e interpreta tus reportes. Hablar con él por chat es solo una forma más de usarlo.",
     capacidades: [
-      { titulo: "Compras óptimas", texto: "Sugiere cuánto y cuándo reabastecer según tu demanda real, y arma la orden de compra por ti." },
-      { titulo: "Alertas antes de que duelan", texto: "Vigila tu stock, tus clientes inactivos y tus facturas pendientes — y te avisa antes de que se conviertan en un problema." },
-      { titulo: "Venta cruzada que se te escapa", texto: "Detecta en tu historial de clientes a quién podrías venderle más, y te lo dice antes que tu competencia." },
-      { titulo: "Reportes que se explican solos", texto: "No solo te muestra el reporte de rotación o rentabilidad — te dice qué significa y qué deberías hacer." },
-      { titulo: "Pregúntale directamente", texto: "Además de todo esto, puedes chatear con Melyor sobre stock bajo, clientes inactivos o facturas pendientes, en lenguaje natural." },
+      { titulo: "Pregúntale directamente", texto: "Chatea con Melyor sobre stock bajo, clientes inactivos o facturas pendientes, en lenguaje natural." },
       { titulo: "Cifras exactas, al instante", texto: "Pregunta tu facturación, cantidad de facturas o stock total y te responde con el número real del momento — sin buscar en menús ni filtros." },
+      { titulo: "Alertas antes de que duelan", texto: "Vigila tu stock, tus clientes inactivos y tus facturas pendientes — y te avisa antes de que se conviertan en un problema." },
+      { titulo: "Compras óptimas", texto: "Sugiere cuánto y cuándo reabastecer según tu demanda real, y arma la orden de compra por ti." },
     ],
-    nota: "Incluido en Aureo. Se activa junto con tu cuenta — sin configuración adicional.",
+    nota: "Incluido en Aureo, mejorando semana a semana. Se activa junto con tu cuenta — sin configuración adicional.",
   },
   contacto: {
     confianza: [

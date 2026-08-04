@@ -55,8 +55,13 @@ describe("site.melyor", () => {
     expect(site.melyor.version).toBe("1");
   });
 
-  it("tiene 6 capacidades mapeadas a los módulos reales", () => {
-    expect(site.melyor.capacidades).toHaveLength(6);
+  it("tiene 4 capacidades mapeadas a los módulos reales, en el orden que consume MelyorSection", () => {
+    expect(site.melyor.capacidades.map((c) => c.titulo)).toEqual([
+      "Pregúntale directamente",
+      "Cifras exactas, al instante",
+      "Alertas antes de que duelan",
+      "Compras óptimas",
+    ]);
   });
 
   it("ninguna capacidad implica que el dashboard es prescindible", () => {
