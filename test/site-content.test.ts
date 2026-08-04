@@ -90,6 +90,12 @@ describe("site.faq", () => {
   });
 });
 
+describe("site.footer", () => {
+  it("menciona que Aureo opera desde Colombia", () => {
+    expect(site.footer.ubicacion.toLowerCase()).toContain("colombia");
+  });
+});
+
 describe("site.planes — precios", () => {
   it("Starter no cambia de precio", () => {
     const starter = site.planes.find((p) => p.nombre === "Starter")!;

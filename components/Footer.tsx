@@ -58,7 +58,9 @@ export function Footer() {
             Términos y Condiciones
           </a>
         </nav>
-        <p className="text-xs text-[var(--text-muted)]">{site.footer.derechos}</p>
+        <p className="text-xs text-[var(--text-muted)]">
+          {site.footer.derechos} · {site.footer.ubicacion}
+        </p>
       </div>
     </motion.footer>
   );

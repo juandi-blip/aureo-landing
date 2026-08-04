@@ -239,5 +239,6 @@ export const site = {
   footer: {
     tagline: "Inteligencia logística para tu negocio.",
     derechos: "© 2026 Aureo. Todos los derechos reservados.",
+    ubicacion: "Operamos desde Colombia.",
   },
 };
