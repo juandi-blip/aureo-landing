@@ -1,6 +1,6 @@
 # Melyor — presencia de "motor de Aureo" — Implementation Plan
 
-> **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
+> **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [x]`) syntax for tracking.
 
 **Goal:** Que Melyor se sienta como el motor de datos/optimización de Aureo (tipo Claude/Claude Code) en vez de un widget de chat genérico, vía indicadores de trabajo contextuales, tarjetas de datos, chips de acción sugerida, y una identidad visual con más presencia — sin agregar ejecución real de acciones.
 
@@ -33,7 +33,7 @@
 **Interfaces:**
 - Produces: `detectMelyorCategory(text)` → `"stock" | "clientes" | "facturas" | "generico"`; `getMelyorWorkingMessage(text)` → string; variable de módulo `melyorWorkingMessage`. Las Tareas 2 y 6 (vía el prompt) reusan `detectMelyorCategory`; ninguna otra tarea depende de `melyorWorkingMessage` directamente.
 
-- [ ] **Step 1: Agregar los mensajes de trabajo y el estado**
+- [x] **Step 1: Agregar los mensajes de trabajo y el estado**
 
 En `aureo-demo/melyor.js`, reemplazar (línea 24):
 
@@ -63,7 +63,7 @@ let melyorBusy = false;
 let melyorWorkingMessage = MELYOR_WORKING_MESSAGES.generico;
 ```
 
-- [ ] **Step 2: Agregar las funciones de detección**
+- [x] **Step 2: Agregar las funciones de detección**
 
 Inmediatamente después del cierre de `startNewMelyorConversation` (antes del comentario `// RENDER —`), agregar:
 
@@ -81,7 +81,7 @@ function getMelyorWorkingMessage(text) {
 }
 ```
 
-- [ ] **Step 3: Calcular el mensaje contextual al enviar**
+- [x] **Step 3: Calcular el mensaje contextual al enviar**
 
 En `sendMelyorMessage`, reemplazar:
 
@@ -102,7 +102,7 @@ async function sendMelyorMessage(text) {
     renderMelyorMessages();
 ```
 
-- [ ] **Step 4: Usar el mensaje contextual en el indicador**
+- [x] **Step 4: Usar el mensaje contextual en el indicador**
 
 En `renderMelyorMessages`, reemplazar:
 
@@ -120,7 +120,7 @@ por:
         : "";
 ```
 
-- [ ] **Step 5: Verificación manual en navegador**
+- [x] **Step 5: Verificación manual en navegador**
 
 Con el servidor local corriendo y la sesión simulada activa (ver Global Constraints), abrir el panel y la consola del navegador. Ejecutar, sin esperar (el fetch real fallará/mostrará "no configurado", pero `melyorWorkingMessage` se fija de forma síncrona antes de eso):
 
@@ -130,7 +130,7 @@ sendMelyorMessage("¿cuánto stock tenemos?"); melyorWorkingMessage
 
 Esperado: `"Revisando inventario..."`, y ese texto visible brevemente en la burbuja de "trabajando" antes de que llegue la respuesta de "no configurado". Repetir con una pregunta que mencione "cliente" (→ `"Cruzando datos de clientes..."`), una que mencione "factura" (→ `"Analizando facturación..."`), y una genérica como "hola" (→ `"Procesando tu consulta..."`).
 
-- [ ] **Step 6: No hay commit — `aureo-demo` no tiene repositorio git.**
+- [x] **Step 6: No hay commit — `aureo-demo` no tiene repositorio git.**
 
 ---
 
@@ -143,7 +143,7 @@ Esperado: `"Revisando inventario..."`, y ese texto visible brevemente en la burb
 - Consumes: `detectMelyorCategory` (Task 1), `applyInlineMarkdown` (ya existente).
 - Produces: `renderMelyorCard(title, items)` → string HTML. `renderMelyorMarkdown` sigue devolviendo un string plano en esta tarea (el cambio a objeto `{bodyHtml, suggestion}` es de la Tarea 3, no de esta).
 
-- [ ] **Step 1: Reescribir `renderMelyorMarkdown` con detección de tarjeta**
+- [x] **Step 1: Reescribir `renderMelyorMarkdown` con detección de tarjeta**
 
 Reemplazar la función completa:
 
@@ -230,7 +230,7 @@ function renderMelyorMarkdown(rawText) {
 }
 ```
 
-- [ ] **Step 2: Agregar los íconos de categoría y el render de tarjeta**
+- [x] **Step 2: Agregar los íconos de categoría y el render de tarjeta**
 
 Inmediatamente después de `applyInlineMarkdown` (antes de `function handleMelyorSubmit`), agregar:
 
@@ -249,7 +249,7 @@ function renderMelyorCard(title, items) {
 }
 ```
 
-- [ ] **Step 3: Agregar el CSS de la tarjeta**
+- [x] **Step 3: Agregar el CSS de la tarjeta**
 
 Dentro de `injectMelyorStyles`, después del bloque `.melyor-msg-bot strong { ... } .melyor-msg-user strong { ... }`, agregar:
 
@@ -280,7 +280,7 @@ Dentro de `injectMelyorStyles`, después del bloque `.melyor-msg-bot strong { ..
         }
 ```
 
-- [ ] **Step 4: Verificación manual en navegador**
+- [x] **Step 4: Verificación manual en navegador**
 
 Con el panel abierto y la sesión simulada activa, en la consola:
 
@@ -306,7 +306,7 @@ renderMelyorMessages();
 
 Esperado: esto NO debe renderizar como tarjeta (la negrita no ocupa toda la primera línea) — debe verse igual que antes de esta tarea: párrafo con "4 artículos" en negrita, seguido de una lista suelta sin el contenedor de tarjeta.
 
-- [ ] **Step 5: No hay commit — `aureo-demo` no tiene repositorio git.**
+- [x] **Step 5: No hay commit — `aureo-demo` no tiene repositorio git.**
 
 ---
 
@@ -319,7 +319,7 @@ Esperado: esto NO debe renderizar como tarjeta (la negrita no ocupa toda la prim
 - Consumes: `renderMelyorMarkdown` de la Tarea 2 (esta tarea lo modifica más).
 - Produces: `renderMelyorMarkdown(rawText)` ahora devuelve `{ bodyHtml: string, suggestion: string|null }` — CAMBIO DE TIPO respecto a la Tarea 2, donde devolvía solo un string. `handleMelyorChipClick(evt)`. La Tarea 4 reusa la clase CSS `.melyor-chip` y el patrón `data-melyor-suggestion` que esta tarea introduce.
 
-- [ ] **Step 1: Cambiar `renderMelyorMarkdown` para extraer el marcador y devolver un objeto**
+- [x] **Step 1: Cambiar `renderMelyorMarkdown` para extraer el marcador y devolver un objeto**
 
 Reemplazar las primeras líneas de la función (dejando el resto del cuerpo — el `while` de la Tarea 2 — intacto):
 
@@ -364,7 +364,7 @@ por:
 }
 ```
 
-- [ ] **Step 2: Actualizar el mapeo de burbujas para usar el nuevo objeto y renderizar el chip**
+- [x] **Step 2: Actualizar el mapeo de burbujas para usar el nuevo objeto y renderizar el chip**
 
 En `renderMelyorMessages`, reemplazar:
 
@@ -401,7 +401,7 @@ por:
 
 **Importante (ver Global Constraints):** `suggestion` viene de `escaped` (ya escapado dentro de `renderMelyorMarkdown`), así que NO se le vuelve a aplicar `escapeHtml()` acá — usarlo tal cual, tanto en el atributo `data-melyor-suggestion` como en el texto visible del botón.
 
-- [ ] **Step 3: Agregar el handler de click delegado**
+- [x] **Step 3: Agregar el handler de click delegado**
 
 Inmediatamente después de `renderMelyorMarkdown` (y de `applyInlineMarkdown`/`MELYOR_CATEGORY_ICONS`/`renderMelyorCard` de la Tarea 2), agregar:
 
@@ -414,7 +414,7 @@ function handleMelyorChipClick(evt) {
 }
 ```
 
-- [ ] **Step 4: Conectar el listener delegado**
+- [x] **Step 4: Conectar el listener delegado**
 
 En `initMelyorWidget`, después de:
 
@@ -428,7 +428,7 @@ agregar:
     panel.querySelector("#melyor-messages").addEventListener("click", handleMelyorChipClick);
 ```
 
-- [ ] **Step 5: Agregar el CSS del chip**
+- [x] **Step 5: Agregar el CSS del chip**
 
 Dentro de `injectMelyorStyles`, después del bloque `.melyor-card-list { ... }` (agregado en la Tarea 2), agregar:
 
@@ -452,7 +452,7 @@ Dentro de `injectMelyorStyles`, después del bloque `.melyor-card-list { ... }` 
         }
 ```
 
-- [ ] **Step 6: Verificación manual en navegador**
+- [x] **Step 6: Verificación manual en navegador**
 
 Con el panel abierto y la sesión simulada activa, en la consola:
 
@@ -468,7 +468,7 @@ Esperado: la burbuja muestra solo "Hay 4 productos por debajo del mínimo." (SIN
 
 Confirmar además que un mensaje SIN el marcador (los de las Tareas 1-2) sigue sin mostrar ningún chip.
 
-- [ ] **Step 7: No hay commit — `aureo-demo` no tiene repositorio git.**
+- [x] **Step 7: No hay commit — `aureo-demo` no tiene repositorio git.**
 
 ---
 
@@ -480,7 +480,7 @@ Confirmar además que un mensaje SIN el marcador (los de las Tareas 1-2) sigue s
 **Interfaces:**
 - Consumes: clase `.melyor-chip` y el patrón `data-melyor-suggestion` + `handleMelyorChipClick` (Tarea 3) — el listener ya está delegado sobre `#melyor-messages`, así que los chips nuevos que esta tarea agrega quedan cubiertos automáticamente, sin listener adicional.
 
-- [ ] **Step 1: Agregar las sugerencias fijas**
+- [x] **Step 1: Agregar las sugerencias fijas**
 
 Después de `MELYOR_WORKING_MESSAGES` (Tarea 1), agregar:
 
@@ -492,7 +492,7 @@ const MELYOR_EMPTY_SUGGESTIONS = [
 ];
 ```
 
-- [ ] **Step 2: Renderizar los chips en el estado vacío**
+- [x] **Step 2: Renderizar los chips en el estado vacío**
 
 En `renderMelyorMessages`, reemplazar:
 
@@ -521,7 +521,7 @@ por:
 
 **Nota:** acá SÍ corresponde `escapeHtml(s)` — a diferencia del `suggestion` de la Tarea 3 (que ya venía escapado), `MELYOR_EMPTY_SUGGESTIONS` son strings literales crudos que nunca pasaron por `escapeHtml()`.
 
-- [ ] **Step 3: Agregar el CSS**
+- [x] **Step 3: Agregar el CSS**
 
 Dentro de `injectMelyorStyles`, después del bloque `.melyor-empty { ... }`, agregar:
 
@@ -535,11 +535,11 @@ Dentro de `injectMelyorStyles`, después del bloque `.melyor-empty { ... }`, agr
         }
 ```
 
-- [ ] **Step 4: Verificación manual en navegador**
+- [x] **Step 4: Verificación manual en navegador**
 
 Con el panel abierto y sin historial (usar el botón "+" si hace falta limpiar), confirmar que se ven 3 chips debajo del texto orientativo: "¿Qué productos están bajo stock?", "Clientes más valiosos", "Facturas pendientes". Click en uno (o vía consola: `document.querySelectorAll(".melyor-chip")[0].click()`): debe agregar un mensaje de usuario con ese texto exacto y arrancar el flujo normal de envío (mismo comportamiento que escribir y enviar a mano).
 
-- [ ] **Step 5: No hay commit — `aureo-demo` no tiene repositorio git.**
+- [x] **Step 5: No hay commit — `aureo-demo` no tiene repositorio git.**
 
 ---
 
@@ -552,7 +552,7 @@ Con el panel abierto y sin historial (usar el botón "+" si hace falta limpiar),
 - Consumes: `melyorBusy` (ya existente).
 - Produces: elemento `#melyor-header-icon`; clase CSS `.melyor-pulse` aplicada/quitada dinámicamente sobre `#melyor-header-icon` y el `<svg>` del trigger. No usado por otras tareas de este plan.
 
-- [ ] **Step 1: Agregar el ícono al header del panel**
+- [x] **Step 1: Agregar el ícono al header del panel**
 
 En `initMelyorWidget`, dentro del template de `panel.innerHTML`, reemplazar:
 
@@ -569,7 +569,7 @@ por:
             </div>
 ```
 
-- [ ] **Step 2: Alternar el pulso según `melyorBusy`**
+- [x] **Step 2: Alternar el pulso según `melyorBusy`**
 
 En `renderMelyorMessages`, reemplazar:
 
@@ -596,7 +596,7 @@ function renderMelyorMessages() {
     if (melyorMessages.length === 0) {
 ```
 
-- [ ] **Step 3: CSS — glow permanente del trigger**
+- [x] **Step 3: CSS — glow permanente del trigger**
 
 Reemplazar:
 
@@ -649,7 +649,7 @@ por:
         }
 ```
 
-- [ ] **Step 4: CSS — profundidad del header y estilos del ícono nuevo**
+- [x] **Step 4: CSS — profundidad del header y estilos del ícono nuevo**
 
 Reemplazar:
 
@@ -692,7 +692,7 @@ por:
         }
 ```
 
-- [ ] **Step 5: CSS — animación de pulso**
+- [x] **Step 5: CSS — animación de pulso**
 
 Reemplazar:
 
@@ -711,7 +711,7 @@ por:
         .melyor-pulse { animation: melyorPulse 1.1s ease-in-out infinite; }
 ```
 
-- [ ] **Step 6: Verificación manual en navegador**
+- [x] **Step 6: Verificación manual en navegador**
 
 Con el panel abierto: confirmar que el trigger tiene un glow visible en reposo (sin pasar el mouse), y que se intensifica en hover. Confirmar que el header del panel se ve con más profundidad (no un azul plano). En consola:
 
@@ -727,7 +727,7 @@ melyorBusy = false; renderMelyorMessages();
 
 Confirmar que el pulso se detiene en ambos.
 
-- [ ] **Step 7: No hay commit — `aureo-demo` no tiene repositorio git.**
+- [x] **Step 7: No hay commit — `aureo-demo` no tiene repositorio git.**
 
 ---
 
@@ -740,7 +740,7 @@ Confirmar que el pulso se detiene en ambos.
 - Consumes: nada nuevo.
 - Produces: nada que otras tareas consuman — el contrato `{ reply: string }` no cambia. El formato que este prompt le pide al modelo debe coincidir exactamente con lo que el frontend sabe interpretar (Tareas 2 y 3): título en `**negrita**` solo en su línea seguido de lista para tarjetas, y una última línea `SUGERENCIA: <texto>` para chips.
 
-- [ ] **Step 1: Reemplazar el `SYSTEM_PROMPT`**
+- [x] **Step 1: Reemplazar el `SYSTEM_PROMPT`**
 
 Reemplazar el const completo:
 
@@ -782,13 +782,13 @@ Si la pregunta no se puede responder con ese contexto, decilo en una línea y se
 donde el usuario puede encontrar esa información (Inventario, Facturación, Clientes, Compras, Logística/WMS).`;
 ```
 
-- [ ] **Step 2: Verificar el archivo**
+- [x] **Step 2: Verificar el archivo**
 
 Confirmar que `SYSTEM_PROMPT` sigue siendo un único template literal válido (un solo backtick de apertura en la línea del `const`, un solo backtick de cierre seguido de `;` al final del prompt). Si hay Node disponible, correr `node --check aureo-demo/api/melyor-chat.js` desde `aureo-demo` como chequeo de sintaxis.
 
 No es posible probar el efecto real contra Claude en este entorno (sin `ANTHROPIC_API_KEY` configurada). Queda pendiente para cuando se configure la key de producción — no es parte del alcance de este plan.
 
-- [ ] **Step 3: No hay commit — `aureo-demo` no tiene repositorio git.**
+- [x] **Step 3: No hay commit — `aureo-demo` no tiene repositorio git.**
 
 ---
 
@@ -798,7 +798,7 @@ No es posible probar el efecto real contra Claude en este entorno (sin `ANTHROPI
 
 **Interfaces:** N/A.
 
-- [ ] **Step 1: Checklist completo en navegador**
+- [x] **Step 1: Checklist completo en navegador**
 
 Con el servidor local corriendo y la sesión simulada activa:
 
@@ -810,6 +810,6 @@ Con el servidor local corriendo y la sesión simulada activa:
 6. **Regresión — plan anterior:** trigger en el header, panel overlay 420px desktop / full-screen mobile sin scrim, persistencia de abierto/cerrado, botón "+" limpia historial sin cerrar, estado `not_configured` intacto, ningún indicador "En línea" ni botón "?" (seguían fuera de alcance).
 7. **Seguridad:** repetir la inyección XSS de la iteración anterior (`<img src=x onerror=alert(1)>` como texto de un mensaje de asistente) y confirmar que sigue mostrándose como texto literal, sin ejecutar nada — la Tarea 3 tocó el tipo de retorno de `renderMelyorMarkdown`, así que vale la pena re-confirmar que el escape-primero se mantuvo intacto en el nuevo flujo.
 
-- [ ] **Step 2: Reportar resultado**
+- [x] **Step 2: Reportar resultado**
 
 Si algún punto falla, volver a la tarea correspondiente y corregir antes de dar el plan por completo. Si todo pasa, el trabajo queda listo para que el usuario pida el deploy explícitamente (fuera de alcance de este plan).
