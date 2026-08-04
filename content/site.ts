@@ -228,6 +228,7 @@ export const site = {
     { pregunta: "¿Es difícil migrar mi inventario?", respuesta: "No. Cargas tu inventario actual (por Excel o uno por uno) y Aureo lo organiza por ti. No necesitas empezar de cero." },
     { pregunta: "¿Qué pasa con mis datos?", respuesta: "Tus datos son tuyos. Los protegemos y nunca los compartimos." },
     { pregunta: "¿Cuándo estará disponible?", respuesta: "Estamos en desarrollo. Únete a la lista de espera para tener acceso anticipado y precio de fundador." },
+    { pregunta: "¿Qué pasa si me uno a la lista de espera y el lanzamiento tarda?", respuesta: "No arriesgas nada: anotarte no cuesta nada ni pide tarjeta. Mientras tanto tu precio de fundador queda reservado y congelado para cuando lancemos — cuanto antes te unas, mejor precio aseguras." },
   ] as FaqItem[],
   finalCta: {
     titulo: "Sé de los primeros en tener el control.",
