@@ -1,14 +1,15 @@
 // components/MelyorSection.tsx
 "use client";
 import { motion } from "motion/react";
-import { ShoppingBag, Bell, Users, FileText, MessageCircle, Zap } from "lucide-react";
+import Image from "next/image";
+import { ShoppingBag, Bell, MessageCircle, Zap } from "lucide-react";
 import { site } from "@/content/site";
 import { staggerContainer, fadeUp, VIEWPORT } from "@/lib/motion";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { GrainOverlay } from "@/components/ui/GrainOverlay";
 import { SpotlightGlow, useSpotlight } from "@/components/ui/Spotlight";
 
-const CAPABILITY_ICONS = [ShoppingBag, Bell, Users, FileText, MessageCircle, Zap];
+const CAPABILITY_ICONS = [MessageCircle, Zap, Bell, ShoppingBag];
 
 function MelyorBadge() {
   return (
@@ -93,7 +94,40 @@ export function MelyorSection() {
         </div>
 
         <motion.div
-          className="mt-14 grid gap-5 sm:grid-cols-2"
+          className="mx-auto mt-14 grid max-w-4xl gap-4 sm:grid-cols-2"
+          variants={staggerContainer}
+          initial="hidden"
+          whileInView="visible"
+          viewport={VIEWPORT}
+        >
+          <motion.div
+            variants={fadeUp}
+            className="relative aspect-[4/3] overflow-hidden rounded-[var(--radius-lg)] border border-[var(--bronze)]/30 shadow-lg"
+          >
+            <Image
+              src="/melyor-panel-empty.png"
+              alt="Panel de Melyor abierto, con sugerencias de preguntas frecuentes"
+              fill
+              className="object-cover object-right"
+              sizes="(min-width: 640px) 50vw, 100vw"
+            />
+          </motion.div>
+          <motion.div
+            variants={fadeUp}
+            className="relative aspect-[4/3] overflow-hidden rounded-[var(--radius-lg)] border border-[var(--bronze)]/30 shadow-lg"
+          >
+            <Image
+              src="/melyor-panel-card.png"
+              alt="Melyor respondiendo con una tarjeta de datos de stock bajo y una acción sugerida"
+              fill
+              className="object-cover object-right"
+              sizes="(min-width: 640px) 50vw, 100vw"
+            />
+          </motion.div>
+        </motion.div>
+
+        <motion.div
+          className="mt-8 grid gap-5 sm:grid-cols-2"
           variants={staggerContainer}
           initial="hidden"
           whileInView="visible"
