@@ -42,6 +42,7 @@ export async function POST(request: Request) {
         // contra un UUID inexistente → 0 filas → ok silencioso, sin IDOR.
         return NextResponse.json({ ok: true, token: randomUUID() }, { status: 200 });
       }
+      console.error("waitlist insert error", error.code, error.message);
       return NextResponse.json({ ok: false, error: "No pudimos registrarte. Intenta de nuevo." }, { status: 500 });
     }
 
@@ -52,7 +53,8 @@ export async function POST(request: Request) {
     // send back on PATCH. It is only ever handed out here, on a genuine new
     // insert, so possessing it proves the caller is the original submitter.
     return NextResponse.json({ ok: true, token: data.id }, { status: 200 });
-  } catch {
+  } catch (e) {
+    console.error("waitlist route error", e instanceof Error ? e.message : e);
     return NextResponse.json({ ok: false, error: "Error del servidor." }, { status: 500 });
   }
 }
