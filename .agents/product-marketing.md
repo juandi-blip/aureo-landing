@@ -111,4 +111,4 @@ No prometer la experiencia móvil completa en el mensaje todavía, pero "úsalo 
 ## Goals
 **Business goal:** Captar los primeros negocios (precio de fundador) y convertirlos vía free trial; abrir mercado frente a los incumbentes atacando el wedge logístico.
 **Conversion action:** Empezar la prueba de 14 días (pre-lanzamiento: unirse a la lista de espera).
-**Current metrics:** Pre-lanzamiento. ~400 leads en pipeline. Landing en producción (aureo-landing.vercel.app) + demo interactiva (aureo-demo-six.vercel.app). Campaña Meta Ads (Lead Ads → WhatsApp) en discusión. Sin dominio propio aún (pendiente aureo.co / aureo.com.co).
+**Current metrics:** Pre-lanzamiento. ~400 leads en pipeline. Landing en producción (aureo-landing.vercel.app). La demo gateada (aureo-demo) fue retirada — el flujo hacia el producto se rehace como signup + trial real en un sub-proyecto en curso. Campaña Meta Ads (Lead Ads → WhatsApp) en discusión. Sin dominio propio aún (pendiente aureo.co / aureo.com.co).
