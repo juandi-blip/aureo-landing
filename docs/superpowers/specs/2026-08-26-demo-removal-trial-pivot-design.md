@@ -1,16 +1,28 @@
 # Demo removal + trial pivot — design
 
-Sub-project A of the Aureo ecosystem reorg (order: A → B auth/multi-tenant
-foundation → C superadmin panel → D new modules → E full backend). This is
-the only sub-project scoped here; B–E are separate future specs.
+Sub-project A of the Aureo ecosystem reorg. **Reordered**: the site is
+launching now, not staying in a waitlist pre-launch phase — every CTA
+across the whole landing (not just the demo section) must lead to real
+signup + 14-day trial, which requires sub-project B (Supabase auth) to
+exist first. Split accordingly:
 
-## Goal
+- **A1** (this spec, no dependencies — done now): delete `aureo-demo`,
+  clean up Vercel/GitHub org for all three projects.
+- **A2** (blocked on B): replace the waitlist entirely — every CTA
+  (`site.ts` demo/hero/finalCta/planes[].cta, `WaitlistForm` and its API
+  route) — with real signup/trial. Written as its own spec once B lands.
 
-Retire the gated "explora la demo 30 min" flow and the `aureo-demo` project
-entirely. Replace it with trial-oriented messaging that funnels into the
-existing waitlist (no real signup exists yet — that's sub-project B).
+Order: A1 now → B (auth/multi-tenant foundation) → A2 → C (superadmin
+panel) → D (new modules) → E (full backend).
+
+## Goal (A1, scoped here)
+
+Retire the gated "explora la demo 30 min" flow and the `aureo-demo`
+project entirely — folder, Vercel project, GitHub repo, git remote.
 Leave the Vercel/GitHub organization for all three projects impeccable:
 `aureo-demo` gone, `aureo` and `aureo-landing` auto-deploying from Git.
+The demo section's copy/CTA rewrite moves to A2 (needs somewhere real to
+send users once the waitlist is gone) — see note in Scope below.
 
 ## Context / key finding
 
@@ -37,17 +49,23 @@ the interim.
 
 ### `aureo-landing`
 
-- `content/site.ts` — rewrite the `demo` section's copy: drop
-  `ctaExplorar`, `ctaExplorarNota`, `gateTitulo`, `gateTexto`, `gateBoton`,
-  `gateExpiradoTitulo`, `gateExpiradoTexto`. New CTA reads roughly "Inicia
-  tu prueba gratis de 14 días" and routes into the same waitlist flow every
-  other CTA on the site already uses (`site.finalCta`/`site.planes[].cta`
-  pattern) — no new signup surface, consistent with the rest of the
-  pre-launch site.
+Interim only — this is NOT the final trial copy. The waitlist itself
+still exists after A1 (it's only removed in A2, once B gives it somewhere
+real to send people). The goal here is just to stop pointing at the
+deleted `aureo-demo` target; the section falls back to the same waitlist
+CTA pattern used everywhere else on the site for now, and gets rewritten
+again in A2 alongside every other CTA.
+
+- `content/site.ts` — drop the gate-specific `demo` fields (`ctaExplorar`,
+  `ctaExplorarNota`, `gateTitulo`, `gateTexto`, `gateBoton`,
+  `gateExpiradoTitulo`, `gateExpiradoTexto`) since they describe a flow
+  that no longer exists. Leave `eyebrow`/`titulo`/`texto`/`badges`
+  (still-accurate product framing) in place.
 - `components/DemoSection.tsx` — remove `DemoGateModal` usage, the
   `?demo=` query-param read (`readInitialGateReason`), `DEMO_URL`/
-  `NEXT_PUBLIC_DEMO_URL`. Keep the video showcase; swap the CTA for the
-  waitlist CTA component/pattern used elsewhere on the page.
+  `NEXT_PUBLIC_DEMO_URL`. Keep the video showcase; swap the CTA for
+  whatever waitlist CTA component/pattern the rest of the page already
+  uses (temporary, superseded by A2).
 - `components/Hero.tsx` — remove `DemoGateModal` import/usage, `DEMO_URL`,
   the "o explora la demo →" link.
 - Delete: `components/DemoGateModal.tsx`, `app/api/demo-token/route.ts`,
@@ -86,6 +104,8 @@ the interim.
 
 - Real signup/login (sub-project B).
 - Removing/replacing `demo-gate.js` itself (sub-project B).
+- Removing the waitlist and rewriting every CTA to real trial signup
+  (sub-project A2, blocked on B).
 - Superadmin panel (sub-project C).
 - Custom domain purchase/wiring.
 
