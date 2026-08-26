@@ -11,14 +11,10 @@ import {
   reducedTransition,
 } from "@/lib/motion";
 import { ParallaxLayer } from "@/components/ui/ParallaxLayer";
-import { DemoGateModal } from "@/components/DemoGateModal";
-
-const DEMO_URL = process.env.NEXT_PUBLIC_DEMO_URL || "";
 
 export function Hero() {
   const reduce = useReducedMotion();
   const [formStep, setFormStep] = useState<WaitlistStep>("email");
-  const [gateOpen, setGateOpen] = useState(false);
 
   return (
     <section
@@ -91,15 +87,6 @@ export function Hero() {
                 {site.hero.nota}
               </p>
             )}
-            {formStep === "email" && DEMO_URL && (
-              <button
-                type="button"
-                onClick={() => setGateOpen(true)}
-                className="mt-2 inline-flex items-center gap-1.5 text-sm font-medium text-[var(--bronze)] underline underline-offset-2 hover:text-[var(--bronze)]/80"
-              >
-                o explora la demo →
-              </button>
-            )}
           </div>
         </div>
 
@@ -124,12 +111,6 @@ export function Hero() {
           </div>
         </motion.div>
       </div>
-      <DemoGateModal
-        open={gateOpen}
-        onOpenChange={setGateOpen}
-        demoUrl={DEMO_URL}
-        reason={null}
-      />
     </section>
   );
 }

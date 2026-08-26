@@ -107,13 +107,6 @@ export const site = {
     texto: "El mapa de calor y el análisis ABC son lo que separa a Aureo de un POS común.",
     badges: ["Mapa de calor en vivo", "Picking guiado", "Análisis ABC / Pareto"],
     placeholder: "Demo en video — próximamente.",
-    ctaExplorar: "Explora la demo tú mismo",
-    ctaExplorarNota: "No es un video — es Aureo funcionando. Dejanos tu correo y recorré el inventario, el mapa de calor y el picking con datos reales durante 30 minutos.",
-    gateTitulo: "Antes de entrar, dejanos tu correo",
-    gateTexto: "Te damos acceso a una sesión de demo de 30 minutos con datos de ejemplo — sin compromiso.",
-    gateBoton: "Entrar a la demo",
-    gateExpiradoTitulo: "Tu sesión de demo expiró",
-    gateExpiradoTexto: "Dejanos tu correo de nuevo para volver a entrar por 30 minutos más.",
   },
   fundadores: {
     titulo: "Lo que aprendimos manejando stock de verdad.",
