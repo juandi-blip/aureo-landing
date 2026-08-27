@@ -6,5 +6,7 @@ initBotId({
   protect: [
     { path: "/api/waitlist", method: "POST" },
     { path: "/api/waitlist", method: "PATCH" },
+    { path: "/api/auth/signup", method: "POST" },
+    { path: "/api/auth/login", method: "POST" },
   ],
 });
