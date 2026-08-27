@@ -24,13 +24,17 @@ export async function POST(request: Request) {
   }
 
   const { email, password, businessName, planId } = parsed.data;
+  const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "https://aureo.com.co";
 
   try {
     const supabase = getSupabaseAnon();
     const { data, error } = await supabase.auth.signUp({
       email,
       password,
-      options: { data: { business_name: businessName, plan_id: planId } },
+      options: {
+        data: { business_name: businessName, plan_id: planId },
+        emailRedirectTo: `${SITE_URL}/login`,
+      },
     });
 
     if (error) {
