@@ -1,9 +1,11 @@
 "use client";
 import { useId, useState } from "react";
 import { useSearchParams } from "next/navigation";
+import { motion, useReducedMotion } from "motion/react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { HONEYPOT_FIELD } from "@/lib/validation";
+import { fadeUp, staggerContainer, reducedTransition } from "@/lib/motion";
 
 type FormState = "idle" | "loading" | "error" | "check-email";
 
@@ -13,7 +15,31 @@ const PLAN_OPTIONS: { id: "starter" | "pro" | "logistica"; label: string }[] = [
   { id: "logistica", label: "Logística" },
 ];
 
+const inputGlow =
+  "focus-visible:shadow-[0_0_0_4px_var(--bronze-glow)] focus-visible:border-[var(--bronze)]";
+
+function CheckEmailIcon() {
+  return (
+    <svg viewBox="0 0 48 48" fill="none" className="h-12 w-12" aria-hidden>
+      <rect x="4" y="10" width="40" height="28" rx="4" stroke="var(--emerald)" strokeWidth="2" />
+      <path d="M4 12l20 15L44 12" stroke="var(--emerald)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+      <motion.path
+        d="M17 27l5.5 5.5L33 21"
+        stroke="var(--emerald)"
+        strokeWidth="3"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        fill="none"
+        initial={{ pathLength: 0, opacity: 0 }}
+        animate={{ pathLength: 1, opacity: 1 }}
+        transition={{ delay: 0.35, duration: 0.5, ease: "easeOut" }}
+      />
+    </svg>
+  );
+}
+
 export function SignupForm() {
+  const reduce = useReducedMotion();
   const honeypotId = useId();
   const searchParams = useSearchParams();
   const initialPlan = searchParams.get("plan");
@@ -60,14 +86,30 @@ export function SignupForm() {
 
   if (state === "check-email") {
     return (
-      <p role="status" className="text-[var(--emerald)] font-semibold">
-        ¡Listo! Revisa tu correo para confirmar tu cuenta antes de entrar.
-      </p>
+      <motion.div
+        role="status"
+        className="flex flex-col items-center gap-3 py-2 text-center"
+        initial={reduce ? false : { opacity: 0, scale: 0.9 }}
+        animate={{ opacity: 1, scale: 1 }}
+        transition={reducedTransition(reduce, 0, 0.4)}
+      >
+        <CheckEmailIcon />
+        <p className="font-semibold text-[var(--emerald)]">
+          ¡Listo! Revisa tu correo para confirmar tu cuenta antes de entrar.
+        </p>
+      </motion.div>
     );
   }
 
   return (
-    <form onSubmit={onSubmit} className="flex w-full max-w-md flex-col gap-3" noValidate>
+    <motion.form
+      onSubmit={onSubmit}
+      className="flex w-full max-w-md flex-col gap-3"
+      noValidate
+      variants={staggerContainer}
+      initial={reduce ? false : "hidden"}
+      animate="visible"
+    >
       <label htmlFor={honeypotId} className="sr-only">
         Deja este campo vacío
       </label>
@@ -81,58 +123,85 @@ export function SignupForm() {
         autoComplete="off"
         className="absolute left-[-9999px] h-0 w-0 opacity-0"
       />
-      <Input
-        type="text"
-        required
-        placeholder="Nombre de tu negocio"
-        aria-label="Nombre de tu negocio"
-        value={businessName}
-        onChange={(e) => setBusinessName(e.target.value)}
-        className="min-h-11"
-      />
-      <Input
-        type="email"
-        required
-        placeholder="Tu correo"
-        aria-label="Correo electrónico"
-        autoComplete="email"
-        value={email}
-        onChange={(e) => setEmail(e.target.value)}
-        className="min-h-11"
-      />
-      <Input
-        type="password"
-        required
-        placeholder="Contraseña (mínimo 8 caracteres)"
-        aria-label="Contraseña"
-        autoComplete="new-password"
-        value={password}
-        onChange={(e) => setPassword(e.target.value)}
-        className="min-h-11"
-      />
-      <div className="flex gap-2">
+      <motion.div variants={fadeUp}>
+        <Input
+          type="text"
+          required
+          placeholder="Nombre de tu negocio"
+          aria-label="Nombre de tu negocio"
+          value={businessName}
+          onChange={(e) => setBusinessName(e.target.value)}
+          className={`min-h-11 ${inputGlow}`}
+        />
+      </motion.div>
+      <motion.div variants={fadeUp}>
+        <Input
+          type="email"
+          required
+          placeholder="Tu correo"
+          aria-label="Correo electrónico"
+          autoComplete="email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          className={`min-h-11 ${inputGlow}`}
+        />
+      </motion.div>
+      <motion.div variants={fadeUp}>
+        <Input
+          type="password"
+          required
+          placeholder="Contraseña (mínimo 8 caracteres)"
+          aria-label="Contraseña"
+          autoComplete="new-password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          className={`min-h-11 ${inputGlow}`}
+        />
+      </motion.div>
+      <motion.div variants={fadeUp} className="flex gap-2">
         {PLAN_OPTIONS.map((p) => (
-          <button
+          <motion.button
             key={p.id}
             type="button"
             onClick={() => setPlanId(p.id)}
             aria-pressed={planId === p.id}
-            className={`flex-1 rounded-lg border px-3 py-2 text-sm font-semibold ${
+            whileHover={reduce ? undefined : { scale: 1.03 }}
+            whileTap={reduce ? undefined : { scale: 0.97 }}
+            className={`flex-1 rounded-lg border px-3 py-2 text-sm font-semibold transition-colors ${
               planId === p.id
                 ? "border-[var(--bronze)] bg-[var(--bronze)]/10 text-[var(--bronze)]"
                 : "border-[var(--border-subtle)] text-[var(--text-secondary)]"
             }`}
           >
             {p.label}
-          </button>
+          </motion.button>
         ))}
-      </div>
-      <Button type="submit" disabled={state === "loading"} aria-busy={state === "loading"} className="min-h-11">
-        {state === "loading" ? "Creando cuenta…" : "Iniciar prueba gratis"}
-      </Button>
-      <p role="alert" aria-live="polite" className="min-h-5 text-sm text-[var(--terracotta)]">
+      </motion.div>
+      <motion.div variants={fadeUp}>
+        <motion.div
+          whileHover={reduce ? undefined : { scale: 1.02 }}
+          whileTap={reduce ? undefined : { scale: 0.98 }}
+        >
+          <Button
+            type="submit"
+            disabled={state === "loading"}
+            aria-busy={state === "loading"}
+            className="min-h-11 w-full"
+          >
+            {state === "loading" ? "Creando cuenta…" : "Iniciar prueba gratis"}
+          </Button>
+        </motion.div>
+      </motion.div>
+      <motion.p
+        key={msg || "idle"}
+        role="alert"
+        aria-live="polite"
+        animate={state === "error" && !reduce ? { x: [0, -6, 6, -4, 4, 0] } : { x: 0 }}
+        transition={reducedTransition(reduce, 0, 0.4)}
+        className="min-h-5 text-sm text-[var(--terracotta)]"
+      >
         {state === "error" ? msg : ""}
-      </p>
-    </form>
+      </motion.p>
+    </motion.form>
   );
 }
