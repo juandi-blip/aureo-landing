@@ -88,15 +88,29 @@ export function SignupForm() {
     return (
       <motion.div
         role="status"
-        className="flex flex-col items-center gap-3 py-2 text-center"
-        initial={reduce ? false : { opacity: 0, scale: 0.9 }}
-        animate={{ opacity: 1, scale: 1 }}
-        transition={reducedTransition(reduce, 0, 0.4)}
+        className="flex flex-col items-center gap-4 py-4 text-center"
+        initial={reduce ? false : { opacity: 0, y: 12 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={reducedTransition(reduce, 0, 0.45)}
       >
-        <CheckEmailIcon />
-        <p className="font-semibold text-[var(--emerald)]">
-          ¡Listo! Revisa tu correo para confirmar tu cuenta antes de entrar.
-        </p>
+        <motion.div
+          initial={reduce ? false : { scale: 0.6, opacity: 0 }}
+          animate={{ scale: 1, opacity: 1 }}
+          transition={
+            reduce ? { duration: 0 } : { delay: 0.1, type: "spring", damping: 14, stiffness: 160 }
+          }
+        >
+          <CheckEmailIcon />
+        </motion.div>
+        <div>
+          <h1 className="font-display text-2xl font-bold text-[var(--text-primary)]">
+            ¡Cuenta creada!
+          </h1>
+          <p className="mt-2 text-[var(--text-secondary)]">
+            Te enviamos un correo de confirmación. Ábrelo y sigue el enlace —
+            te llevará directo a iniciar sesión.
+          </p>
+        </div>
       </motion.div>
     );
   }
@@ -110,6 +124,15 @@ export function SignupForm() {
       initial={reduce ? false : "hidden"}
       animate="visible"
     >
+      <motion.div variants={fadeUp} className="mb-2">
+        <h1 className="font-display text-2xl font-bold text-[var(--text-primary)]">
+          Crea tu cuenta
+        </h1>
+        <div className="mt-2 h-0.5 w-10 rounded-full bg-[var(--bronze)]" aria-hidden />
+        <p className="mt-3 text-[var(--text-secondary)]">
+          14 días gratis, sin tarjeta. Empieza a controlar tu inventario hoy mismo.
+        </p>
+      </motion.div>
       <label htmlFor={honeypotId} className="sr-only">
         Deja este campo vacío
       </label>
