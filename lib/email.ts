@@ -55,3 +55,28 @@ export async function notifyNewSignup(rawEmail: string, rawOrigen: string): Prom
     `,
   });
 }
+
+export async function notifyPasswordChanged(rawEmail: string): Promise<void> {
+  const client = getResend();
+  if (!client) return; // Silently skip if not configured
+
+  const email = escapeHtml(rawEmail);
+  const fromDomain = process.env.RESEND_FROM_DOMAIN ?? "onboarding@resend.dev";
+
+  await client.emails.send({
+    from: `Aureo <${fromDomain}>`,
+    to: rawEmail,
+    subject: "Tu contraseña de Aureo cambió",
+    html: `
+      <div style="font-family: Inter, sans-serif; max-width: 480px; margin: 0 auto; padding: 32px; background: #F7F3EA; border-radius: 12px;">
+        <h1 style="color: #2E4A6E; font-size: 22px; margin: 0 0 8px;">Tu contraseña cambió</h1>
+        <p style="color: #6E6354; margin: 0 0 16px; font-size: 15px;">
+          Confirmamos que la contraseña de tu cuenta (${email}) en Aureo fue actualizada hace un momento.
+        </p>
+        <p style="color: #6E6354; margin: 0; font-size: 14px;">
+          Si no fuiste tú, contáctanos de inmediato — alguien más podría tener acceso a tu cuenta.
+        </p>
+      </div>
+    `,
+  });
+}
