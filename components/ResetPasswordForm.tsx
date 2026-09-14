@@ -1,7 +1,7 @@
 "use client";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { useSearchParams } from "next/navigation";
-import { createClient } from "@supabase/supabase-js";
+import { createClient, type SupabaseClient } from "@supabase/supabase-js";
 import { motion, useReducedMotion } from "motion/react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -34,6 +34,29 @@ export function ResetPasswordForm() {
   const [state, setState] = useState<State>("idle");
   const [msg, setMsg] = useState("");
 
+  // Un solo cliente/sesión por carga de página: verifyOtp consume el
+  // token_hash, así que si updateUser falla después (contraseña igual a la
+  // anterior, rate limit, etc.) un reintento debe reusar la sesión ya
+  // verificada en vez de volver a llamar verifyOtp con un token ya gastado
+  // (eso lo mandaría a "expired" sin que el token sea el problema real).
+  const supabaseRef = useRef<SupabaseClient | null>(null);
+  const verifiedRef = useRef(false);
+  const accessTokenRef = useRef<string | null>(null);
+
+  function getClient() {
+    if (!supabaseRef.current) {
+      supabaseRef.current = getBrowserSupabase();
+    }
+    return supabaseRef.current;
+  }
+
+  async function withTimeout<T>(promise: Promise<T>, ms: number): Promise<T> {
+    return Promise.race([
+      promise,
+      new Promise<T>((_, reject) => setTimeout(() => reject(new Error("timeout")), ms)),
+    ]);
+  }
+
   async function onSubmit(e: React.FormEvent) {
     e.preventDefault();
     setMsg("");
@@ -54,39 +77,44 @@ export function ResetPasswordForm() {
     }
 
     setState("loading");
-    const supabase = getBrowserSupabase();
+    const supabase = getClient();
     try {
-      const { data: verifyData, error: verifyError } = await supabase.auth.verifyOtp({
-        token_hash: tokenHash,
-        type: "recovery",
-      });
-      if (verifyError || !verifyData.session) {
-        setState("expired");
-        return;
+      if (!verifiedRef.current) {
+        const { data: verifyData, error: verifyError } = await supabase.auth.verifyOtp({
+          token_hash: tokenHash,
+          type: "recovery",
+        });
+        if (verifyError || !verifyData.session) {
+          setState("expired");
+          return;
+        }
+        verifiedRef.current = true;
+        accessTokenRef.current = verifyData.session.access_token;
       }
 
       const { error: updateError } = await supabase.auth.updateUser({ password });
       if (updateError) {
         setState("error");
-        setMsg(PASSWORD_REQUIREMENT_MSG);
+        setMsg(updateError.message || "No pudimos actualizar tu contraseña. Intenta de nuevo.");
         return;
       }
 
       try {
-        await supabase.auth.signOut({ scope: "others" });
+        await withTimeout(supabase.auth.signOut({ scope: "others" }), 4000);
       } catch {
-        // best-effort: no bloquea el flujo si falla
+        // best-effort: no bloquea el flujo si falla o tarda demasiado
       }
       try {
         await fetch("/api/auth/notify-password-changed", {
           method: "POST",
           headers: {
             "content-type": "application/json",
-            authorization: `Bearer ${verifyData.session.access_token}`,
+            authorization: `Bearer ${accessTokenRef.current}`,
           },
+          signal: AbortSignal.timeout(4000),
         });
       } catch {
-        // best-effort: no bloquea el flujo si falla
+        // best-effort: no bloquea el flujo si falla o tarda demasiado
       }
 
       setState("success");
@@ -103,11 +131,17 @@ export function ResetPasswordForm() {
     if (!email) return;
     setState("loading");
     try {
-      await fetch("/api/auth/forgot-password", {
+      const res = await fetch("/api/auth/forgot-password", {
         method: "POST",
         headers: { "content-type": "application/json" },
         body: JSON.stringify({ email }),
       });
+      const json = await res.json();
+      if (!res.ok || !json.ok) {
+        setState("error");
+        setMsg(json.error ?? "No pudimos enviar el enlace.");
+        return;
+      }
       setState("resent");
     } catch {
       setState("error");
