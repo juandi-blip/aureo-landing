@@ -6,7 +6,7 @@ describe("parseSignupPayload", () => {
   it("accepts a valid payload", () => {
     const result = parseSignupPayload({
       email: "Test@Example.com",
-      password: "correcthorsebattery",
+      password: "Correcthorse1",
       businessName: "Ferretería El Tornillo",
       planId: "pro",
     });
@@ -15,6 +15,26 @@ describe("parseSignupPayload", () => {
       expect(result.data.email).toBe("test@example.com");
       expect(result.data.planId).toBe("pro");
     }
+  });
+
+  it("rejects a password with no uppercase letter", () => {
+    const result = parseSignupPayload({
+      email: "test@example.com",
+      password: "correcthorse1",
+      businessName: "Negocio",
+      planId: "starter",
+    });
+    expect(result.ok).toBe(false);
+  });
+
+  it("rejects a password with no digit", () => {
+    const result = parseSignupPayload({
+      email: "test@example.com",
+      password: "Correcthorse",
+      businessName: "Negocio",
+      planId: "starter",
+    });
+    expect(result.ok).toBe(false);
   });
 
   it("rejects a short password", () => {
@@ -30,7 +50,7 @@ describe("parseSignupPayload", () => {
   it("rejects an invalid plan id", () => {
     const result = parseSignupPayload({
       email: "test@example.com",
-      password: "correcthorsebattery",
+      password: "Correcthorse1",
       businessName: "Negocio",
       planId: "enterprise",
     });
@@ -40,7 +60,7 @@ describe("parseSignupPayload", () => {
   it("rejects a missing business name", () => {
     const result = parseSignupPayload({
       email: "test@example.com",
-      password: "correcthorsebattery",
+      password: "Correcthorse1",
       businessName: "   ",
       planId: "starter",
     });
@@ -50,7 +70,7 @@ describe("parseSignupPayload", () => {
   it("flags the honeypot as a bot without leaking which check failed", () => {
     const result = parseSignupPayload({
       email: "test@example.com",
-      password: "correcthorsebattery",
+      password: "Correcthorse1",
       businessName: "Negocio",
       planId: "starter",
       [HONEYPOT_FIELD]: "filled-by-a-bot",
