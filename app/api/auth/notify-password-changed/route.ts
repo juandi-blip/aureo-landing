@@ -1,8 +1,12 @@
 import { NextResponse } from "next/server";
 import { getSupabaseAnon } from "@/lib/supabase";
 import { notifyPasswordChanged } from "@/lib/email";
+import { runGuards } from "@/lib/api-guards";
 
 export async function POST(request: Request) {
+  const guardResponse = await runGuards(request);
+  if (guardResponse) return guardResponse;
+
   const authHeader = request.headers.get("authorization") ?? "";
   const token = authHeader.startsWith("Bearer ") ? authHeader.slice(7) : "";
   if (!token) {

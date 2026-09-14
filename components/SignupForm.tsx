@@ -173,7 +173,7 @@ export function SignupForm() {
         <Input
           type="password"
           required
-          placeholder="Contraseña (mínimo 8 caracteres)"
+          placeholder="Contraseña (8+ caracteres, mayúscula, minúscula y número)"
           aria-label="Contraseña"
           autoComplete="new-password"
           value={password}

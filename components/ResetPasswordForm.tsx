@@ -8,10 +8,24 @@ import { Input } from "@/components/ui/input";
 import { fadeUp, staggerContainer, reducedTransition } from "@/lib/motion";
 import { isValidPassword, PASSWORD_REQUIREMENT_MSG } from "@/lib/auth-validation";
 
-type State = "idle" | "loading" | "success" | "error" | "expired" | "resent";
+type State = "idle" | "loading" | "success" | "error" | "expired" | "resending" | "resent";
 
 const inputGlow =
   "focus-visible:shadow-[0_0_0_4px_var(--bronze-glow)] focus-visible:border-[var(--bronze)]";
+
+async function withTimeout<T>(promise: Promise<T>, ms: number): Promise<T> {
+  let timer: ReturnType<typeof setTimeout>;
+  try {
+    return await Promise.race([
+      promise,
+      new Promise<T>((_, reject) => {
+        timer = setTimeout(() => reject(new Error("timeout")), ms);
+      }),
+    ]);
+  } finally {
+    clearTimeout(timer!);
+  }
+}
 
 // Mismo patrón que ConfirmAccount.tsx: el link de recuperación no hace nada
 // hasta que el usuario escribe su nueva contraseña y envía el formulario —
@@ -48,13 +62,6 @@ export function ResetPasswordForm() {
       supabaseRef.current = getBrowserSupabase();
     }
     return supabaseRef.current;
-  }
-
-  async function withTimeout<T>(promise: Promise<T>, ms: number): Promise<T> {
-    return Promise.race([
-      promise,
-      new Promise<T>((_, reject) => setTimeout(() => reject(new Error("timeout")), ms)),
-    ]);
   }
 
   async function onSubmit(e: React.FormEvent) {
@@ -129,7 +136,8 @@ export function ResetPasswordForm() {
 
   async function onResend() {
     if (!email) return;
-    setState("loading");
+    setMsg("");
+    setState("resending");
     try {
       const res = await fetch("/api/auth/forgot-password", {
         method: "POST",
@@ -138,13 +146,13 @@ export function ResetPasswordForm() {
       });
       const json = await res.json();
       if (!res.ok || !json.ok) {
-        setState("error");
+        setState("expired");
         setMsg(json.error ?? "No pudimos enviar el enlace.");
         return;
       }
       setState("resent");
     } catch {
-      setState("error");
+      setState("expired");
       setMsg("Revisa tu conexión e intenta de nuevo.");
     }
   }
@@ -166,7 +174,8 @@ export function ResetPasswordForm() {
     );
   }
 
-  if (state === "expired") {
+  if (state === "expired" || state === "resending") {
+    const isResending = state === "resending";
     return (
       <motion.div
         role="status"
@@ -182,9 +191,20 @@ export function ResetPasswordForm() {
           Este enlace ya expiró o fue usado. Pide uno nuevo para continuar.
         </p>
         {email && (
-          <Button type="button" onClick={onResend} className="min-h-11 w-full">
-            Enviar enlace nuevo
+          <Button
+            type="button"
+            onClick={onResend}
+            disabled={isResending}
+            aria-busy={isResending}
+            className="min-h-11 w-full"
+          >
+            {isResending ? "Enviando…" : "Enviar enlace nuevo"}
           </Button>
+        )}
+        {msg && (
+          <p role="alert" aria-live="polite" className="text-sm text-[var(--terracotta)]">
+            {msg}
+          </p>
         )}
       </motion.div>
     );
@@ -228,7 +248,7 @@ export function ResetPasswordForm() {
         <Input
           type="password"
           required
-          placeholder="Nueva contraseña"
+          placeholder="Nueva contraseña (8+ caracteres, mayúscula, minúscula y número)"
           aria-label="Nueva contraseña"
           autoComplete="new-password"
           value={password}

@@ -5,6 +5,7 @@ import { AuthAmbient } from "@/components/ui/AuthAmbient";
 
 export const metadata = {
   title: "Restablecer contraseña · Aureo",
+  robots: { index: false },
 };
 
 export default function ResetPasswordPage() {

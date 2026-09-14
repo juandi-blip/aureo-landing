@@ -5,6 +5,8 @@ const { getUserMock, notifyMock } = vi.hoisted(() => ({
   notifyMock: vi.fn(),
 }));
 
+vi.mock("@/lib/api-guards", () => ({ runGuards: vi.fn(async () => null) }));
+
 vi.mock("@/lib/supabase", () => ({
   getSupabaseAnon: () => ({ auth: { getUser: getUserMock } }),
 }));
