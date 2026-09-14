@@ -33,7 +33,7 @@ export async function POST(request: Request) {
       password,
       options: {
         data: { business_name: businessName, plan_id: planId },
-        emailRedirectTo: `${SITE_URL}/login`,
+        emailRedirectTo: `${SITE_URL}/auth/confirm`,
       },
     });
 

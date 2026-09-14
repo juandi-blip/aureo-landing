@@ -8,5 +8,6 @@ initBotId({
     { path: "/api/waitlist", method: "PATCH" },
     { path: "/api/auth/signup", method: "POST" },
     { path: "/api/auth/login", method: "POST" },
+    { path: "/api/auth/resend", method: "POST" },
   ],
 });

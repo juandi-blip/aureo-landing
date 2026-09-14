@@ -90,3 +90,19 @@ export function parseLoginPayload(
 
   return { ok: true, data: { email, password: b.password } };
 }
+
+export function parseResendPayload(
+  body: unknown
+): { ok: true; data: { email: string } } | { ok: false; error: string } {
+  if (typeof body !== "object" || body === null) {
+    return { ok: false, error: "Solicitud inválida." };
+  }
+  const b = body as Record<string, unknown>;
+
+  const email = typeof b.email === "string" ? b.email.normalize("NFC").trim().toLowerCase() : "";
+  if (!isValidEmail(email)) {
+    return { ok: false, error: "Ingresa un correo válido." };
+  }
+
+  return { ok: true, data: { email } };
+}
