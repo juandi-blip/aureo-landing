@@ -9,5 +9,7 @@ initBotId({
     { path: "/api/auth/signup", method: "POST" },
     { path: "/api/auth/login", method: "POST" },
     { path: "/api/auth/resend", method: "POST" },
+    { path: "/api/auth/forgot-password", method: "POST" },
+    { path: "/api/auth/notify-password-changed", method: "POST" },
   ],
 });

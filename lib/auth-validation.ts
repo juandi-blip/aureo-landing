@@ -6,6 +6,8 @@ const MAX_BUSINESS_NAME = 80;
 const PLAN_IDS = ["starter", "pro", "logistica"] as const;
 export type PlanId = (typeof PLAN_IDS)[number];
 
+export const PASSWORD_REQUIREMENT_MSG = `La contraseña debe tener al menos ${MIN_PASSWORD} caracteres, con mayúscula, minúscula y número.`;
+
 export type SignupInput = {
   email: string;
   password: string;
@@ -18,11 +20,14 @@ export type LoginInput = {
   password: string;
 };
 
-function isValidPassword(password: unknown): password is string {
+export function isValidPassword(password: unknown): password is string {
   return (
     typeof password === "string" &&
     password.length >= MIN_PASSWORD &&
-    password.length <= MAX_PASSWORD
+    password.length <= MAX_PASSWORD &&
+    /[A-Z]/.test(password) &&
+    /[a-z]/.test(password) &&
+    /[0-9]/.test(password)
   );
 }
 
@@ -48,7 +53,7 @@ export function parseSignupPayload(
   }
 
   if (!isValidPassword(b.password)) {
-    return { ok: false, error: `La contraseña debe tener al menos ${MIN_PASSWORD} caracteres.` };
+    return { ok: false, error: PASSWORD_REQUIREMENT_MSG };
   }
 
   const businessName =

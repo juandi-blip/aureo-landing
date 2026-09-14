@@ -2,7 +2,7 @@ import type { Metadata, Viewport } from "next";
 import { Inter, Syne } from "next/font/google";
 import "./globals.css";
 import { cn } from "@/lib/utils";
-import { Analytics } from "@vercel/analytics/next";
+import { Analytics, type BeforeSend } from "@vercel/analytics/next";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -265,6 +265,22 @@ const jsonLd = {
   ],
 };
 
+// /auth/reset y /auth/confirm llevan token_hash y email en el query string —
+// Vercel Web Analytics registra la URL completa de cada pageview, así que sin
+// esto un token de un solo uso (todavía sin consumir) y el correo de la
+// cuenta terminarían en el dashboard de analítica de un tercero.
+const stripAuthTokens: BeforeSend = (event) => {
+  try {
+    const url = new URL(event.url, "https://placeholder.invalid");
+    if (url.pathname === "/auth/reset" || url.pathname === "/auth/confirm") {
+      url.search = "";
+    }
+    return { ...event, url: url.pathname + url.search + url.hash };
+  } catch {
+    return event;
+  }
+};
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -283,7 +299,7 @@ export default function RootLayout({
       </head>
       <body className="font-sans min-h-full flex flex-col">
         {children}
-        <Analytics />
+        <Analytics beforeSend={stripAuthTokens} />
       </body>
     </html>
   );

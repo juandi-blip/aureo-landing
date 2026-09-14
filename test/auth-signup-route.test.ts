@@ -30,7 +30,7 @@ describe("POST /api/auth/signup", () => {
     const res = await POST(
       makeRequest({
         email: "test@example.com",
-        password: "correcthorsebattery",
+        password: "Correcthorse1",
         businessName: "Negocio",
         planId: "starter",
       })
@@ -46,7 +46,7 @@ describe("POST /api/auth/signup", () => {
     const res = await POST(
       makeRequest({
         email: "test@example.com",
-        password: "correcthorsebattery",
+        password: "Correcthorse1",
         businessName: "Negocio",
         planId: "starter",
       })
@@ -64,7 +64,7 @@ describe("POST /api/auth/signup", () => {
     const res = await POST(
       makeRequest({
         email: "test@example.com",
-        password: "correcthorsebattery",
+        password: "Correcthorse1",
         businessName: "Negocio",
         planId: "starter",
       })
