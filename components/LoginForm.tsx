@@ -1,5 +1,6 @@
 "use client";
 import { useState } from "react";
+import Link from "next/link";
 import { motion, useReducedMotion } from "motion/react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -76,6 +77,14 @@ export function LoginForm() {
           onChange={(e) => setPassword(e.target.value)}
           className={`min-h-11 ${inputGlow}`}
         />
+        <div className="mt-1.5 text-right">
+          <Link
+            href="/forgot-password"
+            className="text-sm text-[var(--bronze)] underline underline-offset-2"
+          >
+            ¿Olvidaste tu contraseña?
+          </Link>
+        </div>
       </motion.div>
       <motion.div variants={fadeUp} className="w-full">
         <motion.div
