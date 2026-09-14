@@ -37,14 +37,20 @@ export function ConfirmAccount() {
     }
     setState("loading");
     setMsg("");
-    const supabase = getBrowserSupabase();
-    const { error } = await supabase.auth.verifyOtp({
-      token_hash: tokenHash,
-      type: "signup",
-    });
-    if (error) {
+    try {
+      const supabase = getBrowserSupabase();
+      const { error } = await supabase.auth.verifyOtp({
+        token_hash: tokenHash,
+        type,
+      });
+      if (error) {
+        setState("error");
+        setMsg("Este enlace ya expiró o fue usado.");
+        return;
+      }
+    } catch {
       setState("error");
-      setMsg("Este enlace ya expiró o fue usado.");
+      setMsg("Revisa tu conexión e intenta de nuevo.");
       return;
     }
     setState("success");
