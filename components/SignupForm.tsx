@@ -6,6 +6,7 @@ import { motion, useReducedMotion } from "motion/react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { PasswordInput } from "@/components/ui/PasswordInput";
+import { GoogleAuthButton } from "@/components/GoogleAuthButton";
 import { HONEYPOT_FIELD } from "@/lib/validation";
 import { fadeUp, staggerContainer, reducedTransition } from "@/lib/motion";
 
@@ -141,6 +142,14 @@ export function SignupForm() {
         <p className="mt-3 text-[var(--text-secondary)]">
           Empieza a controlar tu inventario hoy mismo.
         </p>
+      </motion.div>
+      <motion.div variants={fadeUp}>
+        <GoogleAuthButton />
+      </motion.div>
+      <motion.div variants={fadeUp} className="flex items-center gap-3 text-xs text-[var(--text-secondary)]">
+        <div className="h-px flex-1 bg-[var(--border-subtle)]" />
+        o
+        <div className="h-px flex-1 bg-[var(--border-subtle)]" />
       </motion.div>
       <label htmlFor={honeypotId} className="sr-only">
         Deja este campo vacío

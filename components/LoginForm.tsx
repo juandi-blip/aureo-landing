@@ -5,6 +5,7 @@ import { motion, useReducedMotion } from "motion/react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { PasswordInput } from "@/components/ui/PasswordInput";
+import { GoogleAuthButton } from "@/components/GoogleAuthButton";
 import { fadeUp, staggerContainer, reducedTransition } from "@/lib/motion";
 
 type FormState = "idle" | "loading" | "error";
@@ -55,6 +56,14 @@ export function LoginForm() {
       initial={reduce ? false : "hidden"}
       animate="visible"
     >
+      <motion.div variants={fadeUp}>
+        <GoogleAuthButton />
+      </motion.div>
+      <motion.div variants={fadeUp} className="flex items-center gap-3 text-xs text-[var(--text-secondary)]">
+        <div className="h-px flex-1 bg-[var(--border-subtle)]" />
+        o
+        <div className="h-px flex-1 bg-[var(--border-subtle)]" />
+      </motion.div>
       <motion.div variants={fadeUp}>
         <Input
           type="email"
