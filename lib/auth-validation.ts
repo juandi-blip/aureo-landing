@@ -111,3 +111,24 @@ export function parseResendPayload(
 
   return { ok: true, data: { email } };
 }
+
+export function parseCompleteProfilePayload(
+  body: unknown
+): { ok: true; data: { businessName: string; planId: PlanId } } | { ok: false; error: string } {
+  if (typeof body !== "object" || body === null) {
+    return { ok: false, error: "Solicitud inválida." };
+  }
+  const b = body as Record<string, unknown>;
+
+  const businessName =
+    typeof b.businessName === "string" ? b.businessName.trim().slice(0, MAX_BUSINESS_NAME) : "";
+  if (!businessName) {
+    return { ok: false, error: "Ingresa el nombre de tu negocio." };
+  }
+
+  if (!isValidPlanId(b.planId)) {
+    return { ok: false, error: "Selecciona un plan válido." };
+  }
+
+  return { ok: true, data: { businessName, planId: b.planId } };
+}
