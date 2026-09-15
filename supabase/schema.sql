@@ -76,3 +76,47 @@ drop trigger if exists on_auth_user_created on auth.users;
 create trigger on_auth_user_created
   after insert on auth.users
   for each row execute function public.handle_new_user();
+
+-- ============================================================
+-- Signup/login overhaul: Google OAuth first-login needs a business
+-- name/plan the provider never supplies. The trigger below still fires
+-- for every new auth.users row (OAuth included) and still inserts a
+-- businesses row with placeholder defaults — this just flags rows that
+-- need those placeholders corrected via a post-login screen.
+-- Ejecutar en el SQL Editor de Supabase (mismo procedimiento que las
+-- migraciones de arriba).
+-- ============================================================
+
+alter table public.businesses
+  add column if not exists needs_onboarding boolean not null default false;
+
+create or replace function public.handle_new_user()
+returns trigger
+language plpgsql
+security definer set search_path = public
+as $$
+declare
+  new_business_id uuid;
+  is_oauth boolean;
+begin
+  is_oauth := coalesce(new.raw_app_meta_data->>'provider', 'email') <> 'email';
+
+  insert into public.businesses (name, plan_id, needs_onboarding)
+  values (
+    coalesce(new.raw_user_meta_data->>'business_name', 'Mi negocio'),
+    coalesce(new.raw_user_meta_data->>'plan_id', 'starter'),
+    is_oauth
+  )
+  returning id into new_business_id;
+
+  insert into public.profiles (user_id, business_id, role)
+  values (new.id, new_business_id, 'admin');
+
+  return new;
+end;
+$$;
+
+create policy "Users update their own business"
+  on public.businesses for update
+  using (id in (select business_id from public.profiles where user_id = auth.uid()))
+  with check (id in (select business_id from public.profiles where user_id = auth.uid()));
