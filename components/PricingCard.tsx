@@ -120,7 +120,7 @@ export function PricingCard({
         </ul>
 
         <motion.a
-          href="#waitlist"
+          href={`/registro?plan=${plan.id}`}
           className={`relative mt-8 block overflow-hidden rounded-[var(--radius-md)] py-3 text-center font-semibold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 ${
             hl
               ? "glow-btn bg-[var(--bronze)] text-white hover:bg-[var(--bronze)]/90 focus-visible:ring-[var(--bronze)]"

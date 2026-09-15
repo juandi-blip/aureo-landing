@@ -130,7 +130,7 @@ export function SecuritySection() {
         >
           <p className="mx-auto max-w-xl text-sm text-[var(--text-cream)]/60">{s.nota}</p>
           <motion.a
-            href="#waitlist"
+            href="/registro"
             className="glow-btn mt-6 inline-block rounded-[var(--radius-md)] bg-[var(--bronze)] px-8 py-3 font-semibold text-white transition-colors hover:bg-[var(--bronze)]/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--bronze)] focus-visible:ring-offset-2"
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.98 }}

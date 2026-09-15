@@ -5,6 +5,7 @@ import { createClient, type SupabaseClient } from "@supabase/supabase-js";
 import { motion, useReducedMotion } from "motion/react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { PasswordInput } from "@/components/ui/PasswordInput";
 import { fadeUp, staggerContainer, reducedTransition } from "@/lib/motion";
 import { isValidPassword, PASSWORD_REQUIREMENT_MSG } from "@/lib/auth-validation";
 
@@ -245,8 +246,7 @@ export function ResetPasswordForm() {
         <div className="mt-2 h-0.5 w-10 rounded-full bg-[var(--bronze)]" aria-hidden />
       </motion.div>
       <motion.div variants={fadeUp}>
-        <Input
-          type="password"
+        <PasswordInput
           required
           placeholder="Nueva contraseña (8+ caracteres, mayúscula, minúscula y número)"
           aria-label="Nueva contraseña"
@@ -257,8 +257,7 @@ export function ResetPasswordForm() {
         />
       </motion.div>
       <motion.div variants={fadeUp}>
-        <Input
-          type="password"
+        <PasswordInput
           required
           placeholder="Confirma la contraseña"
           aria-label="Confirma la contraseña"
