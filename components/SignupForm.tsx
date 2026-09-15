@@ -4,6 +4,7 @@ import { useSearchParams } from "next/navigation";
 import { motion, useReducedMotion } from "motion/react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { PasswordInput } from "@/components/ui/PasswordInput";
 import { HONEYPOT_FIELD } from "@/lib/validation";
 import { fadeUp, staggerContainer, reducedTransition } from "@/lib/motion";
 
@@ -170,8 +171,7 @@ export function SignupForm() {
         />
       </motion.div>
       <motion.div variants={fadeUp}>
-        <Input
-          type="password"
+        <PasswordInput
           required
           placeholder="Contraseña (8+ caracteres, mayúscula, minúscula y número)"
           aria-label="Contraseña"

@@ -4,6 +4,7 @@ import Link from "next/link";
 import { motion, useReducedMotion } from "motion/react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { PasswordInput } from "@/components/ui/PasswordInput";
 import { fadeUp, staggerContainer, reducedTransition } from "@/lib/motion";
 
 type FormState = "idle" | "loading" | "error";
@@ -67,8 +68,7 @@ export function LoginForm() {
         />
       </motion.div>
       <motion.div variants={fadeUp}>
-        <Input
-          type="password"
+        <PasswordInput
           required
           placeholder="Contraseña"
           aria-label="Contraseña"
