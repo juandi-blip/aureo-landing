@@ -1,6 +1,7 @@
 "use client";
 import { useEffect, useState } from "react";
 import { motion, useReducedMotion } from "motion/react";
+import Link from "next/link";
 import { site } from "@/content/site";
 import { HERO_TIMING, reducedTransition, staggerContainer, fadeUp } from "@/lib/motion";
 
@@ -80,19 +81,32 @@ export function Nav() {
           ))}
         </motion.div>
 
-        <motion.a
-          href="#waitlist"
-          className="shimmer-btn relative overflow-hidden rounded-[var(--radius-md)] bg-[var(--primary)] px-4 py-2 text-sm font-semibold text-white transition-colors hover:bg-[var(--primary-strong)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--primary)] focus-visible:ring-offset-2"
-          initial={{ opacity: 0, x: reduce ? 0 : 16, scale: reduce ? 1 : 0.92 }}
-          animate={{ opacity: 1, x: 0, scale: 1 }}
+        <motion.div
+          className="flex items-center gap-4"
+          initial={{ opacity: 0, x: reduce ? 0 : 16 }}
+          animate={{ opacity: 1, x: 0 }}
           transition={
             reduce
               ? { duration: 0 }
-              : { type: "spring", damping: 18, stiffness: 200, delay: 0.35 }
+              : { type: "spring", damping: 22, stiffness: 180, delay: 0.3 }
           }
         >
-          Unirme
-        </motion.a>
+          <Link
+            href="/login"
+            className="hidden text-sm font-semibold text-[var(--text-secondary)] transition-colors hover:text-[var(--primary)] sm:inline"
+          >
+            Iniciar sesión
+          </Link>
+          <motion.a
+            href="/registro"
+            className="shimmer-btn relative overflow-hidden rounded-[var(--radius-md)] bg-[var(--primary)] px-4 py-2 text-sm font-semibold text-white transition-colors hover:bg-[var(--primary-strong)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--primary)] focus-visible:ring-offset-2"
+            whileHover={{ scale: 1.03 }}
+            whileTap={{ scale: 0.97 }}
+            transition={{ type: "spring", stiffness: 350, damping: 20 }}
+          >
+            Empieza gratis
+          </motion.a>
+        </motion.div>
       </nav>
     </motion.header>
   );
