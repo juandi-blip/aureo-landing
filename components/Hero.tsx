@@ -1,9 +1,7 @@
 // components/Hero.tsx
 "use client";
-import { useState } from "react";
 import { motion, useReducedMotion } from "motion/react";
 import { site } from "@/content/site";
-import { WaitlistForm, type WaitlistStep } from "@/components/WaitlistForm";
 import { FloatingParticles } from "@/components/ui/FloatingParticles";
 import { DashboardMock } from "@/components/ui/DashboardMock";
 import {
@@ -14,11 +12,10 @@ import { ParallaxLayer } from "@/components/ui/ParallaxLayer";
 
 export function Hero() {
   const reduce = useReducedMotion();
-  const [formStep, setFormStep] = useState<WaitlistStep>("email");
 
   return (
     <section
-      id="waitlist"
+      id="inicio"
       className="relative mx-auto max-w-7xl overflow-visible px-5 py-14 md:py-20 lg:px-8 lg:py-24"
     >
       <motion.div
@@ -81,12 +78,18 @@ export function Hero() {
           </p>
 
           <div className="hero-fade hero-fade-form mt-7 md:mt-8">
-            <WaitlistForm origen="hero" onStepChange={setFormStep} />
-            {formStep === "email" && (
-              <p className="mt-3 text-sm text-[var(--text-secondary)]">
-                {site.hero.nota}
-              </p>
-            )}
+            <motion.a
+              href="/registro"
+              className="shimmer-btn glow-btn relative inline-block overflow-hidden rounded-[var(--radius-md)] bg-[var(--primary)] px-8 py-3.5 text-center font-semibold text-white transition-colors hover:bg-[var(--primary-strong)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--primary)] focus-visible:ring-offset-2"
+              whileHover={{ scale: 1.02 }}
+              whileTap={{ scale: 0.98 }}
+              transition={{ type: "spring", stiffness: 350, damping: 20 }}
+            >
+              Empieza tu prueba gratis
+            </motion.a>
+            <p className="mt-3 text-sm text-[var(--text-secondary)]">
+              {site.hero.nota}
+            </p>
           </div>
         </div>
 

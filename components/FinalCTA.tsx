@@ -2,7 +2,6 @@
 "use client";
 import { motion, useReducedMotion } from "motion/react";
 import { site } from "@/content/site";
-import { WaitlistForm } from "@/components/WaitlistForm";
 import { FloatingParticles } from "@/components/ui/FloatingParticles";
 import { fadeUp, VIEWPORT } from "@/lib/motion";
 import { SectionHeading } from "@/components/ui/SectionHeading";
@@ -56,7 +55,15 @@ export function FinalCTA() {
           whileInView="visible"
           viewport={VIEWPORT}
         >
-          <WaitlistForm origen="final" />
+          <motion.a
+            href="/registro"
+            className="glow-btn relative inline-block overflow-hidden rounded-[var(--radius-md)] bg-[var(--bronze)] px-8 py-3.5 text-center font-semibold text-white transition-colors hover:bg-[var(--bronze)]/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--bronze)] focus-visible:ring-offset-2"
+            whileHover={{ scale: 1.02 }}
+            whileTap={{ scale: 0.98 }}
+            transition={{ type: "spring", stiffness: 350, damping: 20 }}
+          >
+            {site.finalCta.cta}
+          </motion.a>
         </motion.div>
 
         <motion.p
