@@ -12,6 +12,7 @@ export type Moneda = "cop" | "usd";
 export type Periodo = "mensual" | "anual";
 export type PlanPrecios = { cop: Record<Periodo, number>; usd: Record<Periodo, number> };
 export type Plan = {
+  id: "starter" | "pro" | "logistica";
   nombre: string; resumen: string; destacado: boolean;
   precios: PlanPrecios; precioRegular: PlanPrecios; features: string[]; cta: string;
 };
@@ -28,7 +29,7 @@ export const site = {
       "ventas y bodega en un solo lugar.",
     ],
     subtitulo: "Aureo le da a tu negocio la inteligencia logística que antes solo tenían las grandes empresas — sin su complejidad ni su precio.",
-    nota: "Acceso anticipado y precio de fundador para los primeros negocios.",
+    nota: "14 días gratis, sin tarjeta. Precio de fundador asegurado desde el día uno.",
   },
   problema: {
     titulo: "Si tienes inventario y bodega, conoces estos dolores.",
@@ -116,6 +117,7 @@ export const site = {
   },
   planes: [
     {
+      id: "starter",
       nombre: "Starter",
       resumen: "Para vender y controlar tu stock sin desorden.",
       destacado: false,
@@ -128,9 +130,10 @@ export const site = {
         "1 usuario · 1 bodega · 1 dispositivo",
         "Soporte por WhatsApp",
       ],
-      cta: "Unirme a la lista de espera",
+      cta: "Iniciar prueba gratis",
     },
     {
+      id: "pro",
       nombre: "Pro",
       resumen: "Para operar en serio, con equipo y reportes.",
       destacado: false,
@@ -144,9 +147,10 @@ export const site = {
         "Reportes de ventas y rotación",
         "Varios dispositivos",
       ],
-      cta: "Unirme a la lista de espera",
+      cta: "Iniciar prueba gratis",
     },
     {
+      id: "logistica",
       nombre: "Logística",
       resumen: "La inteligencia logística que te diferencia.",
       destacado: true,
@@ -161,15 +165,15 @@ export const site = {
         "Reportes avanzados: rentabilidad y por cliente",
         "Multi-bodega",
       ],
-      cta: "Unirme a la lista de espera",
+      cta: "Iniciar prueba gratis",
     },
   ] as Plan[],
   preciosTrial: "Al lanzamiento: 14 días gratis, sin tarjeta.",
-  preciosNota: "Precio de fundador de por vida para quienes entran por la lista de espera — nunca sube para ti, aunque suba después del lanzamiento.",
+  preciosNota: "Precio de fundador de por vida para quienes se registren ahora — nunca sube para ti, aunque suba después.",
   earlyBird: {
-    badge: "Fundador temprano",
-    titulo: "Los primeros en la lista se llevan el mejor precio.",
-    texto: "Quienes se unan en esta primera etapa acceden a un descuento extra sobre el precio de fundador. Cuanto antes entres, mejor cupo aseguras.",
+    badge: "Precio de lanzamiento",
+    titulo: "Precio de fundador, por tiempo limitado.",
+    texto: "Los primeros negocios en registrarse consiguen un precio que nunca sube — sin importar cuándo actives tu plan pago.",
   },
   // Contenido de components/SecuritySection.tsx — sección deshabilitada
   // mientras estemos en fase lista de espera (sin pasarela de pago aún).
@@ -218,14 +222,14 @@ export const site = {
     { pregunta: "Ya uso Siigo o Alegra, ¿para qué cambiar?", respuesta: "Siigo y Alegra son software contable — te ayudan a facturar y declarar. Aureo se enfoca en tu bodega: mapa de calor, qué rota y qué no, picking guiado. Muchos negocios usan Aureo junto a su contabilidad, no en reemplazo." },
     { pregunta: "¿Es difícil migrar mi inventario?", respuesta: "No. Cargas tu inventario actual (por Excel o uno por uno) y Aureo lo organiza por ti. No necesitas empezar de cero." },
     { pregunta: "¿Qué pasa con mis datos?", respuesta: "Tus datos son tuyos. Los protegemos y nunca los compartimos." },
-    { pregunta: "¿Cuándo estará disponible?", respuesta: "Estamos en desarrollo. Únete a la lista de espera para tener acceso anticipado y precio de fundador." },
-    { pregunta: "¿Qué pasa si me uno a la lista de espera y el lanzamiento tarda?", respuesta: "No arriesgas nada: anotarte no cuesta nada ni pide tarjeta. Mientras tanto tu precio de fundador queda reservado y congelado para cuando lancemos — cuanto antes te unas, mejor precio aseguras." },
+    { pregunta: "¿Cuándo puedo empezar?", respuesta: "Ya puedes crear tu cuenta y probar Aureo gratis por 14 días, sin tarjeta." },
+    { pregunta: "¿Qué pasa cuando termina mi prueba gratuita?", respuesta: "Nada se pierde: tus datos quedan guardados. Activas tu plan cuando quieras, con tu precio de fundador ya asegurado." },
   ] as FaqItem[],
   finalCta: {
-    titulo: "Sé de los primeros en tener el control.",
-    texto: "Únete a la lista de espera y asegura tu precio de fundador.",
-    cta: "Unirme ahora",
-    referido: "¿Conoces a alguien con ferretería, distribuidora o bodega? Comparte tu invitación — cada referido que se una te acerca más a un cupo temprano.",
+    titulo: "Toma el control de tu inventario hoy.",
+    texto: "Crea tu cuenta gratis y asegura tu precio de fundador.",
+    cta: "Empieza gratis",
+    referido: "¿Conoces a alguien con ferretería, distribuidora o bodega? Compártele Aureo — juntos pueden mejorar cómo manejan su inventario.",
   },
   footer: {
     tagline: "Inteligencia logística para tu negocio.",

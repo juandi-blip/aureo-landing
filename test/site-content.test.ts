@@ -82,14 +82,14 @@ describe("site.contacto", () => {
 });
 
 describe("site.faq", () => {
-  it("tiene 8 preguntas, incluyendo la objeción de riesgo de la waitlist", () => {
+  it("tiene 8 preguntas, incluyendo cómo empezar con la prueba gratuita", () => {
     expect(site.faq).toHaveLength(8);
     const preguntas = site.faq.map((f) => f.pregunta.toLowerCase());
-    expect(preguntas.some((p) => p.includes("tarda") || p.includes("retras") || p.includes("no llega"))).toBe(true);
+    expect(preguntas.some((p) => p.includes("cuándo puedo empezar") || p.includes("prueba"))).toBe(true);
   });
 
-  it("la respuesta de riesgo de waitlist no promete nada que el producto no ofrece hoy (sin mención de tarjeta ni pago)", () => {
-    const item = site.faq.find((f) => f.pregunta.toLowerCase().includes("tarda"));
+  it("la respuesta sobre la prueba gratuita no promete nada que el producto no ofrece hoy (sin mención de tarjeta ni pago)", () => {
+    const item = site.faq.find((f) => f.pregunta.toLowerCase().includes("cuándo puedo empezar"));
     expect(item).toBeDefined();
     expect(item!.respuesta.toLowerCase()).not.toContain("reembolso");
   });
