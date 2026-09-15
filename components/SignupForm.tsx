@@ -208,11 +208,21 @@ export function SignupForm() {
         />
         <label htmlFor="accept-terms" className="text-sm text-[var(--text-secondary)]">
           Acepto los{" "}
-          <Link href="/terminos" className="text-[var(--bronze)] underline underline-offset-2" target="_blank">
+          <Link
+            href="/terminos"
+            className="text-[var(--bronze)] underline underline-offset-2"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
             Términos y Condiciones
           </Link>{" "}
           y la{" "}
-          <Link href="/privacidad" className="text-[var(--bronze)] underline underline-offset-2" target="_blank">
+          <Link
+            href="/privacidad"
+            className="text-[var(--bronze)] underline underline-offset-2"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
             Política de Privacidad
           </Link>
           .

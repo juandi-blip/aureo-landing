@@ -116,6 +116,8 @@ begin
 end;
 $$;
 
+drop policy if exists "Users update their own business" on public.businesses;
+
 create policy "Users update their own business"
   on public.businesses for update
   using (id in (select business_id from public.profiles where user_id = auth.uid()))

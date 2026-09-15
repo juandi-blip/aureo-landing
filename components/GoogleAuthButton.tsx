@@ -19,33 +19,43 @@ function GoogleIcon() {
 export function GoogleAuthButton() {
   const reduce = useReducedMotion();
   const [loading, setLoading] = useState(false);
+  const [msg, setMsg] = useState("");
 
   async function onClick() {
     setLoading(true);
+    setMsg("");
     const supabase = getBrowserSupabase();
-    await supabase.auth.signInWithOAuth({
+    const { error } = await supabase.auth.signInWithOAuth({
       provider: "google",
       options: { redirectTo: `${SITE_URL}/auth/oauth-callback` },
     });
-    // No further state update needed on success — signInWithOAuth navigates
-    // the whole page away to Google. `loading` only matters if it fails
-    // without navigating, which the browser surfaces as a normal rejection
-    // Supabase already logs; nothing actionable to show the user here that
-    // a retry click wouldn't already fix.
+    if (error) {
+      setLoading(false);
+      setMsg("No pudimos conectar con Google. Intenta de nuevo o usa tu correo.");
+    }
+    // On success, signInWithOAuth navigates the whole page away — no further
+    // state update needed, loading intentionally stays true until unmount.
   }
 
   return (
-    <motion.button
-      type="button"
-      onClick={onClick}
-      disabled={loading}
-      aria-busy={loading}
-      whileHover={reduce ? undefined : { scale: 1.02 }}
-      whileTap={reduce ? undefined : { scale: 0.98 }}
-      className="flex min-h-11 w-full items-center justify-center gap-2 rounded-[var(--radius-md)] border border-[var(--border-subtle)] bg-[var(--bg-surface)] text-sm font-semibold text-[var(--text-primary)] transition-colors hover:bg-[var(--bg-subtle)] disabled:opacity-60"
-    >
-      <GoogleIcon />
-      Continuar con Google
-    </motion.button>
+    <div className="flex flex-col gap-1.5">
+      <motion.button
+        type="button"
+        onClick={onClick}
+        disabled={loading}
+        aria-busy={loading}
+        whileHover={reduce ? undefined : { scale: 1.02 }}
+        whileTap={reduce ? undefined : { scale: 0.98 }}
+        className="flex min-h-11 w-full items-center justify-center gap-2 rounded-[var(--radius-md)] border border-[var(--border-subtle)] bg-[var(--bg-surface)] text-sm font-semibold text-[var(--text-primary)] transition-colors hover:bg-[var(--bg-subtle)] disabled:opacity-60"
+      >
+        <GoogleIcon />
+        Continuar con Google
+      </motion.button>
+      {msg && (
+        <p role="alert" className="text-sm text-[var(--terracotta)]">
+          {msg}
+        </p>
+      )}
+    </div>
   );
 }

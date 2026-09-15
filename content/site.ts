@@ -168,7 +168,7 @@ export const site = {
       cta: "Iniciar prueba gratis",
     },
   ] as Plan[],
-  preciosTrial: "Al lanzamiento: 14 días gratis, sin tarjeta.",
+  preciosTrial: "14 días gratis, sin tarjeta.",
   preciosNota: "Precio de fundador de por vida para quienes se registren ahora — nunca sube para ti, aunque suba después.",
   earlyBird: {
     badge: "Precio de lanzamiento",
