@@ -1,8 +1,12 @@
 import { NextResponse } from "next/server";
 import { createClient } from "@supabase/supabase-js";
 import { parseCompleteProfilePayload } from "@/lib/auth-validation";
+import { runGuards } from "@/lib/api-guards";
 
 export async function PATCH(request: Request) {
+  const guardResponse = await runGuards(request);
+  if (guardResponse) return guardResponse;
+
   const authHeader = request.headers.get("authorization") ?? "";
   const token = authHeader.startsWith("Bearer ") ? authHeader.slice(7) : "";
   if (!token) {

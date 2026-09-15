@@ -11,5 +11,6 @@ initBotId({
     { path: "/api/auth/resend", method: "POST" },
     { path: "/api/auth/forgot-password", method: "POST" },
     { path: "/api/auth/notify-password-changed", method: "POST" },
+    { path: "/api/auth/complete-profile", method: "PATCH" },
   ],
 });

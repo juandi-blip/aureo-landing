@@ -1,5 +1,7 @@
 import { describe, expect, it, vi, beforeEach } from "vitest";
 
+vi.mock("@/lib/api-guards", () => ({ runGuards: vi.fn(async () => null) }));
+
 const getUserMock = vi.fn();
 const singleMock = vi.fn();
 const eqSelectMock = vi.fn(() => ({ single: singleMock }));
