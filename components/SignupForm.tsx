@@ -1,6 +1,7 @@
 "use client";
 import { useId, useState } from "react";
 import { useSearchParams } from "next/navigation";
+import Link from "next/link";
 import { motion, useReducedMotion } from "motion/react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -53,9 +54,15 @@ export function SignupForm() {
   const [hp, setHp] = useState("");
   const [state, setState] = useState<FormState>("idle");
   const [msg, setMsg] = useState("");
+  const [acceptedTerms, setAcceptedTerms] = useState(false);
 
   async function onSubmit(e: React.FormEvent) {
     e.preventDefault();
+    if (!acceptedTerms) {
+      setState("error");
+      setMsg("Debes aceptar los Términos y la Política de Privacidad.");
+      return;
+    }
     setState("loading");
     setMsg("");
     try {
@@ -126,12 +133,13 @@ export function SignupForm() {
       animate="visible"
     >
       <motion.div variants={fadeUp} className="mb-2">
-        <h1 className="font-display text-2xl font-bold text-[var(--text-primary)]">
-          Crea tu cuenta
+        <p className="text-sm font-semibold text-[var(--bronze)]">Crea tu cuenta</p>
+        <h1 className="mt-1 font-display text-2xl font-bold text-[var(--text-primary)]">
+          14 días gratis, sin tarjeta.
         </h1>
         <div className="mt-2 h-0.5 w-10 rounded-full bg-[var(--bronze)]" aria-hidden />
         <p className="mt-3 text-[var(--text-secondary)]">
-          14 días gratis, sin tarjeta. Empieza a controlar tu inventario hoy mismo.
+          Empieza a controlar tu inventario hoy mismo.
         </p>
       </motion.div>
       <label htmlFor={honeypotId} className="sr-only">
@@ -181,6 +189,26 @@ export function SignupForm() {
           className={`min-h-11 ${inputGlow}`}
         />
       </motion.div>
+      <motion.div variants={fadeUp} className="flex items-start gap-2">
+        <input
+          type="checkbox"
+          id="accept-terms"
+          checked={acceptedTerms}
+          onChange={(e) => setAcceptedTerms(e.target.checked)}
+          className="mt-1 h-4 w-4 shrink-0 rounded border-[var(--border-subtle)] text-[var(--bronze)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--bronze)]"
+        />
+        <label htmlFor="accept-terms" className="text-sm text-[var(--text-secondary)]">
+          Acepto los{" "}
+          <Link href="/terminos" className="text-[var(--bronze)] underline underline-offset-2" target="_blank">
+            Términos y Condiciones
+          </Link>{" "}
+          y la{" "}
+          <Link href="/privacidad" className="text-[var(--bronze)] underline underline-offset-2" target="_blank">
+            Política de Privacidad
+          </Link>
+          .
+        </label>
+      </motion.div>
       <motion.div variants={fadeUp} className="flex gap-2">
         {PLAN_OPTIONS.map((p) => (
           <motion.button
@@ -207,7 +235,7 @@ export function SignupForm() {
         >
           <Button
             type="submit"
-            disabled={state === "loading"}
+            disabled={state === "loading" || !acceptedTerms}
             aria-busy={state === "loading"}
             className="min-h-11 w-full"
           >
